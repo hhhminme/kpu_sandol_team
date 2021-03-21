@@ -113,10 +113,12 @@ class CrawlingFunction():
         result_string = data[idx]
         return "☆빠밤★\n"+ result_string.split("->")[0] +" 에서, "+result_string.split("->")[1].replace("\n", '')+" 어떠세요?"
 
+
+class s3IOEvent():
     def upload_feedback(self, params):
         s3 = boto3.resource('s3')
         bucket = s3.Bucket('my-lambda-bucket-text')
-        params = "["+str(datetime.datetime.today()) + "] :" + params + "\n"
+        params = "[" + str(datetime.datetime.today()) + "] :" + params + "\n"
         try:
             local_file = "/tmp/" + "feedback.txt"
             bucket.download_file("tmp/feedback.txt", local_file)
@@ -136,13 +138,12 @@ class CrawlingFunction():
         except Exception as e:
             return "파일을 서버에 업로드 하는 중 오류가 발생했습니다 [Errno 3]"
 
-
         return "성공적으로 파일을 저장했습니다."
 
     def read_feedback(self, params):
         if params == '1':
             s3 = boto3.resource('s3')
-            obj = s3.Object('my-lambda-bucket-text','tmp/feedback.txt')
+            obj = s3.Object('my-lambda-bucket-text', 'tmp/feedback.txt')
             body = obj.get()['Body'].read().decode('UTF-8')
             return str(body)
 
@@ -173,3 +174,68 @@ class CrawlingFunction():
 
         else:
             return '잘못된 파라미터'
+
+    def upload_meal(self, input_date,store_name, lunch_list, dinner_list, owner_id):
+        owner_id_dec = {'미가식당': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895",
+                        '웰스프레쉬': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895",
+                        '푸드라운지': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895"
+                        }
+        sandol_team = ['d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895',
+                       'd38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895',
+                       'd38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895']
+
+        if store_name == '미가식당' and (owner_id == owner_id_dec[store_name] or owner_id in sandol_team):
+            store_file = store_name + ".txt"
+
+            s3 = boto3.resource('s3')
+            bucket = s3.Bucket('my-lambda-bucket-text')
+
+            try:
+                local_file = "/tmp/" + store_file
+                #local_file = "./restaurant_menu/" + store_file
+
+                bucket.download_file("restaurant_menu/" + store_file, local_file)
+            except Exception as e:
+                return "fist _" + str(e)  # 파일을 /tmp/에 복사하여 다운로드
+
+            try:
+                modified_data = input_date + "\n중식 : " + lunch_list + "\n석식 : " + dinner_list
+                with open (local_file, "w", encoding="UTF-8") as f:
+                    f.writelines(modified_data)
+
+            except Exception as e:
+                return "secn _" + str(e)
+
+            try:
+                s3 = boto3.client('s3')
+                s3.upload_file(local_file, 'my-lambda-bucket-text', "restaurant_menu/"+store_file)
+            except Exception as e:
+                return "thrd _" + str(e)
+        else:
+            return "권한이 없습니다"
+    def read_meal(self, store_name):
+        t = ['월', '화', '수', '목', '금', '토', '일']
+        store_file = store_name + ".txt"
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket("my-lambda-bucket-text")
+        try:
+            # local_file = "/tmp/" + store_file
+            local_file = "./restaurant_menu/" + store_file
+            bucket.download_file("restaurant_menu/" + store_file, local_file)
+
+        except Exception as e:
+            return "fist _" + str(e)  # 파일을 /tmp/에 복사하여 다운로드
+
+        try:
+            with open(local_file,"r",encoding="UTF-8") as f:
+                data = f.readlines()
+                date = data[0].replace("\n",'')
+                lunch = data[1].split(" : ")[1].replace("\n",'')
+                dinner = data[2].split(" : ")[1].replace("\n",'')
+                return_data = "["+date+" "+t[datetime.datetime.today().weekday()]+"요일] "+store_name+"메뉴\n" \
+                                                                                              "중식 : "+lunch.replace(' ', ', ')+"\n" \
+                                                                                                           "석식 : "+dinner.replace(' ', ', ')
+                return return_data
+
+        except Exception as e:
+            return "second _" + str(e)
