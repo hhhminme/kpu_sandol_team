@@ -4,7 +4,8 @@
         "project_name": "betasandol",
         "runtime": "python3.8",
         "s3_bucket": "zappa-m9m800toh",
-	"aws_region": "ap-northeast-2",
-	"keep_warm": false
+        "aws_region": "ap-northeast-2",
+        "keep_warm": false,
+        "lambda_handler": "lambda_prototype.lambda_handler"
     }
 }
