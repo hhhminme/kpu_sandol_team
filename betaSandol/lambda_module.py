@@ -170,7 +170,7 @@ class CrawlingFunction():
 class s3IOEvent():
     def upload_feedback(self, params):  #피드백 업로드 기능
         s3 = boto3.resource('s3')
-        bucket = s3.Bucket('my-lambda-bucket-text')
+        bucket = s3.Bucket('my-lambda-bucket-text')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
         params = "[" + str(datetime.datetime.today()) + "] :" + params + "\n"
         try:
             local_file = "/tmp/" + "feedback.txt"
@@ -185,7 +185,7 @@ class s3IOEvent():
             return "파일을 저장 중 오류가 발생했습니다 [Errno 2]"
 
         try:
-            s3 = boto3.client('s3')
+            s3 = boto3.client('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file("/tmp/feedback.txt", 'my-lambda-bucket-text', 'tmp/feedback.txt')
 
         except Exception as e:
@@ -196,13 +196,13 @@ class s3IOEvent():
     def read_feedback(self, params):    # 피드백 읽기 기능 (관리자 전용)
         if params == '1':   #읽기
             s3 = boto3.resource('s3')
-            obj = s3.Object('my-lambda-bucket-text', 'tmp/feedback.txt')
+            obj = s3.Object('my-lambda-bucket-text', 'tmp/feedback.txt') #이 부분 해당 버킷 생성 후 적절히 수정 예정
             body = obj.get()['Body'].read().decode('UTF-8')
             return str(body)
 
         elif params == '2': #지우기
             s3 = boto3.resource('s3')
-            bucket = s3.Bucket('my-lambda-bucket-text')
+            bucket = s3.Bucket('my-lambda-bucket-text')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
             params = "#feedbacks\n"
             try:
                 local_file = "/tmp/" + "feedback.txt"
@@ -211,7 +211,7 @@ class s3IOEvent():
                 return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]"
 
             try:
-                with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:
+                with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:  #이 부분 해당 버킷 생성 후 적절히 수정 예정
                     f.writelines(params)
             except Exception as e:
                 return "파일을 삭제 중 오류가 발생했습니다 [Errno 2]"
@@ -240,7 +240,7 @@ class s3IOEvent():
             return "권한이 없습니다."
 
         else:
-            store_file = store_name + ".txt"
+            store_file = store_name + ".txt"  #이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("my-lambda-bucket-text")
 
@@ -248,7 +248,7 @@ class s3IOEvent():
                 local_file = "/tmp/" + store_file
                 # local_file = "./restaurant_menu/" + store_file
 
-                bucket.download_file("restaurant_menu/" + store_file, local_file)
+                bucket.download_file("restaurant_menu/" + store_file, local_file)  #이 부분 해당 버킷 생성 후 적절히 수정 예정
 
             except Exception:
                 return "저장소에서 파일을 찾을 수 없습니다."  # 파일을 /tmp/에 복사하여 다운로드
@@ -262,20 +262,22 @@ class s3IOEvent():
                 return "파일을 수정하는 중 오류가 발생했습니다."
 
             try:
-                s3 = boto3.client('s3')
+                s3 = boto3.client('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
                 s3.upload_file(local_file, 'my-lambda-bucket-text', "restaurant_menu/" + store_file)
 
             except Exception:
                 return "파일을 저장소에 업로드하는 중 오류가 발생했습니다."
 
+        return "네! 학생들에게 잘 전달할게요! 감사합니다!"
+
     def read_meal(self, store_name):
         t = ['월', '화', '수', '목', '금', '토', '일']
         store_file = store_name + ".txt"
-        s3 = boto3.resource('s3')
+        s3 = boto3.resource('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("my-lambda-bucket-text")
         try:
-            # local_file = "/tmp/" + store_file
-            local_file = "./restaurant_menu/" + store_file
+            local_file = "/tmp/" + store_file
+            #local_file = "./restaurant_menu/" + store_file  #이 부분 해당 버킷 생성 후 적절히 수정 예정
             bucket.download_file("restaurant_menu/" + store_file, local_file)
 
         except Exception:
