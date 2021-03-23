@@ -21,11 +21,12 @@ def lambda_handler(event, context):
         elif key[0]  == 'upload_date':
             result_value = Module.s3IOEvent.upload_meal(Module.s3IOEvent, str(json.loads(param[key[0]])["date"]), param[key[1]], param[key[2]], param[key[3]], str(request_body['userRequest']['user']['properties']['botUserKey']))
 
-        elif key[0] == 'resturant_name':
+        elif key[0] == 'restaurant_name':
             result_value = Module.s3IOEvent.read_meal(Module.s3IOEvent,str(param[key[0]]))
 
         elif key[0] == 'get_id':
             result_value = str(request_body['userRequest']['user']['properties']['botUserKey'])
+
         else:
             raise Exception("[Parameter Error] 잘못된 파라미터가 전달되었습니다.")
 
@@ -43,6 +44,7 @@ def lambda_handler(event, context):
             ]
         }
     }
+
     return {
         'statusCode':200,
         'body': json.dumps(result),
