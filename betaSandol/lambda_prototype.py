@@ -1,12 +1,15 @@
 import json
 import lambda_prototype_module as Module
 def lambda_handler(event, context):
-    request_body = json.loads(event['body'])
-    param = request_body['action']['params']
-    key = list(param.keys()) # 키가 여러개 들어올 경우는 생각해봐야 함. -> 그런 경우가 있을지부터 의문
-
-    result_value = None
+    parameter_error = "[Parameter Error] 잘못된 파라미터가 전달되었습니다."
     try:
+        if event.get('body') is None:
+            raise Exception(parameter_error)
+        request_body = json.loads(event['body'])
+        param = request_body['action']['params']
+        key = list(param.keys())  # 키가 여러개 들어올 경우는 생각해봐야 함. -> 그런 경우가 있을지부터 의문
+
+        result_value = None
         if key[0]  == 'station':
             result_value = Module.CrawlingFunction.subway(Module.CrawlingFunction, station=str(param[key[0]]))
         elif key[0]  == 'meal':
@@ -28,10 +31,9 @@ def lambda_handler(event, context):
             result_value = str(request_body['userRequest']['user']['properties']['botUserKey'])
 
         else:
-            raise Exception("[Parameter Error] 잘못된 파라미터가 전달되었습니다.")
-
+            raise Exception(parameter_error)
     except Exception as e:
-            result_value = str(e)
+        result_value = str(e)
     result = {
         "version": "2.0",
         "template": {
