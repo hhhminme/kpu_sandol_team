@@ -4,13 +4,15 @@ import boto3
 import random
 import datetime
 import json
+
+
 class CrawlingFunction():
     def subway(self, station):
         try:
             header = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"}
             arrival_subway_api_url = "http://swopenapi.seoul.go.kr/api/subway/49664c636d6a68303634704d4f7649/json/realtimeStationArrival/0/5/" + station
-            soup = requests.get(arrival_subway_api_url, headers=header)     #여기까지 기본 크롤링 준비
+            soup = requests.get(arrival_subway_api_url, headers=header)  # 여기까지 기본 크롤링 준비
 
             if soup.status_code != 200:
                 raise Exception('API 서버에 연결을 실패했습니다 잠시후 다시 시도해주세요')
@@ -27,15 +29,16 @@ class CrawlingFunction():
                 reprocess['subwayStatus'].append(receptdata['realtimeArrivalList'][i]['arvlCd'])
                 reprocess['subwayPos'].append(receptdata['realtimeArrivalList'][i]['arvlMsg2'])
                 reprocess['heading'].append(receptdata['realtimeArrivalList'][i]['trainLineNm'])
-                reprocess['arivlTime'].append(receptdata['realtimeArrivalList'][i]['barvlDt'])              #여기까지 크롤링 한 내용들 기준으로 업데이트
-
+                reprocess['arivlTime'].append(
+                    receptdata['realtimeArrivalList'][i]['barvlDt'])  # 여기까지 크롤링 한 내용들 기준으로 업데이트
 
             retn_str = "-------------------------------------------------\n" + \
                        reprocess['reqDate'] + "기준 " + station + " 도착정보입니다\n" + \
                        "-------------------------------------------------\n"
             print(len(reprocess['arivlTime']))
             for i in range(len(reprocess['arivlTime'])):
-                rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - "  + "\n" + "도착 예정 시각 :" + reprocess['arivlTime'][i] + "초 후\n\n" +  reprocess['subwayPos'][i] + "\n\n"
+                rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - " + "\n" + "도착 예정 시각 :" + \
+                           reprocess['arivlTime'][i] + "초 후\n\n" + reprocess['subwayPos'][i] + "\n\n"
                 retn_str += rept_str
 
             retn_str += "*실제 열차 도착 시간과 상이할 수 있습니다.\n" \
@@ -45,52 +48,28 @@ class CrawlingFunction():
 
 
         except Exception as e:
-            return ("["+str(e)+"] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다")
+            return ("[" + str(e) + "] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다")
 
     def random_meal(self):
         s3 = boto3.resource('s3')
         bucket = s3.Bucket("my-lambda-bucket-text")
         try:
             local_file = "/tmp/" + "test.txt"
-            bucket.download_file("tmp/test.txt", local_file)    #s3에서 파일을 다운로드 후 /tmp에 저장
+            bucket.download_file("tmp/test.txt", local_file)  # s3에서 파일을 다운로드 후 /tmp에 저장
+
         except Exception as e:
             return str(e)
 
-        with open("../../../KaKaoTalk ChatBot/openbuilder/tmp/test.txt", "r", encoding ='UTF-8') as rf:
+        with open("/tmp/test.txt", "r", encoding='UTF-8') as rf:
             data = rf.readlines()  # 파일을 전부 읽어서 list로 변환
-        # date = datetime.date.fromisoformat(data[0].replace("\n", "").split(" : ")[1])
 
-        # try:
-        #     if (date != datetime.date.today()):  # 만약  Datetime이 다르다면 크롤링을 하고 파일을 저장 / 즉, 하루마다 업데이트함 (태평양 시 기준)
-        #         try:
-        #             url = 'https://map.naver.com/v5/api/search?caller=pcweb&query=정왕역 맛집&displayCount=100'
-        #             header = {
-        #                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'}
-        #
-        #             html = requests.get(url, data=header).text
-        #             req_json = json.loads(html)
-        #             data = ''
-        #             data = data + ("date : " + str(datetime.date.today()) + "\n")
-        #
-        #             for line in range(100):
-        #                 data = data + (req_json['result']['place']['list'][line]['name'] + "(" +
-        #                                req_json['result']['place']['list'][line]['category'][0] + ")->" +
-        #                                req_json['result']['place']['list'][line]['category'][1] + "\n")
-        #             with open("/tmp/test.txt", "w", encoding="UTF-8") as wf:
-        #                 wf.writelines(data)
-        #         except Exception as e:
-        #             return "third"+str(e)
-        #         s3 = boto3.client("s3")
-        #         s3.upload_file("/tmp/test.txt", "my-lambda-buckcet-text", "tmp/test.txt")
-        #         data = data.split("\n")
-        # except Exception as e:
-        #     return "second" + str(e)
-
-        idx = random.randint(0,100)
+        idx = random.randint(0, 100)
         result_string = data[idx]
-        return "☆빠밤★\n"+ result_string.split("->")[0] +" 에서, "+result_string.split("->")[1].replace("\n", '')+" 어떠세요?"
+        return "☆빠밤★\n" + result_string.split("->")[0] + " 에서, " + result_string.split("->")[1].replace("\n",
+                                                                                                        '') + " 어떠세요?"
 
     def weather(self, location):
+
         local_code_dict = {'수도권(서울)': '109', '부산': '11H20201', '대구': '11H10701', '광주': '11F20501', '전주': '11F10201',
                            '대전': '11C20401', '청주': '11C10301', '강원': '105', '제주': '11G00201', '서울': '11B10101',
                            '인천': '11B20201', '수원': '11B20601', '성남': '11B20605', '안양': '11B20602', '광명': '11B10103',
@@ -127,22 +106,25 @@ class CrawlingFunction():
                            '동해': '11D20601', '삼척': '11D20602', '태백': '11D20301', '서귀포': '11G00401', '성산': '11G00101',
                            '고산': '11G00501', '성판악': '11G00302', '이어도': '11G00601', '추자도': '11G00800'}
         try:
-            url = 'https://search.naver.com/search.naver?query='+location+"날씨"
+            url = 'https://search.naver.com/search.naver?query=' + location + "날씨"
             html = requests.get(url).text
             soup = BeautifulSoup(html, 'html.parser')
-            form = soup.find("div",{'class':'api_subject_bx'}).find("div",{'class':'main_info'}).find("div",{'class':'info_data'})
-            sub_form = soup.find("div",{'class':'api_subject_bx'}).find("div",{'class':'sub_info'}).find("div",{'class':'detail_box'})
-            today_temp = form.find("span",{'class':'todaytemp'}).text
-            today_temp_min = form.find("span",{'class':'min'}).text
-            today_temp_max = form.find("span",{'class':'max'}).text
-            today_temp_ray = form.find("span",{'class':'indicator'}).find("span").text
-            update_date = soup.find("div",{'class':'guide_bx _guideBox'}).find("span",{'class':'guide_txt'}).find('span',{'class' : 'update'}).text
+            form = soup.find("div", {'class': 'api_subject_bx'}).find("div", {'class': 'main_info'}).find("div", {
+                'class': 'info_data'})
+            sub_form = soup.find("div", {'class': 'api_subject_bx'}).find("div", {'class': 'sub_info'}).find("div", {
+                'class': 'detail_box'})
+            today_temp = form.find("span", {'class': 'todaytemp'}).text
+            today_temp_min = form.find("span", {'class': 'min'}).text
+            today_temp_max = form.find("span", {'class': 'max'}).text
+            today_temp_ray = form.find("span", {'class': 'indicator'}).find("span").text
+            update_date = soup.find("div", {'class': 'guide_bx _guideBox'}).find("span", {'class': 'guide_txt'}).find(
+                'span', {'class': 'update'}).text
             today_weather = form.find("ul").find("li").text.strip()
             today_dust_list = sub_form.find_all("dd")
             today_dust10 = today_dust_list[0].text
             today_dust25 = today_dust_list[1].text
 
-            return update_date+ "시 기준 네이버 기준 날씨 정보입니다!\n기온 : "+ today_temp + "°C\n최저기온 : "+today_temp_min+"\n최고 기온 : "+today_temp_max+"\n날씨 : "+today_weather + "\n미세먼지 : "+today_dust10 + "\n초미세먼지 : "+today_dust25 + "\n자외선 : "+today_temp_ray+"이에요! 참고하세요"
+            return update_date + "시 기준 네이버 기준 날씨 정보입니다!\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "\n최고 기온 : " + today_temp_max + "\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"
 
 
         except Exception as e:
@@ -164,13 +146,14 @@ class CrawlingFunction():
             temp = form['ta']
             wt = form['wf']
 
-            return str(date) + "\n기상청 날씨 정보입니다!\n기온 : " + str(temp) + "°C\n날씨 : " + str(wt) + "\n미세먼지 : 미세먼지 데이터를 불러오는데 실패했습니다" + "\n초미세먼지 : 초미세먼지 데이터를 불러오는데 실패했습니다" + "\n자외선 : 자외선 데이터를 불러오는데 실패했습니다"
+            return str(date) + "\n기상청 날씨 정보입니다!\n기온 : " + str(temp) + "°C\n날씨 : " + str(
+                wt) + "\n미세먼지 : 미세먼지 데이터를 불러오는데 실패했습니다" + "\n초미세먼지 : 초미세먼지 데이터를 불러오는데 실패했습니다" + "\n자외선 : 자외선 데이터를 불러오는데 실패했습니다"
 
 
 class s3IOEvent():
-    def upload_feedback(self, params):  #피드백 업로드 기능
+    def upload_feedback(self, params):  # 피드백 업로드 기능
         s3 = boto3.resource('s3')
-        bucket = s3.Bucket('my-lambda-bucket-text')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+        bucket = s3.Bucket('my-lambda-bucket-text')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         params = "[" + str(datetime.datetime.today()) + "] :" + params + "\n"
         try:
             local_file = "/tmp/" + "feedback.txt"
@@ -185,7 +168,7 @@ class s3IOEvent():
             return "파일을 저장 중 오류가 발생했습니다 [Errno 2]"
 
         try:
-            s3 = boto3.client('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+            s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file("/tmp/feedback.txt", 'my-lambda-bucket-text', 'tmp/feedback.txt')
 
         except Exception as e:
@@ -193,16 +176,28 @@ class s3IOEvent():
 
         return "피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!"
 
-    def read_feedback(self, params):    # 피드백 읽기 기능 (관리자 전용)
-        if params == '1':   #읽기
+    def read_feedback(self, params):  # 피드백 읽기 기능 (관리자 전용)
+        if params == '1':  # 읽기
             s3 = boto3.resource('s3')
-            obj = s3.Object('my-lambda-bucket-text', 'tmp/feedback.txt') #이 부분 해당 버킷 생성 후 적절히 수정 예정
-            body = obj.get()['Body'].read().decode('UTF-8')
-            return str(body)
+            bucket = s3.Bucket("my-lambda-bucket-text")
 
-        elif params == '2': #지우기
+            try:
+                local_file = "/tmp/" + "feedback.txt"
+                bucket.download_file("tmp/feedback.txt", local_file)
+            except Exception as e:
+                return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]" + str(e)
+
+            try:
+                with open("/tmp/feedback.txt", "r", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+                    txt = ''.join(f.readlines())
+                    return txt
+
+            except Exception as e:
+                return "파일을 읽는 중 오류가 발생했습니다 [Errno 2]" + str(e)
+
+        elif params == '2':  # 지우기
             s3 = boto3.resource('s3')
-            bucket = s3.Bucket('my-lambda-bucket-text')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+            bucket = s3.Bucket('my-lambda-bucket-text')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             params = "#feedbacks\n"
             try:
                 local_file = "/tmp/" + "feedback.txt"
@@ -211,7 +206,7 @@ class s3IOEvent():
                 return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]"
 
             try:
-                with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+                with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                     f.writelines(params)
             except Exception as e:
                 return "파일을 삭제 중 오류가 발생했습니다 [Errno 2]"
@@ -225,22 +220,22 @@ class s3IOEvent():
             return "성공적으로 파일 내용을 삭제했습니다"
 
 
-        else:   #param error
+        else:  # param error
             return '잘못된 파라미터'
 
-    def upload_meal(self, input_date,store_name, lunch_list, dinner_list, owner_id):    #식사 업로드 기능
+    def upload_meal(self, input_date, store_name, lunch_list, dinner_list, owner_id):  # 식사 업로드 기능
         owner_id_dec = {'미가식당': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895",
                         '웰스프레쉬': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895",
                         '푸드라운지': "d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895"
                         }
         sandol_team = ['d38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895',
-                       'd38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895',
+                       '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
                        'd38639b2a8ede3ff7f3ae424e41a38acf7b05d8c3b238cf8861c55a9012f6f5895']
         if store_name not in owner_id_dec.keys():
             return "권한이 없습니다."
 
         else:
-            store_file = store_name + ".txt"  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+            store_file = store_name + ".txt"  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("my-lambda-bucket-text")
 
@@ -248,7 +243,7 @@ class s3IOEvent():
                 local_file = "/tmp/" + store_file
                 # local_file = "./restaurant_menu/" + store_file
 
-                bucket.download_file("restaurant_menu/" + store_file, local_file)  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+                bucket.download_file("restaurant_menu/" + store_file, local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
 
             except Exception:
                 return "저장소에서 파일을 찾을 수 없습니다."  # 파일을 /tmp/에 복사하여 다운로드
@@ -262,7 +257,7 @@ class s3IOEvent():
                 return "파일을 수정하는 중 오류가 발생했습니다."
 
             try:
-                s3 = boto3.client('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+                s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                 s3.upload_file(local_file, 'my-lambda-bucket-text', "restaurant_menu/" + store_file)
 
             except Exception:
@@ -273,25 +268,26 @@ class s3IOEvent():
     def read_meal(self, store_name):
         t = ['월', '화', '수', '목', '금', '토', '일']
         store_file = store_name + ".txt"
-        s3 = boto3.resource('s3')  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+        s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("my-lambda-bucket-text")
         try:
             local_file = "/tmp/" + store_file
-            #local_file = "./restaurant_menu/" + store_file  #이 부분 해당 버킷 생성 후 적절히 수정 예정
+            # local_file = "./restaurant_menu/" + store_file  #이 부분 해당 버킷 생성 후 적절히 수정 예정
             bucket.download_file("restaurant_menu/" + store_file, local_file)
 
         except Exception:
             return "저장소에서 파일을 가져오는데 실패했습니다"  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
-            with open(local_file,"r",encoding="UTF-8") as f:
+            with open(local_file, "r", encoding="UTF-8") as f:
                 data = f.readlines()
-                date = data[0].replace("\n",'')
-                lunch = data[1].split(" : ")[1].replace("\n",'')
-                dinner = data[2].split(" : ")[1].replace("\n",'')
-                return_data = "["+date+" "+t[datetime.datetime.today().weekday()]+"요일] "+store_name+"메뉴\n" \
-                                                                                              "중식 : "+lunch.replace(' ', ', ')+"\n" \
-                                                                                                           "석식 : "+dinner.replace(' ', ', ')
+                date = data[0].replace("\n", '')
+                lunch = data[1].split(" : ")[1].replace("\n", '')
+                dinner = data[2].split(" : ")[1].replace("\n", '')
+                return_data = "[" + date + " " + t[datetime.datetime.today().weekday()] + "요일] " + store_name + "메뉴\n" \
+                                                                                                                "중식 : " + lunch.replace(
+                    ' ', ', ') + "\n" \
+                                 "석식 : " + dinner.replace(' ', ', ')
                 return return_data
 
         except Exception:
