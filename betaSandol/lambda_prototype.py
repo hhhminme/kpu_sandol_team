@@ -1,5 +1,5 @@
 import json
-import lambda_prototype_module as Module
+# import lambda_prototype_module as Module
 def lambda_handler(event, context):
     parameter_error = "[Parameter Error] 잘못된 파라미터가 전달되었습니다."
     try:
