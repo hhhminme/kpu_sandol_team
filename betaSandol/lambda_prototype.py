@@ -10,8 +10,10 @@ def lambda_handler(event, context):
 
     result_value = None
     try:
-        if key[0] == "location":  # 날씨 관련 함수로 넘어감
+        if key[0] == "test":
+            result_value = "test!"
 
+        if key[0] == "location":  # 날씨 관련 함수로 넘어감
             result_value = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
 
         elif key[0] == 'station':  # 지하철 정보
