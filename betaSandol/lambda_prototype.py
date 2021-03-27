@@ -5,13 +5,14 @@ import lambda_prototype_module as Module
 def lambda_handler(event, context):
     request_body = json.loads(event['body'])
     param = request_body['action']['params']
+    string = "Test"
     result = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
                     "simpleText": {
-                        "text": str(param)
+                        "text": str(param) + string
                     }
                 }
             ]
