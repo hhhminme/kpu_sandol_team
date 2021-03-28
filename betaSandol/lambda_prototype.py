@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         elif key[0] == 'feedback_upload':
             return_string = Module.s3IOEvent.upload_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
         elif key[0] == 'read_feedback':
-            return_string = Module.s3IOEvent.upload_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
+            return_string = Module.s3IOEvent.read_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
         else:
             return_string = "산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요"
 
