@@ -5,7 +5,7 @@
   - [Authors](#authors)
   - [License](#license)
 
-## About RepositoryTemplate
+## About Repository
 <!--Wirte one paragraph of project description -->  
 산돌이는 한국산업기술대학교 학생들을 위한 편의를 제공하고자 개발되었습니다. 현재 1300명의 학생이 산돌이를 이용하고 있습니다.
 해당 프로젝트는 카카오 i 오픈빌더를 통해 제작되었습니다. AWS Lambda를 이용한 서버리스 아키텍쳐를 활용하고 있습니다. 
@@ -17,16 +17,17 @@ CI/CD 배포 파이프라인을 구축하기 위해 해당 레포지토리가 �
 - 금일 학식/외부식당 메뉴 조회
 - 셔틀버스 시간표 조회
 - 인근 전철/버스 막차시간 조회
-- 날씨 조회
+- 지역별 날씨 조회
 - 교내 시설 조회
 - 교내 유선번호 조회
 - 산기대학로 먹거리/즐길거리 추천
 - 최신 교내공지 요약
+- 건의 및 후원
 
 ## Getting Started
-**'https://pf.kakao.com/_pRxlZxb' 를 클릭하세요. 바로 산돌이와 대화할 수 있습니다.**
+**[여기](https://pf.kakao.com/_pRxlZxb)를 클릭하세요. 바로 산돌이와 대화할 수 있습니다.**
 
-### Installing
+## Installing
 1. https://pf.kakao.com/_pRxlZxb 링크 접속 
 2. 우측 상단 플러스 친구 등록하기
 3. 챗봇 채팅하기 누르기
