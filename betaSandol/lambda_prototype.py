@@ -3,15 +3,23 @@ import lambda_prototype_module as Module
 
 
 def lambda_handler(event, context):
-    request_body = json.loads(event['body'])
-    param = request_body['action']['params']
-    key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
-    # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
+    try:
+        request_body = json.loads(event['body'])
+        param = request_body['action']['params']
+        key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
+        # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
+    except Exception as e:
+        return {
+            'statusCode': 200,
+            'body': json.dumps("error"+str(e)),
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
 
     result_value = None
     try:
         if key[0] == "location":  # 날씨 관련 함수로 넘어감
-
             result_value = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
 
         elif key[0] == 'station':  # 지하철 정보
@@ -27,9 +35,7 @@ def lambda_handler(event, context):
             result_value = Module.s3IOEvent.upload_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
 
         elif key[0] == 'upload_date':  # 학식 등록
-            result_value = Module.s3IOEvent.upload_meal(Module.s3IOEvent, str(json.loads(param[key[0]])["date"]),
-                                                        param[key[1]], param[key[2]], param[key[3]], str(
-                    request_body['userRequest']['user']['properties']['botUserKey']))
+            result_value = Module.s3IOEvent.upload_meal(Module.s3IOEvent, str(json.loads(param[key[0]])["date"]),param[key[1]], param[key[2]], param[key[3]], str(request_body['userRequest']['user']['properties']['botUserKey']))
 
         elif key[0] == 'restaurant_name':  # 학식 출력
             result_value = Module.s3IOEvent.read_meal(Module.s3IOEvent, str(param[key[0]]))
