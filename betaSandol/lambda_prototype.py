@@ -1,5 +1,5 @@
 import json
-import lambda_prototype_module as Module
+#import lambda_prototype_module as Module
 
 
 def lambda_handler(event, context):
