@@ -10,8 +10,10 @@ def lambda_handler(event, context):
         param = request_body['action']['params']
         key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
         # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
-        if key[0] == 'meal':
-            return_string = "meal_function"
+        if key[0] == 'weather':
+            return_string = Module.CrawlingFunction.weather(CrawlingFunction, param[key[0]])
+        else:
+            return_string = "산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요"
 
         result = {
             "version": "2.0",
