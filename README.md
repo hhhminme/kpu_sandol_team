@@ -67,3 +67,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Others
+- [산돌팀 체제 이전 초기 레포](https://github.com/koptimizer/kakaotalk_chatbot_sandol)
