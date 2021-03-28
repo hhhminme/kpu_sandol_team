@@ -114,17 +114,30 @@ class CrawlingFunction():
             sub_form = soup.find("div", {'class': 'api_subject_bx'}).find("div", {'class': 'sub_info'}).find("div", {
                 'class': 'detail_box'})
             today_temp = form.find("span", {'class': 'todaytemp'}).text
-            today_temp_min = form.find("span", {'class': 'min'}).text
-            today_temp_max = form.find("span", {'class': 'max'}).text
-            today_temp_ray = form.find("span", {'class': 'indicator'}).find("span").text
+
+            try:
+                today_temp_min = form.find("span", {'class': 'min'}).text
+            except:
+                today_temp_min = "-"
+
+            try:
+                today_temp_max = form.find("span", {'class': 'max'}).text
+            except:
+                today_temp_max = "-"
+
+            try:
+                today_temp_ray = form.find("span", {'class': 'indicator'}).find("span").text
+            except:
+                today_temp_ray = "-"
             update_date = soup.find("div", {'class': 'guide_bx _guideBox'}).find("span", {'class': 'guide_txt'}).find(
                 'span', {'class': 'update'}).text
+
             today_weather = form.find("ul").find("li").text.strip()
             today_dust_list = sub_form.find_all("dd")
             today_dust10 = today_dust_list[0].text
             today_dust25 = today_dust_list[1].text
 
-            return update_date + "시 기준 네이버 기준 날씨 정보입니다!\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "\n최고 기온 : " + today_temp_max + "\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"
+            return update_date + "시 기준 네이버 기준 날씨 정보입니다!\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "\n최고 기온 : " + today_temp_max + "\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "\n이에요! 참고하세요"
 
 
         except Exception as e:
@@ -147,7 +160,7 @@ class CrawlingFunction():
             wt = form['wf']
 
             return str(date) + "\n기상청 날씨 정보입니다!\n기온 : " + str(temp) + "°C\n날씨 : " + str(
-                wt) + "\n미세먼지 : 미세먼지 데이터를 불러오는데 실패했습니다" + "\n초미세먼지 : 초미세먼지 데이터를 불러오는데 실패했습니다" + "\n자외선 : 자외선 데이터를 불러오는데 실패했습니다"
+                wt) + "\n미세먼지 : -" + "\n초미세먼지 : -" + "\n자외선 : -"
 
 
 class s3IOEvent():
