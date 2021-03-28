@@ -4,7 +4,7 @@ import base64
 
 def lambda_handler(event, context):
     try:
-        request_body = str(type(event))
+        request_body = str(event['action']['params'])
         # request_body = json.loads(str(event))
         #param = request_body['action']['params']
         #key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
