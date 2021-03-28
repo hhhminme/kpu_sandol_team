@@ -3,20 +3,21 @@ import lambda_prototype_module as Module
 
 
 def lambda_handler(event, context):
-    request_body = json.loads(event['body'])
-    param = request_body['action']['params']
-    result = {
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "simpleText": {
-                        "text": str(param)
+    try :
+        request_body = json.loads(event['body'])
+        param = request_body['action']['params']
+        result = {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": str(param)
+                        }
                     }
-                }
-            ]
+                ]
+            }
         }
-    }
     # key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
     # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
     # result_value = None
@@ -69,6 +70,19 @@ def lambda_handler(event, context):
     #
     # except Exception as e:
     #     result = "산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요" + str(e)
+    except Exception as e:
+        result = {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": str(e)
+                        }
+                    }
+                ]
+            }
+        }
 
     return {
         'statusCode': 200,
