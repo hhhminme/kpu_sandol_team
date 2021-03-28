@@ -69,4 +69,4 @@ SOFTWARE.
 ```
 
 ## Others
-- [산돌팀 체제 이전 초기 레포](https://github.com/koptimizer/kakaotalk_chatbot_sandol)
+- [산돌팀 체제 이전 초기 레포 바로가기](https://github.com/koptimizer/kakaotalk_chatbot_sandol)
