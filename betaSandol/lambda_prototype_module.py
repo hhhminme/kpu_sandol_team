@@ -209,7 +209,7 @@ class s3IOEvent():
 
             try:
                 local_file = "/tmp/" + "feedback.txt"
-                bucket.download_file("feedback.txt", local_file)
+                bucket.download_file("미가식당.txt", local_file)
             except Exception as e:
                 return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]" + str(e)
 
