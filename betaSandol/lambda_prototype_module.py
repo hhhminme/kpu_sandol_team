@@ -137,7 +137,7 @@ class CrawlingFunction():
             today_dust10 = today_dust_list[0].text
             today_dust25 = today_dust_list[1].text
 
-            return location + "의 " + update_date + "시 기준 날씨 정보입니다!\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "\n최고 기온 : " + today_temp_max + "\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "\n이에요! 참고하세요"
+            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "C\n최고 기온 : " + today_temp_max + "C\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "\n이에요! 참고하세요"
 
 
         except Exception as e:
