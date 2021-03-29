@@ -171,7 +171,7 @@ class s3IOEvent():
             s3 = boto3.resource('s3')
             my_bucket = s3.Bucket('sandol')
             for my_object in my_bucket.objects.all():
-                return_val += my_object + "\n"
+                return_val += str(my_object) + "\n"
 
         except Exception as e:
             return str(e)
