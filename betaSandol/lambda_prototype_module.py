@@ -300,8 +300,7 @@ class s3IOEvent():
                 date = data[0].replace("\n", '')
                 lunch = data[1].split(" : ")[1].replace("\n", '')
                 dinner = data[2].split(" : ")[1].replace("\n", '')
-                return_data = "[" + date + " " + t[datetime.datetime.today().weekday()] + "요일] " + store_name + "메뉴\n" \
-                                                                                                                "중식 : " + lunch.replace(
+                return_data = "[" + date + " " + t[datetime.datetime.today().weekday()] + "요일] " + store_name + "메뉴\n", "중식 : " + lunch.replace(
                     ' ', ', ') + "\n" \
                                  "석식 : " + dinner.replace(' ', ', ')
                 return return_data
