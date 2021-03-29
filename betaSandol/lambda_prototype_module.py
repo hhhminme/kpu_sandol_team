@@ -237,7 +237,7 @@ class s3IOEvent():
             return '잘못된 파라미터'
 
     def upload_meal(self, input_date, store_name, lunch_list, dinner_list, owner_id):  # 식사 업로드 기능
-        owner_id_dec = {'미가식당': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
+        owner_id_dec = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
                         '웰스프레쉬': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
                         '푸드라운지': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"
                         }
