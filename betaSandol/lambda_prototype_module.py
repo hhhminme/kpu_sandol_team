@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
 import boto3
@@ -244,6 +245,7 @@ class s3IOEvent():
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
 
+        print (owner_id_dec[store_name] != owner_id, owner_id not in sandol_team)
         if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
             return "권한이 없습니다"
 
@@ -252,6 +254,7 @@ class s3IOEvent():
 
         else:
             store_file = store_name + ".txt"  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+            store_file = store_file.
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")
 
@@ -307,3 +310,4 @@ class s3IOEvent():
 
         except Exception:
             return "파일을 여는 중 오류가 발생했습니다."
+#print (s3IOEvent.upload_meal(s3IOEvent, "미가식당","ㅁ ㅁㄴ ㅇㄹ", "ㅇ ㄹㅇ ㄹㄴ","2021-03-29", "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6"))
