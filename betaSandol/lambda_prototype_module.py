@@ -164,6 +164,15 @@ class CrawlingFunction():
 
 
 class s3IOEvent():
+    def test(self):
+        return_val = ''
+
+        s3 = boto3.resource('s3')
+        my_bucket = s3.Bucket('sandol')
+        for my_object in my_bucket.objects.all():
+            return_val += my_object + "\n"
+
+
     def upload_feedback(self, params):  # 피드백 업로드 기능
         s3 = boto3.resource('s3')
         bucket = s3.Bucket('sandol')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
@@ -244,7 +253,6 @@ class s3IOEvent():
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
 
-        print (owner_id_dec[store_name] != owner_id, owner_id not in sandol_team)
         if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
             return "권한이 없습니다"
 
@@ -252,7 +260,8 @@ class s3IOEvent():
             return "해당하는 식당이 없습니다."
 
         else:
-            store_file = store_name + ".txt"  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+            store_file = str(store_name + ".txt")  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")
             local_file = "/tmp/" + store_file
@@ -284,6 +293,7 @@ class s3IOEvent():
     def read_meal(self, store_name):
         t = ['월', '화', '수', '목', '금', '토', '일']
         store_file = store_name + ".txt"
+        print(store_file)
         s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("sandol")
         try:
@@ -307,4 +317,4 @@ class s3IOEvent():
 
         except Exception:
             return "파일을 여는 중 오류가 발생했습니다."
-#print (s3IOEvent.upload_meal(s3IOEvent, "미가식당","ㅁ ㅁㄴ ㅇㄹ", "ㅇ ㄹㅇ ㄹㄴ","2021-03-29", "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6"))
+print (s3IOEvent.upload_meal(s3IOEvent, "미가식당","ㅁ ㅁㄴ ㅇㄹ", "ㅇ ㄹㅇ ㄹㄴ","2021-03-29", "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6"))

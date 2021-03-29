@@ -20,7 +20,8 @@ def lambda_handler(event, context):
         elif key[0] == 'perm_chk':
             return_string = request_body['userRequest']['user']['id']
         elif key[0] == 'store_name':
-            return_string = Module.s3IOEvent.upload_meal(Module.s3IOEvent, param[key[0]],param[key[1]], param[key[2]],json.loads( param[key[3]])['date'], str(request_body['userRequest']['user']['properties']['botUserKey']))
+            # return_string = Module.s3IOEvent.upload_meal(Module.s3IOEvent, param[key[0]],param[key[1]], param[key[2]],json.loads( param[key[3]])['date'], str(request_body['userRequest']['user']['properties']['botUserKey']))
+            return_string = Module.s3IOEvent.upload_meal(Module.s3IOEvent, test)
         else:
             return_string = "산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요"
 
@@ -44,10 +45,6 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": str(e)
-                        }
-                    }
-                ]
             }
         }
 
