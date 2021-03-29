@@ -1,4 +1,3 @@
-#-*- coding:utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
 import boto3
@@ -265,7 +264,7 @@ class s3IOEvent():
                 bucket.download_file(store_file, local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
 
             except Exception as e:
-                return "저장소에서 파일을 찾을 수 없습니다." +str(e)  # 파일을 /tmp/에 복사하여 다운로드
+                return "저장소에서 파일을 찾을 수 없습니다." +str(e)+"\n"+ str(store_file) + str(local_file)  # 파일을 /tmp/에 복사하여 다운로드
 
             try:
                 modified_data = input_date + "\n중식 : " + lunch_list + "\n석식 : " + dinner_list
