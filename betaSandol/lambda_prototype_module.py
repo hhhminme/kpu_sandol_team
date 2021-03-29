@@ -244,7 +244,7 @@ class s3IOEvent():
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
 
-        if owner_id not in owner_id_dec.values() or owner_id not in sandol_team or owner_id != owner_id_dec[store_name]:
+        if owner_id not in owner_id_dec.values() or (owner_id not in sandol_team or owner_id != owner_id_dec[store_name]):
             return "권한이 없습니다"
 
         if store_name not in owner_id_dec.keys():
@@ -261,8 +261,8 @@ class s3IOEvent():
 
                 bucket.download_file(store_file, local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
 
-            except Exception:
-                return "저장소에서 파일을 찾을 수 없습니다."  # 파일을 /tmp/에 복사하여 다운로드
+            except Exception as e:
+                return "저장소에서 파일을 찾을 수 없습니다." +str(e)  # 파일을 /tmp/에 복사하여 다운로드
 
             try:
                 modified_data = input_date + "\n중식 : " + lunch_list + "\n석식 : " + dinner_list
