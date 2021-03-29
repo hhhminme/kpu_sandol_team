@@ -236,7 +236,7 @@ class s3IOEvent():
         else:  # param error
             return '잘못된 파라미터'
 
-    def upload_meal(self, input_date, store_name, lunch_list, dinner_list, owner_id):  # 식사 업로드 기능
+    def upload_meal(self, store_name, lunch_list, dinner_list,input_date, owner_id):  # 식사 업로드 기능
         owner_id_dec = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
                         '웰스프레쉬': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
                         '푸드라운지': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"
@@ -244,7 +244,7 @@ class s3IOEvent():
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
 
-        if owner_id not in owner_id_dec.values():
+        if owner_id not in owner_id_dec.values() or owner_id != owner_id_dec[store_name]:
             return "권한이 없습니다"
 
         if store_name not in owner_id_dec.keys():
