@@ -244,7 +244,7 @@ class s3IOEvent():
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
 
-        if (owner_id_dec[store_name] != owner_id) or owner_id not in sandol_team:
+        if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
             return "권한이 없습니다"
 
         if store_name not in owner_id_dec.keys():
