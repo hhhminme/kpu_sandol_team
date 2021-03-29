@@ -165,12 +165,16 @@ class CrawlingFunction():
 
 class s3IOEvent():
     def test(self):
-        return_val = ''
+        try:
+            return_val = ''
 
-        s3 = boto3.resource('s3')
-        my_bucket = s3.Bucket('sandol')
-        for my_object in my_bucket.objects.all():
-            return_val += my_object + "\n"
+            s3 = boto3.resource('s3')
+            my_bucket = s3.Bucket('sandol')
+            for my_object in my_bucket.objects.all():
+                return_val += my_object + "\n"
+
+        except Exception as e:
+            return str(e)
 
 
     def upload_feedback(self, params):  # 피드백 업로드 기능
