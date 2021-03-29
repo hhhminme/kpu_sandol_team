@@ -253,14 +253,12 @@ class s3IOEvent():
 
         else:
             store_file = store_name + ".txt"  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
-            store_file = store_file.
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")
+            local_file = "/tmp/" + store_file
 
             try:
-                local_file = "/tmp/" + store_file
                 # local_file = "./restaurant_menu/" + store_file
-
                 bucket.download_file(store_file, local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
 
             except Exception as e:
