@@ -263,7 +263,7 @@ class s3IOEvent():
 
             try:
                 # local_file = "./restaurant_menu/" + store_file
-                bucket.download_file(store_file, local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+                bucket.download_file("./restaurant_menu.txt", local_file)  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
 
             except Exception as e:
                 return "저장소에서 파일을 찾을 수 없습니다." +str(e)+"\n"+ str(store_file) + str(local_file)  # 파일을 /tmp/에 복사하여 다운로드
