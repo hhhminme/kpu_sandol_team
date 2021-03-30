@@ -288,40 +288,6 @@ class s3IOEvent():
 
         return "네! 학생들에게 잘 전달할게요! 감사합니다!"
 
-    def upload_meal2(self,  store_name, lunch_list, dinner_list,input_date, owner_id):
-        owner_id_dec = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
-                        '웰스프레쉬': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
-                        '푸드라운지': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"
-                        }
-        sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
-                       '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
-
-        if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
-            return "권한이 없습니다"
-
-        if store_name not in owner_id_dec.keys():
-            return "해당하는 식당이 없습니다."
-
-        else:
-            store_file = "restaurant_menu.txt"
-
-            with open(store_file, "r", encoding="UTF-8") as f:
-                try:
-                    data = f.readlines()
-                    print(data)
-                    menu_info = data[data.index("#"+store_name+"\n") + 1].replace('\'','').replace("\n","").split(", ") #내부 데이터 처리
-                    menu_info[0] = input_date
-                    menu_info[1] = lunch_list.replace(" ",",")
-                    menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
-                    data[data.index("#"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
-                    with open(store_file, "w", encoding='UTF-8') as rf:
-                        rf.writelines(data)
-                    return "메뉴 입력을 마쳤습니다"
-
-                except Exception as e:
-                    return "파일을 수정하는 중 오류가 발생했습니다." + str(e)
-
-
     def read_meal(self, store_name):
         t = ['월', '화', '수', '목', '금', '토', '일']
         store_file = store_name + ".txt"
@@ -350,5 +316,5 @@ class s3IOEvent():
         except Exception:
             return "파일을 여는 중 오류가 발생했습니다."
 # print (s3IOEvent.upload_meal(s3IOEvent, "미가식당","ㅁ ㅁㄴ ㅇㄹ", "ㅇ ㄹㅇ ㄹㄴ","2021-03-29", "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6"))
-print (s3IOEvent.upload_meal2(s3IOEvent,"웰스프레쉬","업데이트되지않았습니다", "업데이트되지않았습니다","2021-03-30","d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"))
+# print (s3IOEvent.upload_meal2(s3IOEvent,"웰스프레쉬","업데이트되지않았습니다", "업데이트되지않았습니다","2021-03-30","d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"))
 
