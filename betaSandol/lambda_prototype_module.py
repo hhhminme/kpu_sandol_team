@@ -189,7 +189,12 @@ class s3IOEvent():
 
         return "피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!"
 
-    def read_feedback(self, params):  # 피드백 읽기 기능 (관리자 전용)
+    def read_feedback(self, params, bot_id):  # 피드백 읽기 기능 (관리자 전용)
+        sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
+                       '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546']
+
+        if bot_id not in sandol_team:
+            return "권한이 없습니다"
         if params == '1':  # 읽기
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")

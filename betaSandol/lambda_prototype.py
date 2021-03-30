@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         elif key[0] == 'feedback_upload':
             return_string = Module.s3IOEvent.upload_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
         elif key[0] == 'read_feedback':
-            return_string = Module.s3IOEvent.read_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
+            return_string = Module.s3IOEvent.read_feedback(Module.CrawlingFunction, params=str(param[key[0]]), bot_id=str(request_body['userRequest']['user']['properties']['botUserKey']))
         elif key[0] == 'perm_chk':
             return_string = request_body['userRequest']['user']['id']
         elif key[0] == 'store_name':
