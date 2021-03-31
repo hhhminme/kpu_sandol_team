@@ -308,7 +308,7 @@ class s3IOEvent():
         try:
             t = ['월', '화', '수', '목', '금', '토', '일']
             return_string = ''
-            with open("restaurant_menu.txt", "r", encoding='UTF-8') as f:
+            with open(local_file, "r", encoding='UTF-8') as f:
                 data = f.readlines()
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
