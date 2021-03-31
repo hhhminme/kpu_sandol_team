@@ -293,10 +293,8 @@ class s3IOEvent():
 
         return "네! 학생들에게 잘 전달할게요! 감사합니다!"
 
-    def read_meal(self, store_name):
-        t = ['월', '화', '수', '목', '금', '토', '일']
-        store_file = store_name + ".txt"
-        print(store_file)
+    def read_meal(self):
+        store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("sandol")
         try:
@@ -308,18 +306,16 @@ class s3IOEvent():
             return "저장소에서 파일을 가져오는데 실패했습니다"  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
-            with open(local_file, "r", encoding="UTF-8") as f:
+            t = ['월', '화', '수', '목', '금', '토', '일']
+            return_string = ''
+            with open("restaurant_menu.txt", "r", encoding='UTF-8') as f:
                 data = f.readlines()
-                date = data[0].replace("\n", '')
-                lunch = data[1].split(" : ")[1].replace("\n", '')
-                dinner = data[2].split(" : ")[1].replace("\n", '')
-                return_data = "[" + date + " " + t[datetime.datetime.today().weekday()] + "요일] " + store_name + "메뉴\n", "중식 : " + lunch.replace(
-                    ' ', ', ') + "\n" \
-                                 "석식 : " + dinner.replace(' ', ', ')
-                return return_data
-
+                for restaurant in range(0, len(data), 2):
+                    menu_list = data[restaurant + 1].replace("\'", '').split(", ")
+                    last_update_date = datetime.date.fromisoformat(menu_list[0])
+                    return_string += (data[restaurant].replace("\n", '') + "[" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일] 식단입니다\n중식 : " + menu_list[1] + "\n석식 : " + menu_list[2] + "\n")
+            return return_string
         except Exception:
             return "파일을 여는 중 오류가 발생했습니다."
-# print (s3IOEvent.upload_meal(s3IOEvent, "미가식당","ㅁ ㅁㄴ ㅇㄹ", "ㅇ ㄹㅇ ㄹㄴ","2021-03-29", "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6"))
-# print (s3IOEvent.upload_meal2(s3IOEvent,"웰스프레쉬","업데이트되지않았습니다", "업데이트되지않았습니다","2021-03-30","d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"))
 
+s3IOEvent.read_meal2(s3IOEvent)
