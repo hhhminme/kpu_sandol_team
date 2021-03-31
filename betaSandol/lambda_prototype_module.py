@@ -317,5 +317,3 @@ class s3IOEvent():
             return return_string
         except Exception:
             return "파일을 여는 중 오류가 발생했습니다."
-
-s3IOEvent.read_meal2(s3IOEvent)
