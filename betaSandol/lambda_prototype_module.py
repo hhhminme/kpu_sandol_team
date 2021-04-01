@@ -192,7 +192,8 @@ class s3IOEvent():
     def read_feedback(self, params, bot_id):  # 피드백 읽기 기능 (관리자 전용)
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
-                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a']
+                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
+                       'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
 
         if bot_id not in sandol_team:
             return "권한이 없습니다"
@@ -249,7 +250,8 @@ class s3IOEvent():
                         }
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
-                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a']
+                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
+                       'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
 
         if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
             return "권한이 없습니다"
