@@ -15,7 +15,8 @@ class CrawlingFunction():
             soup = requests.get(arrival_subway_api_url, headers=header)  # 여기까지 기본 크롤링 준비
 
             if soup.status_code != 200:
-                raise Exception('API 서버에 연결을 실패했습니다 잠시후 다시 시도해주세요')
+                raise Exception('[Crawling-Error #001] API 서버에 연결을 실패했습니다 잠시후 다시 시도해주세요')
+
             receptdata = soup.json()
             reprocess = {'subwayStatus': [],  # arivlCd
                          'subwayPos': [],  # arivlMsg2
@@ -48,7 +49,7 @@ class CrawlingFunction():
 
 
         except Exception as e:
-            return ("[" + str(e) + "] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다")
+            return ("[Crawling_Error #002] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다")
 
     # def random_meal(self):
     #     s3 = boto3.resource('s3')
@@ -141,13 +142,11 @@ class CrawlingFunction():
 
 
         except Exception as e:
-            print(e)
             try:
                 local_code = local_code_dict[location]
 
             except Exception as e:
-
-                return "찾는 지역이 없습니다, '시' 또는 '도'의 이름을 입력해주세요! ex)시흥 날씨"  # 이 부분 오류 메시지로 대체하면 됩니다
+                return "[Crawling-Error #011] 찾는 지역이 없습니다, '시' 또는 '도'의 이름을 입력해주세요! ex)시흥 날씨"  # 이 부분 오류 메시지로 대체하면 됩니다
 
             url = "http://apis.data.go.kr/1360000/VilageFcstMsgService/getLandFcst?serviceKey=M733F8Tb2upYGqNeTgj0ArKYkqk%2Bbc1GtEhry7fELSoGf4WjvU1wLnWQmgd%2FEavkJGqc%2B23pay4r%2BeqfOnpRmA%3D%3D&pageNo=1&numOfRows=10&dataType=json&regId=" + local_code
             json_data = requests.get(url).text
@@ -172,20 +171,20 @@ class s3IOEvent():
             local_file = "/tmp/" + "feedback.txt"
             bucket.download_file("feedback.txt", local_file)
         except Exception as e:
-            return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]"
+            return "[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요"
 
         try:
             with open("/tmp/feedback.txt", "a", encoding="UTF-8") as f:
                 f.writelines(params)
         except Exception as e:
-            return "파일을 저장 중 오류가 발생했습니다 [Errno 2]"
+            return "[File-Open-Error #102] 파일을 저장 중 오류가 발생했습니다"
 
         try:
             s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
 
         except Exception as e:
-            return "파일을 서버에 업로드 하는 중 오류가 발생했습니다 [Errno 3]"
+            return "[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다"
 
         return "피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!"
 
@@ -205,7 +204,7 @@ class s3IOEvent():
                 local_file = "/tmp/" + "feedback.txt"
                 bucket.download_file("feedback.txt", local_file)
             except Exception as e:
-                return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]" + str(e)
+                return "[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 "
 
             try:
                 with open("/tmp/feedback.txt", "r", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
@@ -213,7 +212,7 @@ class s3IOEvent():
                     return txt
 
             except Exception as e:
-                return "파일을 읽는 중 오류가 발생했습니다 [Errno 2]" + str(e)
+                return "[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다"
 
         elif params == '2':  # 지우기
             s3 = boto3.resource('s3')
@@ -223,25 +222,25 @@ class s3IOEvent():
                 local_file = "/tmp/" + "feedback.txt"
                 bucket.download_file("feedback.txt", local_file)
             except Exception as e:
-                return "서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 [Errno 1]"
+                return "[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요"
 
             try:
                 with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                     f.writelines(params)
             except Exception as e:
-                return "파일을 삭제 중 오류가 발생했습니다 [Errno 2]"
+                return "[File-Open-Error #114] 파일을 삭제 중 오류가 발생했습니다"
 
             try:
                 s3 = boto3.client('s3')
                 s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
 
             except Exception as e:
-                return "파일을 서버에 업로드 하는 중 오류가 발생했습니다 [Errno 3]"
+                return "[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다"
             return "성공적으로 파일 내용을 삭제했습니다"
 
 
         else:  # param error
-            return '잘못된 파라미터'
+            return '[Param-Error #116] 잘못된 파라미터'
 
     def upload_meal(self, store_name, lunch_list, dinner_list,input_date, owner_id):  # 식사 업로드 기능
         owner_id_dec = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
@@ -254,10 +253,10 @@ class s3IOEvent():
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
 
         if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
-            return "권한이 없습니다"
+            return "[Permission-Error #121-1] 권한이 없습니다"
 
         if store_name not in owner_id_dec.keys():
-            return "해당하는 식당이 없습니다."
+            return "[Not-Found-Error #121-2] 해당하는 식당이 없습니다."
 
         else:
             store_file = "restaurant_menu.txt"
@@ -270,7 +269,7 @@ class s3IOEvent():
                 s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
 
             except Exception as e:
-                return "저장소에서 파일을 찾을 수 없습니다." +str(e)+"\n"+ str(store_file) + str(local_file)  # 파일을 /tmp/에 복사하여 다운로드
+                return "[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다."
 
             with open(local_file, "r", encoding="UTF-8") as f:
                 try:
@@ -286,13 +285,13 @@ class s3IOEvent():
 
 
                 except Exception as e:
-                    return "파일을 수정하는 중 오류가 발생했습니다." + str(e)
+                    return "[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다."
             try:
                 s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                 s3.upload_file(local_file, 'sandol', store_file)
 
             except Exception:
-                return "파일을 저장소에 업로드하는 중 오류가 발생했습니다."
+                return "[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다."
 
 
         return "네! 학생들에게 잘 전달할게요! 감사합니다!"
@@ -307,7 +306,7 @@ class s3IOEvent():
             bucket.download_file(store_file, local_file)
 
         except Exception:
-            return "저장소에서 파일을 가져오는데 실패했습니다"  # 파일을 /tmp/에 복사하여 다운로드
+            return "[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다"  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
             t = ['월', '화', '수', '목', '금', '토', '일']
@@ -323,5 +322,6 @@ class s3IOEvent():
             return_string += additional_info
 
             return return_string
+
         except Exception:
-            return "파일을 여는 중 오류가 발생했습니다."
+            return "[File-Open-Error #132] 파일을 여는 중 오류가 발생했습니다."

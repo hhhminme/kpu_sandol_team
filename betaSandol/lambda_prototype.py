@@ -24,7 +24,7 @@ def lambda_handler(event, context):
         elif key[0] == 'read_meal':
             return_string = Module.s3IOEvent.read_meal(Module.s3IOEvent)
         else:
-            return_string = "산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요"
+            raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
 
         result = {
             "version": "2.0",
@@ -46,7 +46,7 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": "main_error"+str(e)
+                            "text": "[Main Function Error]"+str(e)
                         }
                     }
                 ]
