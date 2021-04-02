@@ -319,7 +319,7 @@ class s3IOEvent():
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     return_string += (data[restaurant].replace("\n", '') + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n중식 : " + menu_list[1] + "\n석식 : " + menu_list[2] + "\n")
 
-            additional_info = "※ 부득이하게 메뉴가 변동될 수 있습니다.\n※ 주말엔 학식기능이 작동하지 않습니다"
+            additional_info = "\n ※ 부득이하게 메뉴가 변동될 수 있습니다.\n※ 주말엔 학식기능이 작동하지 않습니다"
             return_string += additional_info
 
             return return_string
