@@ -46,7 +46,7 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": str(e)
+                            "text": "main_error"+str(e)
                         }
                     }
                 ]
