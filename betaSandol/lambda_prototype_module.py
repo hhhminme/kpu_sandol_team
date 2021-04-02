@@ -317,7 +317,7 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    return_string += (data[restaurant].replace("\n", '') + "[" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일] 식단입니다\n중식 : " + menu_list[1] + "\n석식 : " + menu_list[2] + "\n")
+                    return_string += (data[restaurant].replace("\n", '') + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n중식 : " + menu_list[1] + "\n석식 : " + menu_list[2] + "\n")
 
             additional_info = "※ 부득이하게 메뉴가 변동될 수 있습니다.\n※ 주말엔 학식기능이 작동하지 않습니다"
             return_string += additional_info
