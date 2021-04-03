@@ -324,4 +324,41 @@ class s3IOEvent():
             return return_string
 
         except Exception:
-            return "[File-Open-Error #132] 파일을 여는 중 오류가 발생했습니다."
+            return "[File-Open-Error #132] 파일을 여는 중 오류가 발생했습니다."\
+
+    def reset_meal(self, bot_id, date):
+        sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
+                       '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
+                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
+                       'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
+        if bot_id not in sandol_team:
+            return "[Permission-Error #141] 권한이 없습니다"
+
+        store_file = "restaurant_menu.txt"
+        s3 = boto3.resource('s3')
+        bucket = s3.Bucket("sandol")
+        local_file = "/tmp/" + store_file
+
+        try:
+            # local_file = "./restaurant_menu/" + store_file
+            s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
+
+        except Exception as e:
+            return "[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."
+        try:
+            with open(local_file, "w", encoding="UTF-8") as f:
+                rest_name = ["#미가식당\n", "#웰스프레쉬\n", "#푸드라운지\n"]
+
+                return_string = ''
+                for i in range (len(rest_name)):
+                    return_string += rest_name[i] + "\'"+date+"\', \'업데이트되지않았습니다\', \'업데이트되지않았습니다\'\n"
+
+        except Exception as e:
+             return "[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."
+
+        try:
+            s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+            s3.upload_file(local_file, 'sandol', store_file)
+
+        except Exception:
+            return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."

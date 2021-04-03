@@ -23,6 +23,8 @@ def lambda_handler(event, context):
             return_string = Module.s3IOEvent.upload_meal(Module.s3IOEvent, param[key[0]],param[key[1]], param[key[2]],json.loads( param[key[3]])['date'], str(request_body['userRequest']['user']['properties']['botUserKey']))
         elif key[0] == 'read_meal':
             return_string = Module.s3IOEvent.read_meal(Module.s3IOEvent)
+        elif key[0] == "reset_meal":
+            return_string = Module.s3IOEvent.reset_meal(Module.s3IOEvent, json.loads(param[key[0]])['date'])
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
 
