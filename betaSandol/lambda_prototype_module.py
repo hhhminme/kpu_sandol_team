@@ -352,6 +352,7 @@ class s3IOEvent():
                 return_string = ''
                 for i in range (len(rest_name)):
                     return_string += rest_name[i] + "\'"+date+"\', \'업데이트되지않았습니다\', \'업데이트되지않았습니다\'\n"
+                f.writelines(return_string)
 
         except Exception as e:
              return "[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."
