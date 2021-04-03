@@ -331,8 +331,8 @@ class s3IOEvent():
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
                        '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
-        if bot_id not in sandol_team:
-            return "[Permission-Error #141] 권한이 없습니다"
+        # if bot_id not in sandol_team:
+        #     return "[Permission-Error #141] 권한이 없습니다"
 
         store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')
