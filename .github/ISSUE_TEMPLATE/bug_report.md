@@ -2,8 +2,8 @@
 name: Bug report
 about: 아프지마 산돌.
 title: ''
-labels: bug, duplicate, enhancement, invalid, wontfix
-assignees: Cycrypto, koptimizer, DPS0340, hhhminme
+labels: ''
+assignees: ''
 
 ---
 
