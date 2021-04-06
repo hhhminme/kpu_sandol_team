@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: 아프지마 산돌.
 title: ''
 labels: ''
 assignees: ''
