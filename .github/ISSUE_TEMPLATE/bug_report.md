@@ -1,11 +1,3 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
----
-
 **Describe the bug**
 어떤 버그인지 간략하게 설명해주세요.
 
