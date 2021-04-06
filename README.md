@@ -1,5 +1,4 @@
 # 한국산업기술대학교 AI 카카오톡 챗봇 산돌이
-![logo2](https://user-images.githubusercontent.com/54930877/113706657-e9f42400-9719-11eb-9fe8-848a5e2f1c1c.png)
 ## Index
   - [Overview](#overview) 
   - [Getting Started](#getting-started)
