@@ -302,7 +302,7 @@ class s3IOEvent():
                     menu_info[0] = input_date
                     menu_info[1] = lunch_list.replace(" ",",")
                     menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
-                    data[data.index(imoge_mapping['emotion']['nexpression']+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
+                    data[data.index("#"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
                     with open(local_file, "w", encoding='UTF-8') as rf:
                         rf.writelines(data)
 
@@ -341,7 +341,7 @@ class s3IOEvent():
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     return_string += (data[restaurant].replace("\n", '').replace("#",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n"+ imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n")
 
-            additional_info = "\n"+imoge_mapping['emotion']['paw']+"부득이하게 메뉴가 변동될 수 있어요!."+"\n"+imoge_mapping['emotion']['paw']+"주말엔 학식기능이 작동하지 않아요!"
+            additional_info = "\n"+imoge_mapping['emotion']['paw']+"부득이하게 메뉴가 변동될 수 있어요!"+"\n"+imoge_mapping['emotion']['paw']+"주말엔 학식기능이 작동하지 않아요!"
             return_string += additional_info
 
             return return_string
