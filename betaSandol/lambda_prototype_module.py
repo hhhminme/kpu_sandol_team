@@ -20,16 +20,16 @@ imoge_mapping = {
 
     },
     'weather':{
-        'cloudy' : '☁',
+        '흐림' : '☁',
         'slgt_cloudy' : '⛅',
         'hvy_rain' : '⛈',
-        'rain' : '☔',
-        'slgt_sunny' : '🌤',
-        'sunny' : '☀',
+        '비' : '☔',
+        '약간흐림' : '🌤',
+        '맑음' : '☀',
         'sun_wth_rain' : '🌦',
         'thunder' : '🌩',
-        'windy' : '🌪',
-        'foggy' : '🌫'
+        '바람' : '🌪',
+        '안개' : '🌫'
     }
 }
 class CrawlingFunction():
@@ -92,8 +92,17 @@ class CrawlingFunction():
     #     return "☆빠밤★\n" + result_string.split("->")[0] + " 에서, " + result_string.split("->")[1].replace("\n",
     #                                                                                                     '') + " 어떠세요?"
 
-    def weather(self, location):
+    def today_covid(self):
+        try:
+            url = 'https://m.search.naver.com/p/csearch/content/nqapirender.nhn?where=nexearch&pkid=9005&key=diffV2API'
+            html = requests.get(url).text
+            data = json.loads(html)
+            return (data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression'])
 
+        except Exception as e:
+            return "코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad']
+
+    def weather(self, location):
         local_code_dict = {'수도권(서울)': '109', '부산': '11H20201', '대구': '11H10701', '광주': '11F20501', '전주': '11F10201',
                            '대전': '11C20401', '청주': '11C10301', '강원': '105', '제주': '11G00201', '서울': '11B10101',
                            '인천': '11B20201', '수원': '11B20601', '성남': '11B20605', '안양': '11B20602', '광명': '11B10103',

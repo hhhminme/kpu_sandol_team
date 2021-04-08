@@ -12,7 +12,8 @@ def lambda_handler(event, context):
         # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
         if key[0] == 'weather': #날씨 관련
             return_string = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
-
+        elif key[0] == 'covid':
+            return_string = Module.CrawlingFunction.today_covid(Module.CrawlingFunction)
         elif key[0] == 'feedback_upload':
             return_string = Module.s3IOEvent.upload_feedback(Module.CrawlingFunction, params=str(param[key[0]]))
         elif key[0] == 'read_feedback':
