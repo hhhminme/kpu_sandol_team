@@ -298,7 +298,7 @@ class s3IOEvent():
                 try:
                     data = f.readlines()
                     print(data)
-                    menu_info = data[data.index(imoge_mapping['emotion']['nexpression']+store_name+"\n") + 1].replace('\'','').replace("\n","").split(", ") #내부 데이터 처리
+                    menu_info = data[data.index("#"+store_name+"\n") + 1].replace('\'','').replace("\n","").split(", ") #내부 데이터 처리
                     menu_info[0] = input_date
                     menu_info[1] = lunch_list.replace(" ",",")
                     menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
@@ -339,7 +339,7 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    return_string += (data[restaurant].replace("\n", '') + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n"+ imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n")
+                    return_string += (data[restaurant].replace("\n", '').replace("#",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n"+ imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n")
 
             additional_info = "\n"+imoge_mapping['emotion']['paw']+"부득이하게 메뉴가 변동될 수 있어요!."+"\n"+imoge_mapping['emotion']['paw']+"주말엔 학식기능이 작동하지 않아요!"
             return_string += additional_info
