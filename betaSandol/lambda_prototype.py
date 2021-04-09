@@ -38,6 +38,13 @@ def lambda_handler(event, context):
                             "text": str(return_string)
                         }
                     }
+                ],
+                "quickReplies" : [
+                    {
+                        "messageText" : "도움말",
+                        "action" : "message",
+                        "label" : "도움말"
+                    }
                 ]
             }
         }
@@ -51,6 +58,13 @@ def lambda_handler(event, context):
                         "simpleText": {
                             "text": "[Main Function Error]"+str(e)
                         }
+                    }
+                ],
+                "quickReplies" : [
+                    {
+                        "messageText" : "도움말",
+                        "action" : "message",
+                        "label" : "도움말"
                     }
                 ]
             }
