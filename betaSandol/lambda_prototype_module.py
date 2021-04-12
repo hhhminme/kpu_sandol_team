@@ -396,5 +396,3 @@ class s3IOEvent():
         except Exception:
             return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
         return "파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy']
-
-s3IOEvent.upload_meal(s3IOEvent,"미가식당", "ㅁ ㄴ ㅇ ㄹ", "ㄹ ㅇ ㄴ ㅁ", "2021-10-01","d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895")
