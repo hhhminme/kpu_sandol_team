@@ -21,7 +21,7 @@ imoge_mapping = {
     },
     'weather':{
         '흐림' : '☁',
-        'slgt_cloudy' : '⛅',
+        '구름많음' : '⛅',
         'hvy_rain' : '⛈',
         '비' : '☔',
         '약간흐림' : '🌤',
@@ -169,8 +169,11 @@ class CrawlingFunction():
             today_dust_list = sub_form.find_all("dd")
             today_dust10 = today_dust_list[0].text
             today_dust25 = today_dust_list[1].text
-
-            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n기온 : " + today_temp + "°C\n최저기온 : " + today_temp_min + "C\n최고 기온 : " + today_temp_max + "C\n날씨 : " + today_weather + "\n미세먼지 : " + today_dust10 + "\n초미세먼지 : " + today_dust25 + "\n자외선 : " + today_temp_ray + "\n이에요! 참고하세요"
+            try:
+                weather_icon = imoge_mapping['weather'][today_weather.split(', ')[0]]
+            except:
+                weather_icon = ''
+            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + "\n\n미세먼지 : " + today_dust10.replace("㎥","㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥","㎥, ") + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"
 
 
         except Exception as e:
@@ -398,3 +401,4 @@ class s3IOEvent():
         except Exception:
             return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
         return "파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy']
+print(CrawlingFunction.weather(CrawlingFunction, "부산"))
