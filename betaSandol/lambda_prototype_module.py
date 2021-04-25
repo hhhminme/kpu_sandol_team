@@ -316,7 +316,7 @@ class s3IOEvent():
                     menu_info[2] = dinner_list.replace(",","").replace(" ",",") #메뉴 수정
                     data[data.index("🐾"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
                     with open(local_file, "w", encoding='UTF-8') as rf:
-                        rf.writelines(data)
+                        rf.writelines(data.replace (",,", ",").replace(",,,",","))
 
 
                 except Exception as e:
