@@ -324,7 +324,7 @@ class s3IOEvent():
 
                     data[data.index("🐾"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
                     with open(local_file, "w", encoding='UTF-8') as rf:
-                        rf.writelines(data.replace (",,", ",").replace(",,,",","))
+                        rf.writelines(data)
 
 
                 except Exception as e:
