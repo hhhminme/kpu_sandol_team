@@ -312,18 +312,16 @@ class s3IOEvent():
                     print(data)
                     menu_info = data[data.index("🐾"+store_name+"\n") + 1].replace('\'','').replace("\n","").split(", ") #내부 데이터 처리
                     menu_info[0] = input_date
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                     menu_info[1] = lunch_list.replace(", ",",").replace(" ",",")
                     menu_info[2] = dinner_list.replace(",","").replace(" ",",") #메뉴 수정
-=======
+
                     menu_info[1] = lunch_list.replace(" ",",")
                     menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
->>>>>>> parent of 4116ffc... 학식 업로드시, ',' 입력해도 한개만 찍히도록 수정.
-=======
+
                     menu_info[1] = lunch_list.replace(" ",",")
                     menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
->>>>>>> parent of 4116ffc... 학식 업로드시, ',' 입력해도 한개만 찍히도록 수정.
+
                     data[data.index("🐾"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
                     with open(local_file, "w", encoding='UTF-8') as rf:
                         rf.writelines(data.replace (",,", ",").replace(",,,",","))
@@ -411,4 +409,3 @@ class s3IOEvent():
         except Exception:
             return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
         return "파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy']
-print(CrawlingFunction.weather(CrawlingFunction, "부산"))
