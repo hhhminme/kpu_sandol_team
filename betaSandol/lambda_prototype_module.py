@@ -313,8 +313,13 @@ class s3IOEvent():
                     menu_info = data[data.index("🐾"+store_name+"\n") + 1].replace('\'','').replace("\n","").split(", ") #내부 데이터 처리
                     menu_info[0] = input_date
 <<<<<<< HEAD
+<<<<<<< HEAD
                     menu_info[1] = lunch_list.replace(", ",",").replace(" ",",")
                     menu_info[2] = dinner_list.replace(",","").replace(" ",",") #메뉴 수정
+=======
+                    menu_info[1] = lunch_list.replace(" ",",")
+                    menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
+>>>>>>> parent of 4116ffc... 학식 업로드시, ',' 입력해도 한개만 찍히도록 수정.
 =======
                     menu_info[1] = lunch_list.replace(" ",",")
                     menu_info[2] = dinner_list.replace(" ",",") #메뉴 수정
