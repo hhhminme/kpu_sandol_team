@@ -173,7 +173,7 @@ class CrawlingFunction():
                 weather_icon = imoge_mapping['weather'][today_weather.split(', ')[0]]
             except:
                 weather_icon = ''
-            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + "\n\n미세먼지 : " + today_dust10.replace("㎥","㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥","㎥, ") + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"+imoge_mapping['emotion']['paw']
+            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + "\n\n미세먼지 : " + today_dust10.replace("㎥","㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥","㎥, ") + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"
 
 
         except Exception as e:
