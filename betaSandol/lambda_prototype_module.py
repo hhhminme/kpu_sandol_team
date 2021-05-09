@@ -359,7 +359,10 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    return_string += (data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n"+ imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n")
+                    if restaurant == 2: # 웰스프레시는 링크로 대체~
+                        return_string += (data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + "\n" + "https://ibook.kpu.ac.kr/Viewer/menu01" + "\n"
+                    else :
+                        return_string += (data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n"+ imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n")
 
             additional_info = "\n"+imoge_mapping['emotion']['paw']+"부득이하게 메뉴가 변동될 수 있어요!"\
                               +"\n"+imoge_mapping['emotion']['paw']+"주말엔 학식기능이 작동하지 않아요!"\
