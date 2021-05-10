@@ -15,12 +15,67 @@
 
 ## Usage
 
+### Simple Text
+
+```Python
+def is_Text(self, text):
+```
+
+**필수 파라미터**
+
+> text\<string\> : 출력할 string을 입력으로 받음
+
+
+
+**사용 예시**
+
+```python
+import return_type_generator as Generator
+gen = Generator()
+result = gen.is_Text("<날씨 스킬 파트 실행>")
+```
+
+<img src="./return_type_img/Simple Text Test.JPG" style="zoom:100%;" />
+
+
+
 
 
 ### Basic Card
 
 ```python
-is_Card(self,thumb_img, is_title = None, is_description = None, is_buttons = None)
+def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None): 
 ```
 
-![]()
+<img src="./return_type_img/Basic Card Field.JPG" style="zoom:50%;" />
+
+
+
+**필수 파라미터**
+
+> thumb_img \<string\> : img의 주소를 `string` 형태로 전달
+
+
+
+**선택 파라미터**
+
+> *is_buttons \<dict\> : button 을 생성하는 dictionary(JSON) 형태로 전달.
+>
+> is_title \<string\> : 카드의 제목을 문자열 형태로 전달
+>
+> is_description \<string\> : 카드에 대한 설명을 문자열 형태로 전달
+
+
+
+**사용 예시**
+
+```python
+import return_type_generator as Generator
+gen = Generator()
+result = gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", is_title="logo", is_description = "<코로나 스킬 파트 실행>")
+```
+
+<img src="./return_type_img/Basic Card Test.JPG" style="zoom:100%;" />
+
+
+
