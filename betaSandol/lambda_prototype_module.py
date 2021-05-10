@@ -97,10 +97,10 @@ class CrawlingFunction():
             url = 'https://m.search.naver.com/p/csearch/content/nqapirender.nhn?where=nexearch&pkid=9005&key=diffV2API'
             html = requests.get(url).text
             data = json.loads(html)
-            return (data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression'])
+            return (data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression'], 1)
 
         except Exception as e:
-            return "코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad']
+            return ("코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad'] , 1)
 
     def weather(self, location):
         local_code_dict = {'수도권(서울)': '109', '부산': '11H20201', '대구': '11H10701', '광주': '11F20501', '전주': '11F10201',
@@ -412,3 +412,5 @@ class s3IOEvent():
         except Exception:
             return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
         return "파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy']
+
+
