@@ -14,6 +14,8 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 ]
             }
         }
+        self.common_params = Common_params()
+
     def init_json(self):
         self.return_json = {
             "version": "2.0",
@@ -41,7 +43,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_text)
         return self.return_json
 
-    def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None):  #카드 형식
+    def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None, flag = False):  #카드 형식
         self.init_json()
         basic_card = {
             "thumbnail": {
@@ -61,32 +63,34 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                     raise Exception("Buttons are must less then 3") # 버튼이 3개 이상이라면 오류 발생
                 else:
                     basic_card.update({"buttons": list(is_buttons)})
+            if flag == True:
+                return basic_card
 
-            self.return_json["template"]["outputs"].append({"basicCard": basic_card})   # 위 정보들을 return_json에 입력
-            return self.return_json
+            else:
+                self.return_json["template"]["outputs"].append({"basicCard": basic_card})   # 위 정보들을 return_json에 입력
+                return self.return_json
 
         except Exception as e:  #오류 발생시 오류 코드 리턴
             basic_card["description"] = "error :" + str(e)
             self.return_json["template"]["outputs"].append({"basicCard": basic_card})
             return self.return_json
 
-    def is_Image(self): # 이미지 반환 형식
-        return_json = {
-                        "version": "2.0",
-                        "template": {
-                            "outputs": [
-                                {
-                                    "simpleImage": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg",
-                                        "altText": "보물상자입니다"
-                                    }
-                                }
-                            ]
-                        }
-                    }
-        return return_json
+    def is_Image(self, src, text = None): # 이미지 반환 형식
+        self.init_json()
+        basic_image ={
+        "simpleImage": {
+            "imageUrl": src,
+            }
+        }
 
-    def is_commerce(self):  # 커머스 반환 형식
+        if text != None:
+            basic_image["simpleImage"]["altText"] = text
+
+        self.return_json["template"]["outputs"].append(basic_image)
+        return self.return_json
+
+    def is_commerce(self,thumbnail, description, price, currency, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None, **kwargs):  # 커머스 반환 형식
+        self.common_params.Button(**kwargs)
         return_json = {
                           "version": "2.0",
                           "template": {
@@ -133,89 +137,41 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return return_json
 
 
-    def is_Carousel(self):  #케로셀 반환 형식
-       return_json =  {
-            "version": "2.0",
-            "template": {
-                "outputs": [
-                    {
+    def is_Carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
+
+        basic_carousel =  {
                         "carousel": {
-                            "type": "basicCard",
-                            "items": [
-                                {
-                                    "title": "보물상자",
-                                    "description": "보물상자 안에는 뭐가 있을까",
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                    },
-                                    "buttons": [
-                                        {
-                                            "action": "message",
-                                            "label": "열어보기",
-                                            "messageText": "짜잔! 우리가 찾던 보물입니다"
-                                        },
-                                        {
-                                            "action": "webLink",
-                                            "label": "구경하기",
-                                            "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "title": "보물상자2",
-                                    "description": "보물상자2 안에는 뭐가 있을까",
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                    },
-                                    "buttons": [
-                                        {
-                                            "action": "message",
-                                            "label": "열어보기",
-                                            "messageText": "짜잔! 우리가 찾던 보물입니다"
-                                        },
-                                        {
-                                            "action": "webLink",
-                                            "label": "구경하기",
-                                            "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "title": "보물상자3",
-                                    "description": "보물상자3 안에는 뭐가 있을까",
-                                    "thumbnail": {
-                                        "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg"
-                                    },
-                                    "buttons": [
-                                        {
-                                            "action": "message",
-                                            "label": "열어보기",
-                                            "messageText": "짜잔! 우리가 찾던 보물입니다"
-                                        },
-                                        {
-                                            "action": "webLink",
-                                            "label": "구경하기",
-                                            "webLinkUrl": "https://e.kakao.com/t/hello-ryan"
-                                        }
-                                    ]
-                                }
-                            ]
+                            "type": card_type,
+                            "items": []
                         }
                     }
-                ]
-            }
-        }
-       return return_json
+        if card_type == "basicCard":
+            for param in range(card_num): # thumb_img, *is_buttons, is_title = None, is_description = None
+                basic_carousel['carousel']['items'].append(self.is_Card(thumb_img = params[param][0], is_title = params[param][1], is_description = params[param][2], flag= True))
 
-import json
-rt = Return_Type()
-print(rt.is_Card("None"))
+        self.return_json["template"]["outputs"].append(basic_carousel)
+        return self.return_json
 
-result = {
-        'statusCode': 200,
-        'body': json.dumps(rt.is_Text("간단한 텍스트 요소입니다.")),
-        'headers': {
-            'Access-Control-Allow-Origin': '*',
-        }
-    }
 
+
+class Common_params:
+
+    #kwargs로 들어올 수 있는 값은 DOCS를 참조
+    # label = string
+    # action = string
+    # webLinkUrl = string | action = webLink
+    # messageText = string | action = message or block
+    # phoneNumber = string | action = phone
+    # blockId = string | action = block
+    # extra ...
+    def Button(self, **kwargs):
+        data = {}
+        for item in kwargs.items():
+            data[item[0]] = item[1]
+
+        return data
+
+# a = Common_params()
+# b = Return_Type()
+# print(a.Button(label="test", action="weblink", weblinkUrl="https://www.naver.com"))
+#print(b.is_Carousel("basicCard",3,("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자2", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자3", "보물상자 안에는 뭐가 있을까")))

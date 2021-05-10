@@ -17,6 +17,10 @@
 
 ### Simple Text
 
+<img src="./return_type_img/Text Type.JPG" style="zoom:50%;" />
+
+
+
 ```Python
 def is_Text(self, text):
 ```
@@ -42,6 +46,10 @@ result = gen.is_Text("<날씨 스킬 파트 실행>")
 
 
 ### Basic Card
+
+<img src="./return_type_img/Basic Card Type.JPG" style="zoom:50%;" />
+
+
 
 ```python
 def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None): 
