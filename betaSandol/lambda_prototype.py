@@ -43,6 +43,8 @@ def lambda_handler(event, context):
         result = gen.return_json
         if return_string[1] == 1:
             result = gen.is_Text(str(return_string[0]))
+        if return_string[1] == 2:
+            result = gen.is_Card(str(return_string[2]), is_description = return_string[0])
 
     except Exception as e:
         result = {
