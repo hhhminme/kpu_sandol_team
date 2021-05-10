@@ -48,7 +48,7 @@ def lambda_handler(event, context):
             result = gen.is_Card(str(return_string[2]), is_description = return_string[0])
 
         elif return_string[1] == 3:
-            result = gen.is_Carousel("basicCard", len(return_string), (return_string[0][0], return_string[0][1], return_string[0][2]),(return_string[1][0], return_string[1][1], return_string[1][2]),(return_string[2][0], return_string[2][1], return_string[2][2]))
+            result = gen.is_Carousel("basicCard", len(return_string), (return_string[0][0][0], return_string[0][0][1], return_string[0][0][2]),(return_string[0][1][0], return_string[0][1][1], return_string[0][1][2]),(return_string[0][2][0], return_string[0][2][1], return_string[0][2][2]))
 
     except Exception as e:
         result = {
