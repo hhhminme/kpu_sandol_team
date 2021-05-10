@@ -173,7 +173,7 @@ class CrawlingFunction():
                 weather_icon = imoge_mapping['weather'][today_weather.split(', ')[0]]
             except:
                 weather_icon = ''
-            return location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + "\n\n미세먼지 : " + today_dust10.replace("㎥","㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥","㎥, ") + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요"
+            return  (location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + "\n\n미세먼지 : " + today_dust10.replace("㎥","㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥","㎥, ") + "\n자외선 : " + today_temp_ray + "이에요! 참고하세요", 1)
 
 
         except Exception as e:
@@ -181,7 +181,7 @@ class CrawlingFunction():
                 local_code = local_code_dict[location]
 
             except Exception as e:
-                return "[Crawling-Error #011] 찾는 지역이 없습니다" + imoge_mapping['emotion']['paw'] + " '시' 또는 '도'의 이름을 입력해주세요! ex)시흥 날씨"  # 이 부분 오류 메시지로 대체하면 됩니다
+                return ("[Crawling-Error #011] 찾는 지역이 없습니다" + imoge_mapping['emotion']['paw'] + " '시' 또는 '도'의 이름을 입력해주세요! ex)시흥 날씨", 1)  # 이 부분 오류 메시지로 대체하면 됩니다
 
             url = "http://apis.data.go.kr/1360000/VilageFcstMsgService/getLandFcst?serviceKey=M733F8Tb2upYGqNeTgj0ArKYkqk%2Bbc1GtEhry7fELSoGf4WjvU1wLnWQmgd%2FEavkJGqc%2B23pay4r%2BeqfOnpRmA%3D%3D&pageNo=1&numOfRows=10&dataType=json&regId=" + local_code
             json_data = requests.get(url).text
@@ -193,8 +193,8 @@ class CrawlingFunction():
             temp = form['ta']
             wt = form['wf']
 
-            return str(date) + "\n기상청 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n기온 : " + str(temp) + "°C\n날씨 : " + str(
-                wt) + "\n미세먼지 : -" + "\n초미세먼지 : -" + "\n자외선 : -"
+            return (str(date) + "\n기상청 날씨 정보입니다!"+ imoge_mapping['emotion']['walk']+"\n기온 : " + str(temp) + "°C\n날씨 : " + str(
+                wt) + "\n미세먼지 : -" + "\n초미세먼지 : -" + "\n자외선 : -", 1)
 
 
 class s3IOEvent():
@@ -206,22 +206,22 @@ class s3IOEvent():
             local_file = "/tmp/" + "feedback.txt"
             bucket.download_file("feedback.txt", local_file)
         except Exception as e:
-            return "[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요"+ imoge_mapping['emotion']['sad']
+            return ("[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요"+ imoge_mapping['emotion']['sad'], 1)
 
         try:
             with open("/tmp/feedback.txt", "a", encoding="UTF-8") as f:
                 f.writelines(params)
         except Exception as e:
-            return "[File-Open-Error #102] 파일을 저장 중 오류가 발생했습니다" + imoge_mapping['emotion']['sad']
+            return ("[File-Open-Error #102] 파일을 저장 중 오류가 발생했습니다" + imoge_mapping['emotion']['sad'], 1)
 
         try:
             s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
 
         except Exception as e:
-            return "[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다" + imoge_mapping['emotion']['sad']
+            return ("[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다" + imoge_mapping['emotion']['sad'], 1)
 
-        return "피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!" + imoge_mapping['emotion']['love']
+        return ("피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!" + imoge_mapping['emotion']['love'], 1)
 
     def read_feedback(self, params, bot_id):  # 피드백 읽기 기능 (관리자 전용)
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
@@ -230,7 +230,7 @@ class s3IOEvent():
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
 
         if bot_id not in sandol_team:
-            return "권한이 없습니다"
+            return ("권한이 없습니다", 1)
         if params == '1':  # 읽기
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")
@@ -239,15 +239,15 @@ class s3IOEvent():
                 local_file = "/tmp/" + "feedback.txt"
                 bucket.download_file("feedback.txt", local_file)
             except Exception as e:
-                return "[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 "
+                return ("[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요 ", 1)
 
             try:
                 with open("/tmp/feedback.txt", "r", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                     txt = ''.join(f.readlines())
-                    return txt
+                    return (txt, 1)
 
             except Exception as e:
-                return "[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다"
+                return ("[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다", 1)
 
         elif params == '2':  # 지우기
             s3 = boto3.resource('s3')
@@ -257,25 +257,25 @@ class s3IOEvent():
                 local_file = "/tmp/" + "feedback.txt"
                 bucket.download_file("feedback.txt", local_file)
             except Exception as e:
-                return "[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요"
+                return ("[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요", 1)
 
             try:
                 with open("/tmp/feedback.txt", "w", encoding="UTF-8") as f:  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                     f.writelines(params)
             except Exception as e:
-                return "[File-Open-Error #114] 파일을 삭제 중 오류가 발생했습니다"
+                return ("[File-Open-Error #114] 파일을 삭제 중 오류가 발생했습니다", 1)
 
             try:
                 s3 = boto3.client('s3')
                 s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
 
             except Exception as e:
-                return "[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다"
-            return "성공적으로 파일 내용을 삭제했습니다"
+                return ("[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다", 1)
+            return ("성공적으로 파일 내용을 삭제했습니다", 1)
 
 
         else:  # param error
-            return '[Param-Error #116] 잘못된 파라미터'
+            return ('[Param-Error #116] 잘못된 파라미터', 1)
 
     def upload_meal(self, store_name, lunch_list, dinner_list,input_date, owner_id):  # 식사 업로드 기능
         owner_id_dec = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
@@ -288,10 +288,10 @@ class s3IOEvent():
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
 
         if (owner_id_dec[store_name] != owner_id) and owner_id not in sandol_team:
-            return "[Permission-Error #121-1] 권한이 없습니다" + imoge_mapping['emotion']['angry']
+            return ("[Permission-Error #121-1] 권한이 없습니다" + imoge_mapping['emotion']['angry'], 1)
 
         if store_name not in owner_id_dec.keys():
-            return "[Not-Found-Error #121-2] 해당하는 식당이 없습니다."+ imoge_mapping['emotion']['sad']
+            return ("[Not-Found-Error #121-2] 해당하는 식당이 없습니다."+ imoge_mapping['emotion']['sad'], 1)
 
         else:
             store_file = "restaurant_menu.txt"
@@ -304,7 +304,7 @@ class s3IOEvent():
                 s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
 
             except Exception as e:
-                return "[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad']
+                return ("[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad'], 1)
 
             with open(local_file, "r", encoding="UTF-8") as f:
                 try:
@@ -328,16 +328,16 @@ class s3IOEvent():
 
 
                 except Exception as e:
-                    return "[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
+                    return ("[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
             try:
                 s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                 s3.upload_file(local_file, 'sandol', store_file)
 
             except Exception:
-                return "[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
+                return ("[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
 
 
-        return "네! 학생들에게 잘 전달할게요! 감사합니다!"+ imoge_mapping['emotion']['walk']
+        return ("네! 학생들에게 잘 전달할게요! 감사합니다!"+ imoge_mapping['emotion']['walk'], 1)
 
     def read_meal(self):
         store_file = "restaurant_menu.txt"
@@ -349,7 +349,7 @@ class s3IOEvent():
             bucket.download_file(store_file, local_file)
 
         except Exception:
-            return "[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad'] # 파일을 /tmp/에 복사하여 다운로드
+            return ("[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad'], 1) # 파일을 /tmp/에 복사하여 다운로드
 
         try:
             t = ['월', '화', '수', '목', '금', '토', '일']
@@ -369,10 +369,10 @@ class s3IOEvent():
                               +"\n"+imoge_mapping['emotion']['paw']+"세미콘 식당은 업주님의 사정으로 업데이트하지 못하고 있어요"+imoge_mapping['emotion']['sad']
             return_string += additional_info
 
-            return return_string
+            return (return_string, 1)
 
         except Exception:
-            return "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad']
+            return ("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad'], 1)
 
     def reset_meal(self, bot_id, date):
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
@@ -380,7 +380,7 @@ class s3IOEvent():
                        '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
         if bot_id not in sandol_team:
-            return "[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry']
+            return ("[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry'], 1)
 
         store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')
@@ -392,7 +392,7 @@ class s3IOEvent():
             s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
 
         except Exception as e:
-            return "[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad']
+            return ("[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad'], 1)
         try:
             with open(local_file, "w", encoding="UTF-8") as f:
                 rest_name = [imoge_mapping['emotion']['paw']+"미가식당\n", imoge_mapping['emotion']['paw']+"웰스프레쉬\n", imoge_mapping['emotion']['paw']+"푸드라운지\n"]
@@ -403,14 +403,14 @@ class s3IOEvent():
                 f.writelines(return_string)
 
         except Exception as e:
-             return "[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
+             return ("[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
 
         try:
             s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file(local_file, 'sandol', store_file)
 
         except Exception:
-            return "[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad']
-        return "파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy']
+            return ("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
+        return ("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'], 1)
 
 
