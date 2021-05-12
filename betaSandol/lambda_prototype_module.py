@@ -420,4 +420,6 @@ class s3IOEvent():
             return gen.is_Text("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
         return gen.is_Text("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'])
 
-
+class Test():
+    def returnType(self):
+        return gen.is_Text("Test")

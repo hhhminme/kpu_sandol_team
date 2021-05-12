@@ -35,23 +35,14 @@ def lambda_handler(event, context):
 
         elif key[0] == "reset_meal":
             return_string = Module.s3IOEvent.reset_meal(Module.s3IOEvent, str(request_body['userRequest']['user']['properties']['botUserKey']), json.loads(param[key[0]])['date'])
-
+        elif key[0] == "test":
+            return_string = Module.Test.returnType()
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
 
-        # gen = Generator.Return_Type()
-        # result = gen.return_json
-        # if return_string[1] == 1:
-        #     result = gen.is_Text(str(return_string[0]))
-        #
-        # elif return_string[1] == 2:
-        #     result = gen.is_Card(str(return_string[2]), is_description = return_string[0])
-        #
-        # elif return_string[1] == 3:
-        #     result = gen.is_Carousel("basicCard", len(return_string) + 1, (return_string[0][0][0], return_string[0][0][1], return_string[0][0][2]),(return_string[0][1][0], return_string[0][1][1], return_string[0][1][2]),(return_string[0][2][0], return_string[0][2][1], return_string[0][2][2]))
 
     except Exception as e:
-        result = {
+        return_string = {
             "version": "2.0",
             "template": {
                 "outputs": [
