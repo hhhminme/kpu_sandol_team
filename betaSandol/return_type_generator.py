@@ -63,7 +63,8 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                     raise Exception("Buttons are must less then 3") # 버튼이 3개 이상이라면 오류 발생
                 else:
                     basic_card.update({"buttons": list(is_buttons)})
-            if flag == True:
+
+            if flag == True:    #flag 가 True이면 Card Json만 반환하지만, False이면 return해야하는 기본 JSON도 포함이 된다.
                 return basic_card
 
             else:

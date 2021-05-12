@@ -87,3 +87,37 @@ result = gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team
 
 
 
+
+
+### Commerce Card
+
+```Python
+def is_commerce(self,thumbnail, description, price, currency, *is_buttons, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None):
+```
+
+<img src="./return_type_img/Commerce Card Field.JPG" style="zoom:50%;" />
+
+**필수 파라미터**
+
+> description \<string\> : 판매 항목의 설명을 문자열 형태로 전달
+>
+> price \<int\> : 제품의 가격을 문자열 형태로 전달
+>
+> currency \<string\> : 제품 가격의 통화를 전달합니다 (`won`만 가능)
+>
+> thumbnail \<string\> : 썸네일 이미지 URL을 전달합니다.
+>
+> is_buttons\<string\> : 기본적으로 `구매하기` 버튼이 생성되며, 추가 버튼을 전달합니다 (최대 2개)
+
+
+
+**선택 파라미터**
+
+> is_discount \<int\> : 제품의 할인한 금액을 전달합니다.
+>
+> is_discountRate \<int\> : 제품의 가격에 대한 할인된 가격의 비율을 전달합니다.
+>
+> is_discountPrice\<int\> : 제품의 가격에 대한 할인가(할인된 가격)을 전달합니다.
+>
+> profile : 제품을 판매하는 프로필 정보를 전달합니다.
+

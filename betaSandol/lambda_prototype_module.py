@@ -4,6 +4,7 @@ import boto3
 import random
 import datetime
 import json
+import return_type_generator as Generator
 
 imoge_mapping = {
     'emotion':{
@@ -32,6 +33,7 @@ imoge_mapping = {
         '안개' : '🌫'
     }
 }
+gen = Generator.Return_Type()
 class CrawlingFunction():
     def subway(self, station):
         try:
@@ -97,8 +99,8 @@ class CrawlingFunction():
             url = 'https://m.search.naver.com/p/csearch/content/nqapirender.nhn?where=nexearch&pkid=9005&key=diffV2API'
             html = requests.get(url).text
             data = json.loads(html)
-            return (data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression'], 2,
-                    "https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", "코로나 확진자 수")
+            result = data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression']
+            return gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", is_title="코로나 확진자 수", is_description= result)
 
         except Exception as e:
             return ("코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad'] , 1)
