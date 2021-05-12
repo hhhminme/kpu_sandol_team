@@ -423,4 +423,15 @@ class s3IOEvent():
 
 class Test():
     def returnType(self):
-        return gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"), opt.Button(label="Test2", action="message", MessageText="Msg Text"), is_description="Button Test2")
+        try:
+            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4",
+                            opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"),
+                            opt.Button(label="Test2", action="message", MessageText="Msg Text"),
+                            is_description="Button Test2")
+        except Exception as e:
+            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4",
+                            opt.Button(label=e, action="webLink", webLinkUrl="https://github.com/Cycrypto"), is_description="Button Test2")
+        return a
+
+a = Test()
+print(a.returnType())
