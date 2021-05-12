@@ -31,7 +31,6 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 ]
             }
         }
-    #Return Type 이 1이면 텍스트, 2면 카드, 3이면
 
     def is_Text(self, text):  #텍스트 형식
         self.init_json()
@@ -150,6 +149,9 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             for param in range(card_num): # thumb_img, *is_buttons, is_title = None, is_description = None
                 basic_carousel['carousel']['items'].append(self.is_Card(thumb_img = params[param][0], is_title = params[param][1], is_description = params[param][2], flag= True))
 
+        else:
+            for param in range(card_num): # thumb_img, *is_buttons, is_title = None, is_description = None
+                basic_carousel['carousel']['items'].append(self.is_Card(thumb_img = params[param][0], is_title = params[param][1], is_description = params[param][2], flag= True))
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
 
@@ -167,12 +169,18 @@ class Common_params:
     # extra ...
     def Button(self, **kwargs):
         data = {}
+        params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
         for item in kwargs.items():
+            if item[0] not in params:
+                data.clear()
+                data["label"] = "error, Check Parameter"
+                break
             data[item[0]] = item[1]
 
         return data
 
 # a = Common_params()
 # b = Return_Type()
+# print(b.is_Card("asd",a.Button(label='true', action='false', ff="ff"), is_title="title", is_description="asdf"))
 # print(a.Button(label="test", action="weblink", weblinkUrl="https://www.naver.com"))
 #print(b.is_Carousel("basicCard",3,("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자2", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자3", "보물상자 안에는 뭐가 있을까")))

@@ -34,6 +34,7 @@ imoge_mapping = {
     }
 }
 gen = Generator.Return_Type()
+opt = Generator.Common_params()
 class CrawlingFunction():
     def subway(self, station):
         try:
@@ -422,4 +423,4 @@ class s3IOEvent():
 
 class Test():
     def returnType(self):
-        return gen.is_Text("Test")
+        return gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"), opt.Button(label="Test2", action="message", MessageText="Msg Text"), is_description="Button Test2")
