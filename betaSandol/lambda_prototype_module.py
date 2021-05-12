@@ -379,7 +379,7 @@ class s3IOEvent():
             return gen.is_Carousel("basicCard", len(return_string), return_string[0], return_string[1], return_string[2])
 
         except Exception:
-            return ("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad'], 1)
+            return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad'])
 
     def reset_meal(self, bot_id, date):
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
@@ -387,7 +387,7 @@ class s3IOEvent():
                        '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
                        'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
         if bot_id not in sandol_team:
-            return ("[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry'], 1)
+            return gen.is_Text("[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry'])
 
         store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')
@@ -399,7 +399,7 @@ class s3IOEvent():
             s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
 
         except Exception as e:
-            return ("[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad'], 1)
+            return gen.is_Text("[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad'])
         try:
             with open(local_file, "w", encoding="UTF-8") as f:
                 rest_name = [imoge_mapping['emotion']['paw']+"미가식당\n", imoge_mapping['emotion']['paw']+"웰스프레쉬\n", imoge_mapping['emotion']['paw']+"푸드라운지\n"]
@@ -410,14 +410,14 @@ class s3IOEvent():
                 f.writelines(return_string)
 
         except Exception as e:
-             return ("[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
+             return gen.is_Text("[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
 
         try:
             s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
             s3.upload_file(local_file, 'sandol', store_file)
 
         except Exception:
-            return ("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'], 1)
-        return ("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'], 1)
+            return gen.is_Text("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
+        return gen.is_Text("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'])
 
 
