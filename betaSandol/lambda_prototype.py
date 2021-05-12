@@ -35,6 +35,7 @@ def lambda_handler(event, context):
 
         elif key[0] == "reset_meal":
             return_string = Module.s3IOEvent.reset_meal(Module.s3IOEvent, str(request_body['userRequest']['user']['properties']['botUserKey']), json.loads(param[key[0]])['date'])
+
         elif key[0] == "test":
             return_string = Module.Test.returnType(Module.Test)
         else:

@@ -174,6 +174,7 @@ class Common_params:
             if item[0] not in params:
                 data.clear()
                 data["label"] = "error, Check Parameter"
+                data["action"] = "message"
                 break
             data[item[0]] = item[1]
 
