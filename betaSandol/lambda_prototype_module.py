@@ -423,14 +423,39 @@ class s3IOEvent():
 
 class Test():
     def returnType(self):
-        try:
-            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4",
-                            opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"),
-                            opt.Button(label="Test2", action="message", MessageText="Msg Text"),
-                            is_description="Button Test2")
-        except Exception as e:
-            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description="Button Test2")
-        return a
+        return {
+   "version":"2.0",
+   "template":{
+      "outputs":[
+         {
+            "basicCard":{
+               "thumbnail":{
+                  "imageUrl":"https://avatars.githubusercontent.com/u/25563122?v=4"
+               },
+               "description":"Button Test2",
+               "buttons":[
+                  {
+                     "label":"Test",
+                     "action":"webLink",
+                     "webLinkUrl":"https://github.com/Cycrypto"
+                  },
+                  {
+                     "label":"error, Check Parameter",
+                     "action":"message"
+                  }
+               ]
+            }
+         }
+      ],
+      "quickReplies":[
+         {
+            "messageText":"도움말",
+            "action":"message",
+            "label":"도움말"
+         }
+      ]
+   }
+}
 
 # a = Test()
 # print(a.returnType())
