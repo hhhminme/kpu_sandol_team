@@ -426,7 +426,7 @@ class Test():
         try:
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4",
                             opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"),
-                            opt.Button(label="Test2", action="message", messageText="Msg Text"),
+                            opt.Button(label="Test2", action="phone", phoneNumber="010-7579-2729"),
                             is_description="Button Test2")
 
         except Exception as e:
