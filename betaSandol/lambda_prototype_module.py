@@ -424,10 +424,7 @@ class s3IOEvent():
 class Test():
     def returnType(self):
         try:
-            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4",
-                            opt.Button(label="Test", action="webLink", webLinkUrl="https://github.com/Cycrypto"),
-                            opt.Button(label="★여친 구함★", action="share"),
-                            is_description="Button Test2")
+            a = gen.is_Text("Test")
 
         except Exception as e:
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
