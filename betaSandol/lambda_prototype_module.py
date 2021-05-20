@@ -36,7 +36,7 @@ imoge_mapping = {
 gen = Generator.Return_Type()
 opt = Generator.Common_params()
 class CrawlingFunction():
-    def subway(self, station):
+    def subway(self, station='정왕'):
         try:
             header = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"}
@@ -71,11 +71,11 @@ class CrawlingFunction():
 
             retn_str += imoge_mapping['emotion']['paw']+"실제 열차 도착 시간과 상이할 수 있습니다.\n"+ imoge_mapping['emotion']['paw']+"API의 문제로 일부 역에서는 도착 예정 시간이 0초로 표기되는 오류가 있을 수 있습니다."
 
-            return retn_str
+            return gen.is_Text(retn_str)
 
 
         except Exception as e:
-            return ("[Crawling_Error #002] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다"+ imoge_mapping['emotion']['sad'])
+            return gen.is_Text("[Crawling_Error #002] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다"+ imoge_mapping['emotion']['sad'])
 
     # def random_meal(self):
     #     s3 = boto3.resource('s3')
@@ -424,11 +424,23 @@ class s3IOEvent():
 class Test():
     def returnType(self):
         try:
-            a = gen.is_Text("Test")
+            a = gen.is_Carousel()
 
         except Exception as e:
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
         return a
 
+    def announcement(self):
+        URL = "http://www.kpu.ac.kr/front/boardlist.do?bbsConfigFK=1&siteGubun=14&menuGubun=1"
+        ORIGIN = "http://www.kpu.ac.kr"
+        req = requests.get(URL)
+        soup = BeautifulSoup(req.text, 'html.parser')
+        announce_list = soup.find('table').find('tbody').find_all('tr')
+        result = [] # title, date, URl
+
+        for i in range (3):
+            result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
+        return result
+
 a = Test()
-print(a.returnType())
+print(a.announcement())

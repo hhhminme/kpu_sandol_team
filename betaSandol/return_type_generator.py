@@ -138,7 +138,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
 
     def is_Carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
-
+        self.init_json()
         basic_carousel =  {
                         "carousel": {
                             "type": card_type,
@@ -154,6 +154,16 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 basic_carousel['carousel']['items'].append(self.is_Card(thumb_img = params[param][0], is_title = params[param][1], is_description = params[param][2], flag= True))
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
+
+    def is_List(self, title, **kwargs):
+        basic_list = {
+            "listCard": {
+              "header": {
+                "title": title
+              },
+              "items": []
+            }
+        }
 
 
 
@@ -179,6 +189,11 @@ class Common_params:
             data[item[0]] = item[1]
 
         return data
+
+    def Link(self, url):
+        return {
+            'web' : url
+        }
 
 # a = Common_params()
 # b = Return_Type()

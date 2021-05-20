@@ -13,7 +13,7 @@
 
 
 
-## Usage
+## Usage of Basic Type
 
 ### Simple Text
 
@@ -52,7 +52,7 @@ result = gen.is_Text("<날씨 스킬 파트 실행>")
 
 
 ```python
-def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None): 
+def is_Card(self,thumb_img, Button(), is_title = None, is_description = None): 
 ```
 
 <img src="./return_type_img/Basic Card Field.JPG" style="zoom:50%;" />
@@ -67,7 +67,7 @@ def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None)
 
 **선택 파라미터**
 
-> *is_buttons \<dict\> : button 을 생성하는 dictionary(JSON) 형태로 전달.
+> Button() \<dict\> : button 을 생성하는 dictionary(JSON) 형태로 전달.
 >
 > is_title \<string\> : 카드의 제목을 문자열 형태로 전달
 >
@@ -92,7 +92,7 @@ result = gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team
 ### Commerce Card
 
 ```Python
-def is_commerce(self,thumbnail, description, price, currency, *is_buttons, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None):
+def is_commerce(self,thumbnail, description, price, currency, Button(), is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None):
 ```
 
 <img src="./return_type_img/Commerce Card Field.JPG" style="zoom:50%;" />
@@ -107,7 +107,7 @@ def is_commerce(self,thumbnail, description, price, currency, *is_buttons, is_di
 >
 > thumbnail \<string\> : 썸네일 이미지 URL을 전달합니다.
 >
-> is_buttons\<string\> : 기본적으로 `구매하기` 버튼이 생성되며, 추가 버튼을 전달합니다 (최대 2개)
+> Button() : 기본적으로 `구매하기` 버튼이 생성되며, 추가 버튼을 전달합니다 (최대 2개)
 
 
 
@@ -120,4 +120,61 @@ def is_commerce(self,thumbnail, description, price, currency, *is_buttons, is_di
 > is_discountPrice\<int\> : 제품의 가격에 대한 할인가(할인된 가격)을 전달합니다.
 >
 > profile : 제품을 판매하는 프로필 정보를 전달합니다.
+
+
+
+
+
+## Usage of Parameter Type
+
+### Button
+
+```python
+def Button(self, **kwargs):
+```
+
+* **Kwargs** 에 들어갈 내용
+
+  > `'label'` : 버튼에 들어가는 내용 <mark>(필수)</mark>
+  >
+  > `'action'` : 버튼 클릭시 수행되는 작업 <mark>(필수)</mark>
+  >
+  > `'webLinkUrl'`
+  >
+  > `'messageText'`
+  >
+  > `'phoneNumber'`
+  >
+  > `'blockId'`
+
+  
+
+* **action** 종류
+
+  > - `webLink`: 웹 브라우저를 열고 webLinkUrl 의 주소로 이동합니다.
+  > - `message`: 사용자의 발화로 messageText를 실행합니다. (바로가기 응답의 메세지 연결 기능과 동일)
+  > - `phone`: phoneNumber에 있는 번호로 전화를 겁니다. `ex) 010-0000-1234`
+  > - `block`: blockId를 갖는 블록을 호출합니다. (바로가기 응답의 블록 연결 기능과 동일)
+  >   - messageText가 있다면, 해당 messageText가 사용자의 발화로 나가게 됩니다.
+  >   - messageText가 없다면, button의 label이 사용자의 발화로 나가게 됩니다.
+  >
+  > - `share`: 말풍선을 다른 유저에게 공유합니다. share action은 특히 케로셀을 공유해야 하는 경우 유용합니다.
+
+
+
+**사용 예시**
+
+```python
+try:
+    a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", 
+                            opt.Button(label="Test", action="webLink",
+                            webLinkUrl="https://github.com/Cycrypto"),
+                            is_description="Button Test2")
+except Exception as e:
+    a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
+            
+return a
+```
+
+
 
