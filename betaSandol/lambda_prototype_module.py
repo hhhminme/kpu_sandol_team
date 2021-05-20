@@ -62,8 +62,7 @@ class CrawlingFunction():
                 reprocess['arivlTime'].append(
                     receptdata['realtimeArrivalList'][i]['barvlDt'])  # 여기까지 크롤링 한 내용들 기준으로 업데이트
 
-            retn_str = reprocess['reqDate'] + "기준 " + station + " 도착정보입니다"+ imoge_mapping['emotion']['walk']
-            print(len(reprocess['arivlTime']))
+            retn_str = reprocess['reqDate'] + "기준 " + station + " 도착정보입니다"+ imoge_mapping['emotion']['walk']+"\n"
             for i in range(len(reprocess['arivlTime'])):
                 rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - " + "\n" + "도착 예정 시각 :" + \
                            reprocess['arivlTime'][i] + "초 후\n\n" + reprocess['subwayPos'][i] + "\n\n"
@@ -438,9 +437,9 @@ class Test():
         announce_list = soup.find('table').find('tbody').find_all('tr')
         result = [] # title, date, URl
 
-        for i in range (3):
+        for i in range (10):
             result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
-        return result
+        return gen.is_List("test", result)
 
-a = Test()
-print(a.announcement())
+# a = Test()
+# print(a.announcement())
