@@ -176,8 +176,8 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                         item[order[idx]] = dat
 
             basic_list['listCard']['items'].append(item)
-
-        return basic_list
+        self.return_json["template"]["outputs"].append(basic_list)
+        return self.return_json
 
 
 class Common_params:

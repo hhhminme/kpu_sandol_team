@@ -441,5 +441,5 @@ class Test():
             result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
         return gen.is_List("test", result)
 
-# a = Test()
-# print(a.announcement())
+a = Test()
+print(a.announcement())
