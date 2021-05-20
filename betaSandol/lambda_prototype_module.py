@@ -437,7 +437,7 @@ class Test():
         announce_list = soup.find('table').find('tbody').find_all('tr')
         result = [] # title, date, URl
 
-        for i in range (10):
+        for i in range (5):
             result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
         return gen.is_List("test", result)
 
