@@ -156,7 +156,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return self.return_json
 
     def is_List(self, title, data):     # [title, desc, url], 만약 없으면 None
-        order = ['title', 'desc', 'link']
+        order = ['title', 'description', 'link']
         basic_list = {
             "listCard": {
               "header": {
