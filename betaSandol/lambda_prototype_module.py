@@ -366,7 +366,7 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant == 0 :
+                    if restaurant == 0:
                         return_string.append(
                             ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_miga.png",
                              data[restaurant].replace("\n", '').replace("🐾",
@@ -382,7 +382,7 @@ class s3IOEvent():
                                  last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
                              imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
                                  'paw'] + "석식 : " + menu_list[2] + "\n"])
-                    elif restaurant == 2:
+                    else:
                         return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_wells.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']), "https://ibook.kpu.ac.kr/Viewer/menu01"])
 
                     # if restaurant == 2: # 웰스프레시는 링크로 대체~
