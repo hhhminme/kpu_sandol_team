@@ -100,7 +100,7 @@ class CrawlingFunction():
             html = requests.get(url).text
             data = json.loads(html)
             result = data['result']['list'][-1]['date'] +"일까지 코로나 발생 현황이에요"+imoge_mapping['emotion']['walk']+"\n"+imoge_mapping['emotion']['paw']+"지역발생 : " + data['result']['list'][-1]['local'] +"명\n" + imoge_mapping['emotion']['paw'] + "해외유입 : "+data['result']['list'][-1]['oversea']+"명 입니다!\n코로나 조심하세요"+imoge_mapping['emotion']['nexpression']
-            return gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", is_title="코로나 확진자 수", is_description= result)
+            return gen.is_Card("https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_covid.png", is_title="코로나 확진자 수", is_description= result)
 
         except Exception as e:
             return gen.is_Text("코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad'])
