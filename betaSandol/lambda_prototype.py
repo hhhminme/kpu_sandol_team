@@ -41,7 +41,7 @@ def lambda_handler(event, context):
 
         elif key[0] == "ann":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
-            return_string = Module.Test.announcement(Module.Test)
+            return_string = Module.CrawlingFunction.announcement(Module.Test)
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
 

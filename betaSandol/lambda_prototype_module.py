@@ -203,6 +203,18 @@ class CrawlingFunction():
             return gen.is_Text(result)
 
 
+    def announcement(self):
+        URL = "http://www.kpu.ac.kr/front/boardlist.do?bbsConfigFK=1&siteGubun=14&menuGubun=1"
+        ORIGIN = "http://www.kpu.ac.kr"
+        req = requests.get(URL)
+        soup = BeautifulSoup(req.text, 'html.parser')
+        announce_list = soup.find('table').find('tbody').find_all('tr')
+        result = [] # title, date, URl
+
+        for i in range (5):
+            result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
+        return gen.is_List("교내 최신 학사공지 내역입니다", result, is_Button= opt.Button(label="바로가기", action="webLink", webLinkUrl = "http://www.kpu.ac.kr/contents/main/cor/noticehaksa.html"))
+
 class s3IOEvent():
     def upload_feedback(self, params):  # 피드백 업로드 기능
         s3 = boto3.resource('s3')
@@ -442,17 +454,5 @@ class Test():
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
         return a
 
-    def announcement(self):
-        URL = "http://www.kpu.ac.kr/front/boardlist.do?bbsConfigFK=1&siteGubun=14&menuGubun=1"
-        ORIGIN = "http://www.kpu.ac.kr"
-        req = requests.get(URL)
-        soup = BeautifulSoup(req.text, 'html.parser')
-        announce_list = soup.find('table').find('tbody').find_all('tr')
-        result = [] # title, date, URl
-
-        for i in range (5):
-            result.append([announce_list[i].find_all("td")[1].find('a').text.strip(), announce_list[i].find_all("td")[4].text.strip(), ORIGIN+announce_list[i].find_all("td")[1].find("a")['href']])
-        return gen.is_List("교내 최신 학사공지 내역입니다", result)
-
-a = Test()
-print(a.announcement())
+# a = Test()
+# print(a.announcement())
