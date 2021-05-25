@@ -74,3 +74,5 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
+
+print(Module.CrawlingFunction.announcement(Module.CrawlingFunction))

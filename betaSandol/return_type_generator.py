@@ -178,7 +178,8 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
             basic_list['listCard']['items'].append(item)
             if is_Button != None:
-                basic_list['listCard']['buttons'] = is_Button
+                basic_list['listCard']['buttons'] = list()
+                basic_list['listCard']['buttons'].append(is_Button)
 
         self.return_json["template"]["outputs"].append(basic_list)
         return self.return_json
