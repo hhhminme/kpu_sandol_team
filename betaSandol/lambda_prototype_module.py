@@ -4,6 +4,7 @@ import boto3
 import random
 import datetime
 import json
+import time
 import return_type_generator as Generator
 
 imoge_mapping = {
@@ -64,8 +65,7 @@ class CrawlingFunction():
 
             retn_str = reprocess['reqDate'] + "기준 " + station + " 도착정보입니다"+ imoge_mapping['emotion']['walk']+"\n"
             for i in range(len(reprocess['arivlTime'])):
-                rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - " + "\n" + "도착 예정 시각 :" + \
-                           reprocess['arivlTime'][i] + "초 후\n\n" + reprocess['subwayPos'][i] + "\n\n"
+                rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - " + "\n" + "도착 예정 시각 :" + reprocess['subwayPos'][i] + "\n\n"
                 retn_str += rept_str
 
             retn_str += imoge_mapping['emotion']['paw']+"실제 열차 도착 시간과 상이할 수 있습니다.\n"+ imoge_mapping['emotion']['paw']+"API의 문제로 일부 역에서는 도착 예정 시간이 0초로 표기되는 오류가 있을 수 있습니다."
@@ -453,6 +453,3 @@ class Test():
         except Exception as e:
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
         return a
-
-# a = Test()
-# print(a.announcement())

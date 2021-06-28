@@ -75,4 +75,4 @@ def lambda_handler(event, context):
         }
     }
 
-print(Module.CrawlingFunction.announcement(Module.CrawlingFunction))
+# print(Module.CrawlingFunction.announcement(Module.CrawlingFunction))
