@@ -401,3 +401,6 @@ class Test():
         except Exception as e:
             a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
         return a
+
+    def subway(self):
+        return gen.is_Text("test")
