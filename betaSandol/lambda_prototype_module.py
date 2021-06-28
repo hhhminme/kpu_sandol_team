@@ -68,7 +68,7 @@ class CrawlingFunction():
                 rept_str = str(i + 1) + ".\n[" + reprocess['heading'][i] + "] - " + "\n" + reprocess['subwayPos'][i] + "\n\n"
                 retn_str += rept_str
 
-            retn_str += imoge_mapping['emotion']['paw']+"실제 열차 도착 시간과 상이할 수 있습니다.\n"+ imoge_mapping['emotion']['paw']
+            retn_str += imoge_mapping['emotion']['paw']+"실제 열차 도착 시간과 상이할 수 있습니다.\n"
 
             return gen.is_Text(retn_str)
 
@@ -144,10 +144,10 @@ class CrawlingFunction():
         except:
             weather_icon = ''
 
-        result = imoge_mapping['emotion']['walk'] + \
-                 "\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + \
+        result = imoge_mapping[emotion][walk]+ location + "의  기상정보입니다" \
+            "\n\n기온 : " + today_temp + "°C (" + today_temp_min + "C / " + today_temp_max + "C)\n" + weather_icon + today_weather + \
                  "\n\n미세먼지 : " + today_dust10.replace("㎥", "㎥, ") + "\n초미세먼지 : " + today_dust25.replace("㎥", "㎥, ") + \
-                 "\n자외선 : " + today_temp_ray + "이에요!\n\n" + location + "의 " + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"
+                 "\n자외선 : " + today_temp_ray + "이에요!\n\n" + update_date + "시에 업데이트 된 네이버 날씨 정보입니다!"
 
         return gen.is_Text(result)
 
