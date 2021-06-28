@@ -105,7 +105,7 @@ class CrawlingFunction():
         except Exception as e:
             return gen.is_Text("코로나 확진자 정보를 불러오는데 실패했어요" + imoge_mapping['emotion']['sad'])
 
-    def weather(self, location,today):
+    def weather(self, location):
 
         url = 'https://search.naver.com/search.naver?query=' + location + "날씨"
         html = requests.get(url).text
