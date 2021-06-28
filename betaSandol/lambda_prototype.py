@@ -42,6 +42,9 @@ def lambda_handler(event, context):
         elif key[0] == "ann":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
             return_string = Module.CrawlingFunction.announcement(Module.CrawlingFunction)
+
+        elif key[0] == 'last_subway':
+            return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
         elif key[0] == "param1":
             return_string = Module.Test.subway(Module.Test, param[key[0]])
         else:

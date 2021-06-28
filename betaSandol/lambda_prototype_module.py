@@ -75,7 +75,82 @@ class CrawlingFunction():
 
         except Exception as e:
             return gen.is_Text("[Crawling_Error #002] 현재 열차 운행 시간이 아니거나, API 서버와의 통신에 실패하였습니다"+ imoge_mapping['emotion']['sad'])
+    def last_subway(self):
+        def station_no4():
+            target_url = "https://map.naver.com/v5/api/transit/subway/stations/455/schedule?lang=ko&stationID=455"
+            html = requests.get(target_url)
+            soup = BeautifulSoup(html.text, 'html.parser')
 
+            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
+            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
+
+            weekday_last = [last_arrival_weekday['up'][101 + i] for i in range(len(last_arrival_weekday['up']) - 101)][
+                           ::-1]  # 역순으로 변경
+            weekend_last = [last_arrival_weekend['up'][85 + i] for i in range(len(last_arrival_weekend['up']) - 85)][
+                           ::-1]  # 역순으로 변경
+            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+            find_station_idx = station.index  # 가독성 up
+            find_station2_idx = station2.index  # 가독성 up
+
+            return "당고개 - (평일) ", weekday_last[find_station_idx("당고개")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("당고개")]['departureTime'][:-3] \
+                   + "\n안산 - (평일) ", weekday_last[find_station_idx("안산")]['departureTime'][:-3] \
+                   + "\n노원 - (평일) ", weekday_last[find_station_idx("노원")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("노원")]['departureTime'][:-3] \
+                   + "\n금정 - (평일) ", weekday_last[find_station_idx("금정")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("금정")]['departureTime'][:-3] \
+                   + "\n한성대입구 - (휴일) ", weekend_last[find_station2_idx("한성대입구")]['departureTime'][:-3] \
+                   + "\n사당 - (휴일) ", weekend_last[find_station2_idx("사당")]['departureTime'][:-3] \
+                   + "\n오이도 - (평일) ", last_arrival_weekday['down'][-1]['departureTime'][:-3], " (휴일) ", \
+                   last_arrival_weekend['down'][-1]['departureTime'][:-3]
+
+        def station_suin():
+            target_url = "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"
+            html = requests.get(target_url)
+            soup = BeautifulSoup(html.text, 'html.parser')
+
+            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
+            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
+            weekday_last = [last_arrival_weekday['up'][i] for i in range(len(last_arrival_weekday['up']))][
+                           ::-1]  # 역순으로 변경 (상행)
+            weekend_last = [last_arrival_weekend['up'][i] for i in range(len(last_arrival_weekend['up']))][
+                           ::-1]  # 역순으로 변경
+
+            weekday_last2 = [last_arrival_weekday['down'][i] for i in range(len(last_arrival_weekday['down']))][
+                            ::-1]  # 역순으로 변경 (하행)
+            weekend_last2 = [last_arrival_weekend['down'][i] for i in range(len(last_arrival_weekend['down']))][
+                            ::-1]  # 역순으로 변경
+
+            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (상행)
+            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+
+            station_down = [i['headsign'] for i in weekday_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (하행)
+            station_down2 = [i['headsign'] for i in weekend_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+
+            find_station_idx = station.index  # 가독성 up  (상행)
+            find_station2_idx = station2.index  # 가독성 up
+
+            find_station_down_idx = station_down.index  # 가독성 up (하행)
+            find_station_down_idx2 = station_down2.index  # 가독성 up
+            return "왕십리 - (평일) ", weekday_last[find_station_idx("왕십리")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("왕십리")]['departureTime'][:-3] \
+                   + "\n죽전 - (평일) ", weekday_last[find_station_idx("죽전")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("죽전")]['departureTime'][:-3] \
+                   + "\n고색 - (평일) ", weekday_last[find_station_idx("고색")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last[find_station2_idx("고색")]['departureTime'][:-3] \
+                   + "\n오이도 - (평일) ", weekday_last2[find_station_down_idx("오이도")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last2[find_station_down_idx2("오이도")]['departureTime'][:-3] \
+                   + "\n인천 - (평일) ", weekday_last2[find_station_down_idx("인천")]['departureTime'][:-3], " (휴일) ", \
+                   weekend_last2[find_station_down_idx2("인천")]['departureTime'][:-3]
+
+        # station_suin()
+        return_str = imoge_mapping['emotion']['walk'] + '4호선 막차 시간입니다\n'
+        return_str += ''.join(station_no4())
+        return_str += '\n\n' + imoge_mapping['emotion']['walk'] + '수인선 막차 시간입니다\n'
+        return_str += ''.join(station_suin())
+        return gen.is_Text(return_str)
+        # boto3 주석 해제하기
     # def random_meal(self):
     #     s3 = boto3.resource('s3')
     #     bucket = s3.Bucket("sandol")
@@ -403,4 +478,67 @@ class Test():
         return a
 
     def subway(self):
-        return gen.is_Text("test")
+        def station_no4():
+            target_url = "https://map.naver.com/v5/api/transit/subway/stations/455/schedule?lang=ko&stationID=455"
+            html = requests.get(target_url)
+            soup = BeautifulSoup(html.text, 'html.parser')
+
+            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
+            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
+
+            weekday_last = [last_arrival_weekday['up'][101 + i] for i in range(len(last_arrival_weekday['up']) - 101)][
+                           ::-1]  # 역순으로 변경
+            weekend_last = [last_arrival_weekend['up'][85 + i] for i in range(len(last_arrival_weekend['up']) - 85)][
+                           ::-1]  # 역순으로 변경
+            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+            find_station_idx = station.index  # 가독성 up
+            find_station2_idx = station2.index  # 가독성 up
+
+            return "당고개 - (평일) ", weekday_last[find_station_idx("당고개")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("당고개")]['departureTime'][:-3] \
+            + "\n안산 - (평일) ", weekday_last[find_station_idx("안산")]['departureTime'][:-3] \
+            + "\n노원 - (평일) ", weekday_last[find_station_idx("노원")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("노원")]['departureTime'][:-3] \
+            + "\n금정 - (평일) ", weekday_last[find_station_idx("금정")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("금정")]['departureTime'][:-3] \
+            + "\n한성대입구 - (휴일) ", weekend_last[find_station2_idx("한성대입구")]['departureTime'][:-3] \
+            + "\n사당 - (휴일) ", weekend_last[find_station2_idx("사당")]['departureTime'][:-3] \
+            + "\n오이도 - (평일) ", last_arrival_weekday['down'][-1]['departureTime'][:-3], " (휴일) ", last_arrival_weekend['down'][-1]['departureTime'][:-3]
+
+        def station_suin():
+            target_url = "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"
+            html = requests.get(target_url)
+            soup = BeautifulSoup(html.text, 'html.parser')
+
+            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
+            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
+            weekday_last = [last_arrival_weekday['up'][i] for i in range(len(last_arrival_weekday['up']))][::-1]  # 역순으로 변경 (상행)
+            weekend_last = [last_arrival_weekend['up'][i]for i in range(len(last_arrival_weekend['up']))][::-1]  # 역순으로 변경
+
+            weekday_last2 = [last_arrival_weekday['down'][i] for i in range(len(last_arrival_weekday['down']))][::-1]  # 역순으로 변경 (하행)
+            weekend_last2 = [last_arrival_weekend['down'][i]for i in range(len(last_arrival_weekend['down']))][::-1]  # 역순으로 변경
+
+            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (상행)
+            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+
+            station_down = [i['headsign'] for i in weekday_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (하행)
+            station_down2 = [i['headsign'] for i in weekend_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+
+            find_station_idx = station.index  # 가독성 up  (상행)
+            find_station2_idx = station2.index  # 가독성 up
+
+            find_station_down_idx = station_down.index  # 가독성 up (하행)
+            find_station_down_idx2 = station_down2.index  # 가독성 up
+            return "왕십리 - (평일) ", weekday_last[find_station_idx("왕십리")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("왕십리")]['departureTime'][:-3] \
+            + "\n죽전 - (평일) ", weekday_last[find_station_idx("죽전")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("죽전")]['departureTime'][:-3] \
+            + "\n고색 - (평일) ", weekday_last[find_station_idx("고색")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("고색")]['departureTime'][:-3] \
+            + "\n오이도 - (평일) ", weekday_last2[find_station_down_idx("오이도")]['departureTime'][:-3], " (휴일) ", weekend_last2[find_station_down_idx2("오이도")]['departureTime'][:-3] \
+            + "\n인천 - (평일) ", weekday_last2[find_station_down_idx("인천")]['departureTime'][:-3], " (휴일) ", weekend_last2[find_station_down_idx2("인천")]['departureTime'][:-3]
+        # station_suin()
+        return_str = imoge_mapping['emotion']['walk']+'4호선 막차 시간입니다\n'
+        return_str += ''.join(station_no4())
+        return_str += '\n\n'+imoge_mapping['emotion']['walk']+'수인선 막차 시간입니다\n'
+        return_str += ''.join(station_suin())
+
+        return return_str
+        #boto3 주석 해제하기
+
+print(Test.subway(Test.subway))
