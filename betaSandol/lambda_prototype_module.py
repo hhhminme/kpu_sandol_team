@@ -491,59 +491,62 @@ class Test():
         heading_down = []
         heading_up = [] #하행선과 상행선의 시간과 목적지를 저장할 리스트
 
-        if self.data['todayServiceDay']['name'] == '평일':    #평일 시간표
-            schedule_data_up = self.data['weekdaySchedule']['up']
-            schedule_data_down = self.data['weekdaySchedule']['down']
+        try:
+            if self.data['todayServiceDay']['name'] == '평일':  # 평일 시간표
+                schedule_data_up = self.data['weekdaySchedule']['up']
+                schedule_data_down = self.data['weekdaySchedule']['down']
 
-            it = schedule_data_up.__iter__()    #상행선
-            for i in schedule_data_up:
-                it.__next__()
-                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                    print(i['departureTime'], end=' ')
-                    print(it.__next__()['departureTime'])
-                    break
+                it = schedule_data_up.__iter__()  # 상행선
+                for i in schedule_data_up:
+                    it.__next__()
+                    if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                        print(i['departureTime'], end=' ')
+                        print(it.__next__()['departureTime'])
+                        break
 
-                else:
-                    continue
+                    else:
+                        continue
 
-            it = schedule_data_down.__iter__()  #하행선
-            for i in schedule_data_down:
-                it.__next__()
-                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                    print(i['departureTime'], end= ' ')
-                    print(it.__next__()['departureTime'], end=' ')
-                    break
+                it = schedule_data_down.__iter__()  # 하행선
+                for i in schedule_data_down:
+                    it.__next__()
+                    if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                        print(i['departureTime'], end=' ')
+                        print(it.__next__()['departureTime'], end=' ')
+                        break
 
-                else:
-                    continue
+                    else:
+                        continue
 
-        else:   #주말 시간표
-            schedule_data_up = self.data['sundaySchedule']['up']
-            schedule_data_down = self.data['sundaySchedule']['down']
+            else:  # 주말 시간표
+                schedule_data_up = self.data['sundaySchedule']['up']
+                schedule_data_down = self.data['sundaySchedule']['down']
 
-            it = schedule_data_up.__iter__()
-            for i in schedule_data_up:
-                it.__next__()
-                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                    print(i['departureTime'], end=' ')
-                    print(it.__next__()['departureTime'])
-                    break
+                it = schedule_data_up.__iter__()
+                for i in schedule_data_up:
+                    it.__next__()
+                    if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                        print(i['departureTime'], end=' ')
+                        print(it.__next__()['departureTime'])
+                        break
 
-                else:
-                    continue
+                    else:
+                        continue
 
-            it = schedule_data_down.__iter__()
-            for i in schedule_data_down:
-                it.__next__()
-                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                    print(i['departureTime'], end=' ')
-                    print(it.__next__()['departureTime'])
-                    break
+                it = schedule_data_down.__iter__()
+                for i in schedule_data_down:
+                    it.__next__()
+                    if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                        print(i['departureTime'], end=' ')
+                        print(it.__next__()['departureTime'])
+                        break
 
-                else:
-                    continue
+                    else:
+                        continue
+        except Exception as e:
+            return gen.is_Text(str(e))
 
-        return return_data
+        return gen.is_Text(return_data)
 
     def get_time(self):
         return gen.is_Text(self.time)
