@@ -488,8 +488,6 @@ class Test():
 
     def arrival_time(self) -> str:
         return_data = ''
-        # heading_down = []
-        # heading_up = [] #하행선과 상행선의 시간과 목적지를 저장할 리스트
 
         try:
             if self.data['todayServiceDay']['name'] == '평일':  # 평일 시간표
@@ -500,19 +498,23 @@ class Test():
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        print(i['departureTime'], end=' ')
-                        print(it.__next__()['departureTime'])
+                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        # print(i['departureTime'], end=' ')
+                        # print(it.__next__()['departureTime'])
                         break
 
                     else:
                         continue
 
+                return_data +=  "\n\n"
+
                 it = schedule_data_down.__iter__()  # 하행선
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        print(i['departureTime'], end=' ')
-                        print(it.__next__()['departureTime'], end=' ')
+                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        # print(i['departureTime'], end=' ')
+                        # print(it.__next__()['departureTime'], end=' ')
                         break
 
                     else:
@@ -526,17 +528,19 @@ class Test():
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        print(i['departureTime'], end=' ')
-                        print(it.__next__()['departureTime'])
+                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        # print(i['departureTime'], end=' ')
+                        # print(it.__next__()['departureTime'])
                         break
 
                     else:
                         continue
-
+                return_data += "\n\n"
                 it = schedule_data_down.__iter__()
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
                         print(i['departureTime'], end=' ')
                         print(it.__next__()['departureTime'])
                         break
