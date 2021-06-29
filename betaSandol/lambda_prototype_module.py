@@ -488,8 +488,8 @@ class Test():
 
     def arrival_time(self) -> str:
         return_data = ''
-        heading_down = []
-        heading_up = [] #하행선과 상행선의 시간과 목적지를 저장할 리스트
+        # heading_down = []
+        # heading_up = [] #하행선과 상행선의 시간과 목적지를 저장할 리스트
 
         try:
             if self.data['todayServiceDay']['name'] == '평일':  # 평일 시간표
