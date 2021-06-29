@@ -46,7 +46,7 @@ def lambda_handler(event, context):
         elif key[0] == 'last_subway':
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
         elif key[0] == "param1":
-            return_string = Module.Test.subway(Module.Test, param[key[0]])
+            return_string = Module.Test(time = param[key[0]]).get_time()
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
 

@@ -468,77 +468,85 @@ class s3IOEvent():
             return gen.is_Text("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
         return gen.is_Text("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'])
 
+
 class Test():
-    def returnType(self):
-        try:
-            a = gen.is_Carousel()
+    def __init__(self, time: str = "00:00:00", station_no: str = "455") ->None:
+        self.time = datetime.datetime.strptime(time, '%H:%M:%S')    #time 모듈로 변환
+        self.station_no = station_no
+        self.rail: str
+        self.station_name: str
+        self.data = self.get_data()
 
-        except Exception as e:
-            a = gen.is_Card("https://avatars.githubusercontent.com/u/25563122?v=4", is_description=str(e))
-        return a
+    def get_data(self) -> dict:
+        URL = "https://map.naver.com/v5/api/transit/subway/stations/"+self.station_no+"/schedule?lang=ko&stationID="+self.station_no
+        html = requests.get(URL).text
+        soup = BeautifulSoup(html, 'html.parser')
 
-    def subway(self):
-        def station_no4():
-            target_url = "https://map.naver.com/v5/api/transit/subway/stations/455/schedule?lang=ko&stationID=455"
-            html = requests.get(target_url)
-            soup = BeautifulSoup(html.text, 'html.parser')
+        json_data = json.loads(soup.text)
+        # print(json_data)
+        return json_data
 
-            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
-            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
+    def arrival_time(self) -> str:
+        return_data = ''
+        heading_down = []
+        heading_up = [] #하행선과 상행선의 시간과 목적지를 저장할 리스트
 
-            weekday_last = [last_arrival_weekday['up'][101 + i] for i in range(len(last_arrival_weekday['up']) - 101)][
-                           ::-1]  # 역순으로 변경
-            weekend_last = [last_arrival_weekend['up'][85 + i] for i in range(len(last_arrival_weekend['up']) - 85)][
-                           ::-1]  # 역순으로 변경
-            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
-            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
-            find_station_idx = station.index  # 가독성 up
-            find_station2_idx = station2.index  # 가독성 up
+        if self.data['todayServiceDay']['name'] == '평일':    #평일 시간표
+            schedule_data_up = self.data['weekdaySchedule']['up']
+            schedule_data_down = self.data['weekdaySchedule']['down']
 
-            return "당고개 - (평일) ", weekday_last[find_station_idx("당고개")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("당고개")]['departureTime'][:-3] \
-            + "\n안산 - (평일) ", weekday_last[find_station_idx("안산")]['departureTime'][:-3] \
-            + "\n노원 - (평일) ", weekday_last[find_station_idx("노원")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("노원")]['departureTime'][:-3] \
-            + "\n금정 - (평일) ", weekday_last[find_station_idx("금정")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("금정")]['departureTime'][:-3] \
-            + "\n한성대입구 - (휴일) ", weekend_last[find_station2_idx("한성대입구")]['departureTime'][:-3] \
-            + "\n사당 - (휴일) ", weekend_last[find_station2_idx("사당")]['departureTime'][:-3] \
-            + "\n오이도 - (평일) ", last_arrival_weekday['down'][-1]['departureTime'][:-3], " (휴일) ", last_arrival_weekend['down'][-1]['departureTime'][:-3]
+            it = schedule_data_up.__iter__()    #상행선
+            for i in schedule_data_up:
+                it.__next__()
+                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                    print(i['departureTime'], end=' ')
+                    print(it.__next__()['departureTime'])
+                    break
 
-        def station_suin():
-            target_url = "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"
-            html = requests.get(target_url)
-            soup = BeautifulSoup(html.text, 'html.parser')
+                else:
+                    continue
 
-            last_arrival_weekday = json.loads(soup.text)["weekdaySchedule"]  # 평일
-            last_arrival_weekend = json.loads(soup.text)["sundaySchedule"]  # 주말
-            weekday_last = [last_arrival_weekday['up'][i] for i in range(len(last_arrival_weekday['up']))][::-1]  # 역순으로 변경 (상행)
-            weekend_last = [last_arrival_weekend['up'][i]for i in range(len(last_arrival_weekend['up']))][::-1]  # 역순으로 변경
+            it = schedule_data_down.__iter__()  #하행선
+            for i in schedule_data_down:
+                it.__next__()
+                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                    print(i['departureTime'], end= ' ')
+                    print(it.__next__()['departureTime'], end=' ')
+                    break
 
-            weekday_last2 = [last_arrival_weekday['down'][i] for i in range(len(last_arrival_weekday['down']))][::-1]  # 역순으로 변경 (하행)
-            weekend_last2 = [last_arrival_weekend['down'][i]for i in range(len(last_arrival_weekend['down']))][::-1]  # 역순으로 변경
+                else:
+                    continue
 
-            station = [i['headsign'] for i in weekday_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (상행)
-            station2 = [i['headsign'] for i in weekend_last]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+        else:   #주말 시간표
+            schedule_data_up = self.data['sundaySchedule']['up']
+            schedule_data_down = self.data['sundaySchedule']['down']
 
-            station_down = [i['headsign'] for i in weekday_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트 (하행)
-            station_down2 = [i['headsign'] for i in weekend_last2]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+            it = schedule_data_up.__iter__()
+            for i in schedule_data_up:
+                it.__next__()
+                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                    print(i['departureTime'], end=' ')
+                    print(it.__next__()['departureTime'])
+                    break
 
-            find_station_idx = station.index  # 가독성 up  (상행)
-            find_station2_idx = station2.index  # 가독성 up
+                else:
+                    continue
 
-            find_station_down_idx = station_down.index  # 가독성 up (하행)
-            find_station_down_idx2 = station_down2.index  # 가독성 up
-            return "왕십리 - (평일) ", weekday_last[find_station_idx("왕십리")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("왕십리")]['departureTime'][:-3] \
-            + "\n죽전 - (평일) ", weekday_last[find_station_idx("죽전")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("죽전")]['departureTime'][:-3] \
-            + "\n고색 - (평일) ", weekday_last[find_station_idx("고색")]['departureTime'][:-3], " (휴일) ", weekend_last[find_station2_idx("고색")]['departureTime'][:-3] \
-            + "\n오이도 - (평일) ", weekday_last2[find_station_down_idx("오이도")]['departureTime'][:-3], " (휴일) ", weekend_last2[find_station_down_idx2("오이도")]['departureTime'][:-3] \
-            + "\n인천 - (평일) ", weekday_last2[find_station_down_idx("인천")]['departureTime'][:-3], " (휴일) ", weekend_last2[find_station_down_idx2("인천")]['departureTime'][:-3]
-        # station_suin()
-        return_str = imoge_mapping['emotion']['walk']+'4호선 막차 시간입니다\n'
-        return_str += ''.join(station_no4())
-        return_str += '\n\n'+imoge_mapping['emotion']['walk']+'수인선 막차 시간입니다\n'
-        return_str += ''.join(station_suin())
+            it = schedule_data_down.__iter__()
+            for i in schedule_data_down:
+                it.__next__()
+                if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
+                    print(i['departureTime'], end=' ')
+                    print(it.__next__()['departureTime'])
+                    break
 
-        return return_str
-        #boto3 주석 해제하기
+                else:
+                    continue
 
-print(Test.subway(Test.subway))
+        return return_data
+
+    def get_time(self):
+        return gen.is_Text(self.time)
+    #boto3 주석 해제하기
+
+# Test("11:11:11", "455").arrival_time()
