@@ -495,24 +495,30 @@ class Test():
                 schedule_data_down = self.data['weekdaySchedule']['down']
 
                 it = schedule_data_up.__iter__()  # 상행선
+                flag = False
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        return_data += i['headsign'] +"방면 "+ i['departureTime'] + ", " + it.__next__()['departureTime']
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'])
+                        flag = True
                         break
-
                     else:
                         continue
 
+                if flag == False:
+                    return_data += schedule_data_up[-1]['departureTime']+ "막차입니다"
+
                 return_data +=  "\n\n"
 
+                flag = False
                 it = schedule_data_down.__iter__()  # 하행선
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        flag = True
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'], end=' ')
                         break
@@ -520,33 +526,49 @@ class Test():
                     else:
                         continue
 
+                if flag == False:
+                    return_data += schedule_data_down[-1]['departureTime']+ "막차입니다"
+
             else:  # 주말 시간표
                 schedule_data_up = self.data['sundaySchedule']['up']
                 schedule_data_down = self.data['sundaySchedule']['down']
+
+                flag = False
 
                 it = schedule_data_up.__iter__()
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
+                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        flag = True
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'])
                         break
 
                     else:
                         continue
+
+                if flag == False:
+                    return_data += schedule_data_up[-1]['departureTime']+ "막차입니다"
                 return_data += "\n\n"
+
+                flag = False
                 it = schedule_data_down.__iter__()
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['departureTime'] + " " + it.__next__()['departureTime']
-                        print(i['departureTime'], end=' ')
-                        print(it.__next__()['departureTime'])
+                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        flag = True
+                        # print(i['departureTime'], end=' ')
+                        # print(it.__next__()['departureTime'])
                         break
 
                     else:
                         continue
+
+                if flag == False:
+                    return_data += schedule_data_down[-1]['departureTime'] + "막차입니다"
+
         except Exception as e:
             return gen.is_Text(str(e))
 
@@ -556,4 +578,4 @@ class Test():
         return gen.is_Text(self.time)
     #boto3 주석 해제하기
 
-# Test("11:11:11", "455").arrival_time()
+# print(Test("23:59:11", "455").arrival_time())
