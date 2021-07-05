@@ -570,9 +570,9 @@ class Test():
                     return_data += schedule_data_down[-1]['headsign'] +schedule_data_down[-1]['departureTime'] + " 막차입니다"
 
         except Exception as e:
-            return gen.is_Text(str(e))
+            return str(e)
 
-        return gen.is_Text(return_data)
+        return return_data
 
     def get_time(self):
         return gen.is_Text(self.time)
