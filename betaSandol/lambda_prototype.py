@@ -47,7 +47,6 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
         elif key[0] == "param1":
             return_string = Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
-            return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
 
 
         else:
