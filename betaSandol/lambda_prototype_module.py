@@ -508,7 +508,7 @@ class Test():
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_up[-1]['departureTime']+ "막차입니다"
+                    return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime']+ " 막차입니다"
 
                 return_data +=  "\n\n"
 
@@ -527,7 +527,7 @@ class Test():
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_down[-1]['departureTime']+ "막차입니다"
+                    return_data += schedule_data_down[-1]['headsign'] + schedule_data_down[-1]['departureTime']+ " 막차입니다"
 
             else:  # 주말 시간표
                 schedule_data_up = self.data['sundaySchedule']['up']
@@ -549,7 +549,7 @@ class Test():
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_up[-1]['departureTime']+ "막차입니다"
+                    return_data += schedule_data_up[-1]['headsign'] +schedule_data_up[-1]['departureTime']+ " 막차입니다"
                 return_data += "\n\n"
 
                 flag = False
@@ -567,7 +567,7 @@ class Test():
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_down[-1]['departureTime'] + "막차입니다"
+                    return_data += schedule_data_down[-1]['headsign'] +schedule_data_down[-1]['departureTime'] + " 막차입니다"
 
         except Exception as e:
             return gen.is_Text(str(e))
