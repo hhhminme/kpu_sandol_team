@@ -11,7 +11,6 @@ def lambda_handler(event, context):
         param = request_body['action']['params']
         key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
         # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
-
         if key[0] == 'weather': #날씨 관련
             return_string = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
 
@@ -38,6 +37,10 @@ def lambda_handler(event, context):
 
         elif key[0] == 'subway':
             return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
+            # gen = Generator.Return_Type()
+            # return_string = "[4호선]\n" + Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
+            # return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
+            # return_string = gen.is_Text(return_string)
 
         elif key[0] == "ann":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
@@ -47,10 +50,14 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
 
         elif key[0] == "param1":
+            # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
             gen = Generator.Return_Type()
-            return_string = Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
-            return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
-            gen.is_Text(return_string)
+            return_string = "[4호선]\n" + Module.Test(time=str(
+                request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
+            return_string += Module.Test(time=str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
+            return_string = gen.is_Text(return_string)
+
+
 
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
@@ -84,5 +91,3 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
-
-# print(Module.CrawlingFunction.announcement(Module.CrawlingFunction))
