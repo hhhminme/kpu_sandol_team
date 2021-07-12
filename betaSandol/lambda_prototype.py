@@ -36,7 +36,11 @@ def lambda_handler(event, context):
             return_string = Module.s3IOEvent.reset_meal(Module.s3IOEvent, str(request_body['userRequest']['user']['properties']['botUserKey']), json.loads(param[key[0]])['date'])
 
         elif key[0] == 'subway':
-            return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
+            #return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
+            gen = Generator.Return_Type()
+            return_string = "[4호선]\n" + Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
+            return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
+            return_string = gen.is_Text(return_string)
 
         elif key[0] == "ann":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
@@ -46,12 +50,9 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
 
         elif key[0] == "param1":
-            gen = Generator.Return_Type()
-            # return_string = Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
-            # return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time()
-            return_string = "[4호선]\n" + Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
-            return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
-            return_string = gen.is_Text(return_string)
+            raise Exception ("test block")
+
+
 
         else:
             raise Exception("산돌이가 작업을 마무리하지 못했어요ㅠㅠ\n 피드백을 통해 어떤 기능에서 오류가 발생했는지 알려주시면 빠른 시일 내에 작동 하도록 할게요")
