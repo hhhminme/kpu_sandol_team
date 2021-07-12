@@ -50,7 +50,12 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
 
         elif key[0] == "param1":
-            raise Exception ("test block")
+            # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
+            gen = Generator.Return_Type()
+            return_string = "[4호선]\n" + Module.Test(time=str(
+                request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
+            return_string += Module.Test(time=str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
+            return_string = gen.is_Text(return_string)
 
 
 
