@@ -577,5 +577,6 @@ class Test():
     def get_time(self):
         return gen.is_Text(self.time)
     #boto3 주석 해제하기
-
+#
+#
 # print(Test("23:59:11", "455").arrival_time())
