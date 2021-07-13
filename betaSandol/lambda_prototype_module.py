@@ -167,7 +167,7 @@ class CrawlingFunction():
     #     idx = random.randint(0, 100)
     #     result_string = data[idx]
     #     return "☆빠밤★\n" + result_string.split("->")[0] + " 에서, " + result_string.split("->")[1].replace("\n",
-    #                                                                                                     '') + " 어떠세요?"
+    #                                                                                                    '') + " 어떠세요?"
 
     def today_covid(self):
         try:
@@ -428,7 +428,7 @@ class s3IOEvent():
 
         except Exception:
             return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad'])
-#
+
     def reset_meal(self, bot_id, date):
         sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
                        '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
@@ -577,6 +577,4 @@ class Test():
     def get_time(self):
         return gen.is_Text(self.time)
     #boto3 주석 해제하기
-#
-#
 # print(Test("23:59:11", "455").arrival_time())
