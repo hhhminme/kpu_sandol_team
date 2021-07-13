@@ -6,7 +6,6 @@
     "s3_bucket": "zappa-m9m800toh",
     "aws_region": "ap-northeast-2",
     "keep_warm": false,
-    "lambda_handler": "lambda_prototype.lambda_handler",
-    "troposphere" : "2.7.0"
+    "lambda_handler": "lambda_prototype.lambda_handler"
   }
 }
