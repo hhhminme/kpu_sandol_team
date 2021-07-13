@@ -1,11 +1,12 @@
 {
-    "dev": {
-        "profile_name": null,
-        "project_name": "betasandol",
-        "runtime": "python3.8",
-        "s3_bucket": "zappa-m9m800toh",
-        "aws_region": "ap-northeast-2",
-        "keep_warm": false,
-        "lambda_handler": "lambda_prototype.lambda_handler"
-    }
+  "dev": {
+    "profile_name": null,
+    "project_name": "betasandol",
+    "runtime": "python3.8",
+    "s3_bucket": "zappa-m9m800toh",
+    "aws_region": "ap-northeast-2",
+    "keep_warm": false,
+    "lambda_handler": "lambda_prototype.lambda_handler",
+    "troposphere" : "2.7.0"
+  }
 }
