@@ -47,7 +47,8 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.announcement(Module.CrawlingFunction)
 
         elif key[0] == 'last_subway':
-            return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
+            gen = Generator.Return_Type()
+            return_string = gen.is_Text(str(param))
 
         elif key[0] == "param1":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
