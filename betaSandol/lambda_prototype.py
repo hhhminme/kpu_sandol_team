@@ -37,7 +37,7 @@ def lambda_handler(event, context):
 
         elif key[0] == 'subway':
             gen = Generator.Return_Type()
-            setting_time = json.loads(request_body['action']['detailParams']['date_time']['value'])
+            setting_time = json.loads(request_body['action']['detailParams']['date_time']['value'])['time']
             gen.is_Text(str(setting_time))
 
             # return_string = "[4호선]\n" + Module.Test(time = setting_time).arrival_time() + "\n\n[수인분당선]\n"
