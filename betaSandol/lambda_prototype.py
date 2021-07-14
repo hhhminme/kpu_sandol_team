@@ -39,7 +39,7 @@ def lambda_handler(event, context):
             gen = Generator.Return_Type()
             try:
                 # setting_time = json.loads(gen.is_Text(str(request_body['action']['detailParams']['date_time']['value'])))['time']
-                return_string = gen.is_Text(str(request_body['action']['detailParams']['date_time']['value']['time']))
+                return_string = gen.is_Text(str(type(request_body['action']['detailParams']['date_time']['value'])))
             except Exception as e:
                 return_string = gen.is_Text(str(e))
 
