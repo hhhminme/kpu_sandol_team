@@ -37,13 +37,10 @@ def lambda_handler(event, context):
 
         elif key[0] == 'subway':
             gen = Generator.Return_Type()
-
-            # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
-            return_string = gen.is_Text(str(request_body))
-            # gen = Generator.Return_Type()
-            # return_string = "[4호선]\n" + Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin'])).arrival_time() + "\n\n[수인분당선]\n"
-            # return_string += Module.Test(time = str(request_body['action']['detailParams']['current_time']['origin']), station_no="11120").arrival_time()
-            # return_string = gen.is_Text(return_string)
+            setting_time = str(request_body['action']['detailParams']['date_time']['value']['time'])
+            return_string = "[4호선]\n" + Module.Test(time = setting_time).arrival_time() + "\n\n[수인분당선]\n"
+            return_string += Module.Test(time = setting_time, station_no="11120").arrival_time()
+            return_string = gen.is_Text(return_string)
 
         elif key[0] == "ann":
             # return_string = Module.CrawlingFunction.subway(Module.CrawlingFunction)
