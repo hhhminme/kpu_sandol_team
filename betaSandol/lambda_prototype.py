@@ -38,8 +38,8 @@ def lambda_handler(event, context):
         elif key[0] == 'subway':
             gen = Generator.Return_Type()
             try:
-                setting_time = json.loads(request_body['action']['detailParams']['date_time']['value'])['time']
-                gen.is_Text(str(setting_time))
+                # setting_time = json.loads()['time']
+                gen.is_Text(str(request_body['action']['detailParams']['date_time']['value']))
             except Exception as e:
                 gen.is_Text(str(e))
 
