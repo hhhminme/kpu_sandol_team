@@ -155,7 +155,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
 
-    def is_List(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None
+    def is_List(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None #data = list
         self.init_json()
         order = ['title', 'description', 'link']
         basic_list = {

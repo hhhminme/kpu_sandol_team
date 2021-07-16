@@ -435,7 +435,7 @@ class s3IOEvent():
             #                   +"\n"+imoge_mapping['emotion']['paw']+"세미콘 식당은 업주님의 사정으로 업데이트하지 못하고 있어요"+imoge_mapping['emotion']['sad']
             # return_string += additional_info
 
-            return gen.is_Carousel("basicCard", len(return_string), return_string[0], return_string[1], return_string[2])
+            return gen.is_List("학식 정보입니다", return_string)
 
         except Exception:
             return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'])
