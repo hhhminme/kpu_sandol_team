@@ -409,15 +409,6 @@ class s3IOEvent():
                     else:
                         return_string += data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
 
-                    # if restaurant == 2: # 웰스프레시는 링크로 대체~
-                    #     return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']), "https://ibook.kpu.ac.kr/Viewer/menu01"])
-                    # else :
-                    #      return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]",imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n"])
-
-            # additional_info = "\n"+imoge_mapping['emotion']['paw']+"부득이하게 메뉴가 변동될 수 있어요!"\
-            #                   +"\n"+imoge_mapping['emotion']['paw']+"주말엔 학식기능이 작동하지 않아요!"\
-            #                   +"\n"+imoge_mapping['emotion']['paw']+"세미콘 식당은 업주님의 사정으로 업데이트하지 못하고 있어요"+imoge_mapping['emotion']['sad']
-            # return_string += additional_info
 
             return gen.is_Text("학식 정보입니다\n" + return_string)
 

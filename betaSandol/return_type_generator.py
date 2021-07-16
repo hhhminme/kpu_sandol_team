@@ -32,8 +32,9 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             }
         }
 
-    def is_Text(self, text):  #텍스트 형식
-        self.init_json()
+    def is_Text(self, text, is_init = True):  #텍스트 형식
+        if (is_init == True):
+            self.init_json()
         basic_text ={
                         "simpleText": {
                             "text": str(text)
