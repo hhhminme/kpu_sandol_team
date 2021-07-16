@@ -407,7 +407,7 @@ class s3IOEvent():
                         return_string += "웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n"
 
                     else:
-                        return_string += data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion']['paw'] + "\n석식 : " + menu_list[2] + "\n"
+                        return_string += data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
 
                     # if restaurant == 2: # 웰스프레시는 링크로 대체~
                     #     return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']), "https://ibook.kpu.ac.kr/Viewer/menu01"])
