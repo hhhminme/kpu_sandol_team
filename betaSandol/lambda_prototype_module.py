@@ -381,6 +381,7 @@ class s3IOEvent():
 
         return gen.is_Text("네! 학생들에게 잘 전달할게요! 감사합니다!"+ imoge_mapping['emotion']['walk'])
 
+
     def read_meal(self):
         store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
@@ -391,52 +392,38 @@ class s3IOEvent():
             bucket.download_file(store_file, local_file)
 
         except Exception:
-            return gen.is_Text("[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad']) # 파일을 /tmp/에 복사하여 다운로드
+            return gen.is_Text(
+                "[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad'])  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
             t = ['월', '화', '수', '목', '금', '토', '일']
-            return_string = ''
+            return_string = []
             with open(local_file, "r", encoding='UTF-8') as f:
                 data = f.readlines()
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    return_string += (data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion'][
-                        'walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" +
-                                        imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" +
-                                        imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n")
-
-            additional_info = "\n" + imoge_mapping['emotion']['paw'] + "부득이하게 메뉴가 변동될 수 있어요!" \
-                                + "\n" + imoge_mapping['emotion']['paw'] + "주말엔 학식기능이 작동하지 않아요!" \
-                                + "\n" + imoge_mapping['emotion']['paw'] + "세미콘 식당은 업주님의 사정으로 업데이트하지 못하고 있어요" + \
-                                imoge_mapping['emotion']['sad']
-            return_string += additional_info
-
-            return return_string
-
-        except Exception:
-            return "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad']
-
-            # try:
-        #     t = ['월', '화', '수', '목', '금', '토', '일']
-        #     return_string = []
-        #     with open(local_file, "r", encoding='UTF-8') as f:
-        #         data = f.readlines()
-        #         for restaurant in range(0, len(data), 2):
-        #             menu_list = data[restaurant + 1].replace("\'", '').split(", ")
-        #             last_update_date = datetime.date.fromisoformat(menu_list[0])
-        #             if restaurant == 2:
-        #                 return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_wells.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']), "https://ibook.kpu.ac.kr/Viewer/menu01"])
-        #             elif restaurant == 0:
-        #                 return_string.append(
-        #                     ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_miga.png",
-        #                      data[restaurant].replace("\n", '').replace("🐾",
-        #                                                                 imoge_mapping['emotion']['walk']) + " [" + str(
-        #                          last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
-        #                      imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
-        #                          'paw'] + "석식 : " + menu_list[2] + "\n"])
-        #             else:
-        #                  return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_food.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]",imoge_mapping['emotion']['paw']+"중식 : " + menu_list[1] + "\n"+ imoge_mapping['emotion']['paw']+"석식 : " + menu_list[2] + "\n"])
+                    if restaurant == 2:
+                        return_string.append(
+                            ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_wells.png",
+                             data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion']['walk']),
+                             "https://ibook.kpu.ac.kr/Viewer/menu01"])
+                    elif restaurant == 0:
+                        return_string.append(
+                            ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_miga.png",
+                             data[restaurant].replace("\n", '').replace("🐾",
+                                                                        imoge_mapping['emotion']['walk']) + " [" + str(
+                                 last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
+                             imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
+                                 'paw'] + "석식 : " + menu_list[2] + "\n"])
+                    else:
+                        return_string.append(
+                            ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_food.png",
+                             data[restaurant].replace("\n", '').replace("🐾",
+                                                                        imoge_mapping['emotion']['walk']) + " [" + str(
+                                 last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
+                             imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
+                                 'paw'] + "석식 : " + menu_list[2] + "\n"])
 
                     # if restaurant == 2: # 웰스프레시는 링크로 대체~
                     #     return_string.append(["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/logo1.png", data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']), "https://ibook.kpu.ac.kr/Viewer/menu01"])
@@ -448,49 +435,10 @@ class s3IOEvent():
             #                   +"\n"+imoge_mapping['emotion']['paw']+"세미콘 식당은 업주님의 사정으로 업데이트하지 못하고 있어요"+imoge_mapping['emotion']['sad']
             # return_string += additional_info
 
-        #     return gen.is_Carousel("basicCard", len(return_string), return_string[0], return_string[1], return_string[2])
-        #
-        # except Exception:
-        #     return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.."+ imoge_mapping['emotion']['sad'])
-
-    def reset_meal(self, bot_id, date):
-        sandol_team = ['d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895',
-                       '339b0444bfabbffa0f13508ea7c45b61675b5720234cca8f73cd7421c22de9e546',
-                       '04eabc8b965bf5ae6cccb122a18521969cc391162e3fd5f61b85efe8bb12e5e98a',
-                       'def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997']
-        if bot_id not in sandol_team:
-            return gen.is_Text("[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry'])
-
-        store_file = "restaurant_menu.txt"
-        s3 = boto3.resource('s3')
-        bucket = s3.Bucket("sandol")
-        local_file = "/tmp/" + store_file
-
-        try:
-            # local_file = "./restaurant_menu/" + store_file
-            s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/t`1mp/restaurant_menu.txt')
-
-        except Exception as e:
-            return gen.is_Text("[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다."+ imoge_mapping['emotion']['sad'])
-        try:
-            with open(local_file, "w", encoding="UTF-8") as f:
-                rest_name = [imoge_mapping['emotion']['paw']+"미가식당\n", imoge_mapping['emotion']['paw']+"웰스프레쉬\n", imoge_mapping['emotion']['paw']+"푸드라운지\n"]
-
-                return_string = ''
-                for i in range (len(rest_name)):
-                    return_string += rest_name[i] + "\'"+date+"\', \'업데이트되지않았습니다\', \'업데이트되지않았습니다\'\n"
-                f.writelines(return_string)
-
-        except Exception as e:
-             return gen.is_Text("[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
-
-        try:
-            s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
-            s3.upload_file(local_file, 'sandol', store_file)
+            return gen.is_Carousel("basicCard", len(return_string), return_string[0], return_string[1], return_string[2])
 
         except Exception:
-            return gen.is_Text("[File-Open-Error #144]파일을 저장소에 업로드하는 중 오류가 발생했습니다."+ imoge_mapping['emotion']['sad'])
-        return gen.is_Text("파일을 정상적으로 초기화했습니다" + imoge_mapping['emotion']['happy'])
+            return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'])
 
 
 class Test():
