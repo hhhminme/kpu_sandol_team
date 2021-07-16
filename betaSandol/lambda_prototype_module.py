@@ -410,16 +410,14 @@ class s3IOEvent():
                              "https://ibook.kpu.ac.kr/Viewer/menu01"])
                     elif restaurant == 0:
                         return_string.append(
-                            ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_miga.png",
-                             data[restaurant].replace("\n", '').replace("🐾",
+                            [data[restaurant].replace("\n", '').replace("🐾",
                                                                         imoge_mapping['emotion']['walk']) + " [" + str(
                                  last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
                              imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
                                  'paw'] + "석식 : " + menu_list[2] + "\n"])
                     else:
                         return_string.append(
-                            ["https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_food.png",
-                             data[restaurant].replace("\n", '').replace("🐾",
+                            [data[restaurant].replace("\n", '').replace("🐾",
                                                                         imoge_mapping['emotion']['walk']) + " [" + str(
                                  last_update_date) + " " + t[last_update_date.weekday()] + "요일]",
                              imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion'][
