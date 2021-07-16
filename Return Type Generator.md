@@ -58,7 +58,6 @@ def is_Card(self,thumb_img, Button(), is_title = None, is_description = None):
 <img src="./return_type_img/Basic Card Field.JPG" style="zoom:50%;" />
 
 
-
 **필수 파라미터**
 
 > thumb_img \<string\> : img의 주소를 `string` 형태로 전달
@@ -121,6 +120,21 @@ def is_commerce(self,thumbnail, description, price, currency, Button(), is_disco
 >
 > profile : 제품을 판매하는 프로필 정보를 전달합니다.
 
+
+### List Card
+```Python
+def is_List(self, title, data, is_Button = None): 
+```
+**필수 파라미터**
+
+> title : 리스트 최 상단에 노출 될 제목  
+> data :  리스트에 들어갈 값, [title, subtitle, link]의 형태를 가진 리스트가 들어가야함.  
+
+
+
+**선택 파라미터**
+
+> is_Button : 버튼 타입 파라미터가 들어가야함.
 
 
 
