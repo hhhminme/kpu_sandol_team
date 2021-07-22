@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         request_body = json.loads(base64.b64decode(request_body))
         param = request_body['action']['params']
         key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
-        # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
+        여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
         if key[0] == 'weather': #날씨 관련
             return_string = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
 
@@ -55,14 +55,13 @@ def lambda_handler(event, context):
 
         elif key[0] == "param1":
             g = Generator.Return_Type()
-
             try:
                 for i in range (1,3):
                     g.is_Text("str"+str(i), is_init=False)
-                return_string = g.is_Text(str3, is_init=False)
-
+                return_string = g.is_Text("str3", is_init=False)
             except Exception as e:
                 return_string = str(e)
+
 
 
 
