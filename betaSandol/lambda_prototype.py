@@ -54,12 +54,12 @@ def lambda_handler(event, context):
             return_string = Module.CrawlingFunction.last_subway(Module.CrawlingFunction)
 
         elif key[0] == "param1":
-            gen = Generator.Return_Type()
+            g = Generator.Return_Type()
 
             try:
                 for i in range (1,3):
-                    eval(gen.is_Text("str"+str(i), is_init=False))
-                return_string = gen.is_Text(str3, is_init=False)
+                    g.is_Text("str"+str(i), is_init=False)
+                return_string = g.is_Text(str3, is_init=False)
 
             except Exception as e:
                 return_string = str(e)
