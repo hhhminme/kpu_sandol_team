@@ -405,15 +405,17 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant != 2:
+                    if restaurant == 2:
+                        return_string = meal_gen.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01", is_init=False)
+
+                    else:
                         ret = data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion'][
                             'walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + \
-                                         imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + \
-                                         imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
+                              imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n\n" + \
+                              imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2]
 
                         return_string = meal_gen.is_Text(ret, is_init=False)
-                    else:
-                        return_string = meal_gen.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n", is_init=False)
+
 
             return return_string
 
