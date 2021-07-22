@@ -411,10 +411,9 @@ class s3IOEvent():
                                          imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + \
                                          imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
 
-
-                        return_string = meal_gen.is_Text(g.is_Text(ret, is_init=False))
+                        return_string = meal_gen.is_Text(ret, is_init=False)
                     else:
-                        return_string = meal_gen.is_Text(g.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n", is_init=False))
+                        return_string = meal_gen.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n", is_init=False)
 
             return return_string
 
