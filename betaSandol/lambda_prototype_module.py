@@ -406,7 +406,7 @@ class s3IOEvent():
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     if restaurant == 2:
-                        return_string = meal_gen.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01", is_init=False)
+                        meal_gen.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01", is_init=False)
 
                     else:
                         ret = data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion'][
