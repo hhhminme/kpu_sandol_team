@@ -171,7 +171,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             item = {}
             for idx, dat in enumerate(column):
                 if dat is not None:
-                    if order[idx] is "link":
+                    if order[idx] == "link":
                         item[order[idx]] = self.common_params.Link(dat)
 
                     else:

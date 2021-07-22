@@ -55,12 +55,10 @@ def lambda_handler(event, context):
 
         elif key[0] == "param1":
             gen = Generator.Return_Type()
-            str1 = "aaa"
-            str2 = "bbb"
-            str3 = "ccc"
+
             try:
                 for i in range (1,3):
-                    eval(gen.is_Text("str"+i, is_init=False))
+                    eval(gen.is_Text("str"+str(i), is_init=False))
                 return_string = gen.is_Text(str3, is_init=False)
 
             except Exception as e:
