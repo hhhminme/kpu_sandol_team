@@ -397,7 +397,6 @@ class s3IOEvent():
 
         try:
             meal_gen = Generator.Return_Type()
-            meal_gen.is_Text("학식정보입니다!", is_init=False)
             t = ['월', '화', '수', '목', '금', '토', '일']
             return_string = ''
             with open(local_file, "r", encoding='UTF-8') as f:
