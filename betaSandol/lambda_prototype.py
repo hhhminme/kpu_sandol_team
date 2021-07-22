@@ -6,11 +6,12 @@ import base64
 def lambda_handler(event, context):
     return_string = None
     try:
+        key = ['param1']
         request_body = event['body']
         request_body = json.loads(base64.b64decode(request_body))
         param = request_body['action']['params']
         key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
-        여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
+        # 여러개 들어오는 경우 필수 파라미터 명이 key[0]에 들어감
         if key[0] == 'weather': #날씨 관련
             return_string = Module.CrawlingFunction.weather(Module.CrawlingFunction, param[key[0]])
 
