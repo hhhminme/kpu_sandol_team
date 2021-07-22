@@ -386,6 +386,7 @@ class s3IOEvent():
         store_file = "restaurant_menu.txt"
         s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("sandol")
+        meal_gen = Generator.Return_Type()
         try:
             local_file = "/tmp/" + store_file
             # local_file = "./restaurant_menu/" + store_file  #이 부분 해당 버킷 생성 후 적절히 수정 예정
@@ -396,6 +397,7 @@ class s3IOEvent():
                 "[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad'])  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
+            meal_gen.is_Text(g.is_Text("학식정보입니다!", is_init=False))
             t = ['월', '화', '수', '목', '금', '토', '일']
             return_string = ''
             with open(local_file, "r", encoding='UTF-8') as f:
@@ -403,14 +405,18 @@ class s3IOEvent():
                 for restaurant in range(0, len(data), 2):
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant == 2:
-                        return_string += "웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n"
+                    if restaurant != 2:
+                        ret = data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion'][
+                            'walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + \
+                                         imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + \
+                                         imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
 
+
+                        return_string = meal_gen.is_Text(g.is_Text(ret, is_init=False))
                     else:
-                        return_string += data[restaurant].replace("\n", '').replace("🐾",imoge_mapping['emotion']['walk']) + " [" + str(last_update_date) + " " + t[last_update_date.weekday()] + "요일]\n" + imoge_mapping['emotion']['paw'] + "중식 : " + menu_list[1] + "\n" + imoge_mapping['emotion']['paw'] + "석식 : " + menu_list[2] + "\n"
+                        return_string = meal_gen.is_Text(g.is_Text("웰스프레쉬\nhttps://ibook.kpu.ac.kr/Viewer/menu01\n\n", is_init=False))
 
-
-            return gen.is_Text("학식 정보입니다\n" + return_string)
+            return return_string
 
         except Exception as e:
             return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
