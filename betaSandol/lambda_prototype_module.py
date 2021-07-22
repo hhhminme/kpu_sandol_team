@@ -397,7 +397,7 @@ class s3IOEvent():
                 "[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다" + imoge_mapping['emotion']['sad'])  # 파일을 /tmp/에 복사하여 다운로드
 
         try:
-            meal_gen.is_Text(g.is_Text("학식정보입니다!", is_init=False))
+            meal_gen.is_Text("학식정보입니다!", is_init=False)
             t = ['월', '화', '수', '목', '금', '토', '일']
             return_string = ''
             with open(local_file, "r", encoding='UTF-8') as f:
