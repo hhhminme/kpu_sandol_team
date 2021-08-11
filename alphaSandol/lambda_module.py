@@ -10,6 +10,9 @@ try:
     import boto3
 except ImportError:
     pass
+# boto3는 AWS 버킷에 접근하기 위해  import한 모듈로서, 로컬에서 테스트하기에는 어려움이 있음.
+# 따라서 버킷에 접근하는 코드의 경우, 메인에 올려서 직접 실행해봐야함.
+# 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 
 from Resource import *
 from kpu_sandol_team.betaSandol import return_type_generator as return_type
@@ -29,7 +32,7 @@ class AboutMeal:  # 학식 관련 클래스
         self.data = ""
         self.URL_MENU = "https://ibook.kpu.ac.kr/Viewer/menu01"
 
-    def read_meal(self) -> GEN.is_Text:  # 학식 불러오기
+    def read_meal(self) -> dict:  # 학식 불러오기
         try:
             self.bucket.download_file(Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
 
@@ -60,8 +63,8 @@ class AboutMeal:  # 학식 관련 클래스
             return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
 
 
-    def upload_meal(self, store_name, owner_id) -> GEN.is_Text:  # 학식 업로드
-        if (Constant.RESTAURANT_ACCESS_ID[store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID:
+    def upload_meal(self, store_name, owner_id) -> dict:  # 학식 업로드
+        if (Constant.RESTAURANT_ACCESS_ID[store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.value():
             return GEN.is_Text(f"[Permission-Error #121-1] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
@@ -106,8 +109,8 @@ class AboutMeal:  # 학식 관련 클래스
 
         return GEN.is_Text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
 
-    def reset_meal(self, bot_id, date) -> GEN.is_Text:  # 학식 초기화
-        if bot_id not in Constant.SANDOL_ACCESS_ID:
+    def reset_meal(self, bot_id, date) -> dict:  # 학식 초기화
+        if bot_id not in Constant.SANDOL_ACCESS_ID.value():
             return GEN.is_Text(f"[Permission-Error #141] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
 
         try:
@@ -203,12 +206,12 @@ class LastTraffic:  # 교통 관련 클래스
                 context += ''.join(f"{arv} - ")
                 try:
                     context += ''.join(f"(평일) {find_arrival_time_down(find_weekday2(arv))}")
-                except Exception as e:
+                except Exception:
                     pass
 
                 try:
                     context += "".join(f"(휴일) {find_arrival_time_down2(find_weekend2(arv))}\n")  # 휴일 시간이 있으면 시간 추가
-                except Exception as e:
+                except Exception:
                     context += "".join("\n")  # 휴일 시간 없으면 개행문자 넣고 pass
         return context[:-1]
 
@@ -245,18 +248,42 @@ class Feedback:
         return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
     def delete_feedback(self):
-        pass
+        basic_text = "#feedbacks\n"
+        try:
+            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+        except Exception as e:
+            return GEN.is_Text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
 
-    def read_feedback(self):
-        if token not in Constant.SANDOL_ACCESS_ID:
-            return Return_Type
+        try:
+            with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
+                f.writelines(basic_text)
+
+        except Exception as e:
+            return GEN.is_Text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
+
+    def read_feedback(self, token):
+        if token not in Constant.SANDOL_ACCESS_ID.value():
+            return GEN.is_Text("피드백을 읽을 권한이 없습니다")
+
+        try:
+            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+        except Exception as e:
+            GEN.is_Text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
+
+        try:
+            with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
+                txt = ''.join(f.readlines())
+                return GEN.is_Text(txt)
+
+        except Exception as e:
+            return GEN.is_Text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
 
 
 class Covid:
     def __init__(self):
         self.return_string = ""
 
-    def today_covid(self) -> GEN.is_Card:
+    def today_covid(self) -> dict:
         try:
             url = 'https://m.search.naver.com/p/csearch/content/nqapirender.nhn?where=nexearch&pkid=9005&key=diffV2API'
             html = requests.get(url).text
@@ -283,7 +310,7 @@ class Weather:
         self.URL = 'https://search.naver.com/search.naver?query='
         self.return_string = ''
 
-    def weather(self, location: str = "정왕") -> GEN.is_Text:
+    def weather(self, location: str = "정왕") -> dict:
         url = self.URL + (location + "날씨")
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html.parser')
@@ -342,7 +369,7 @@ class Announcement:
         self.MAX_ANNOUNCEMENT_CNT = 5  # 최대 가져올 공지 수
         self.webLinkUrl = "http://www.kpu.ac.kr/contents/main/cor/noticehaksa.html"
 
-    def announce(self) -> GEN.is_List:
+    def announce(self) -> dict:
         req = requests.get(self.URL)
         soup = BeautifulSoup(req.text, 'html.parser')
         announce_list = soup.find('table').find('tbody').find_all('tr')
@@ -355,11 +382,6 @@ class Announcement:
 
         return GEN.is_List(self.TITLE, result,
                            is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
-
-
-class Test:
-    def __init__(self):
-        pass
 
 class LiveSubwayTraffic:
     def __init__(self, time: str = "00:00:00", station_no: str = "455") ->None:
@@ -393,8 +415,6 @@ class LiveSubwayTraffic:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
                         return_data += i['headsign'] +"방면 "+ i['departureTime'] + ", " + it.__next__()['departureTime']
-                        # print(i['departureTime'], end=' ')
-                        # print(it.__next__()['departureTime'])
                         flag = True
                         break
                     else:
@@ -467,12 +487,9 @@ class LiveSubwayTraffic:
 
         return return_data
 
-    def get_time(self):
+    def get_time(self) -> dict:
         return gen.is_Text(self.time)
-if __name__ == "__main__":
-    cov = Covid()
-    weather = Weather()
-    announce = Announcement()
-    subway = AboutTraffic()
 
-    print(subway.subway())
+class Test: # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
+    def __init__(self):
+        pass
