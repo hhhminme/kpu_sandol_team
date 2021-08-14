@@ -1,11 +1,5 @@
 import json
-<<<<<<< HEAD
 import lambda_module as Module
-=======
-
-# alphaSandol에서는 쓰지 않음. 임포트 삭제 후 모듈 관련 코드 미그레이션 필요
-import lambda_prototype_module as Module
->>>>>>> 91a4f9d73d89195c955ade0b83e19c2c985eabdb
 import return_type_generator as Generator
 import base64
 
