@@ -5,13 +5,10 @@ if __name__ == '__main__':
     path.append(os.path.dirname(__file__))
 
 import json
-<<<<<<< HEAD
+
 import lambda_module as Module
 import resource as Resource
-=======
-import lambda_module as module
-# from . import resource as Resource
->>>>>>> e3221ea69abdf90654e24494c805a4fb1031f668
+
 import base64
 
 def lambda_handler(event, context):
