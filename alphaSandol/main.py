@@ -6,8 +6,8 @@ if __name__ == '__main__':
 
 import json
 
-import lambda_module as Module
-import resource as Resource
+# import lambda_module as Module
+# import resource as Resource
 
 import base64
 
