@@ -6,7 +6,6 @@ import base64
 def lambda_handler(event, context):
     return_string = None
     try:
-        key = ['param1']
         request_body = event['body']
         request_body = json.loads(base64.b64decode(request_body))
         param = request_body['action']['params']
