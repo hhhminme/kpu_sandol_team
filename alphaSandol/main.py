@@ -9,13 +9,21 @@ import lambda_module as Module
 import base64
 
 def lambda_handler(event, context):
+    try:
+        request_body = event['body']
+        request_body = json.loads(base64.b64decode(request_body))
+        param = request_body['action']['params']
+        # key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
+    except Exception as e:
+        print(e)
+
     return_string = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
                     "simpleText": {
-                        "text": "산돌이 기능 개선중입니다 금방 돌아올게요!"
+                        "text": f"{str(param)}\n산돌이 기능 개선중입니다 금방 돌아올게요!"
                     }
                 }
             ],
