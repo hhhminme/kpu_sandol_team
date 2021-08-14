@@ -11,10 +11,12 @@ except ImportError:
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 #
 import resource
-import return_type_generator as return_type
+from return_type_generator import return_type
+from return_type_generator import common_params
 
-GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
-# GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
+
+GEN =  return_type()    # kakao-i type json generator
+GEN_OPTION = common_params() # generator optional param
 Constant = resource.Constant
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
