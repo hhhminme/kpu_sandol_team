@@ -12,7 +12,7 @@ except ImportError:
 # 따라서 버킷에 접근하는 코드의 경우, 메인에 올려서 직접 실행해봐야함.
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 
-from Resource import *
+from .resource import *
 from kpu_sandol_team.alphaSandol import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
