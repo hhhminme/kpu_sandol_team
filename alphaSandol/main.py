@@ -1,6 +1,6 @@
 import json
-import lambda_module as Module
-import return_type_generator as Generator
+# import lambda_module as Module
+# import return_type_generator as Generator
 import base64
 
 def lambda_handler(event, context):
