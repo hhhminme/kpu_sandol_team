@@ -5,25 +5,71 @@ if __name__ == '__main__':
     path.append(os.path.dirname(__file__))
 
 import json
-import lambda_module as Module
 import base64
-
-def lambda_handler(event, context):
+import pprint
+JSON_DATA =  {
+    'body':{
+  "intent": {
+    "id": "ttc0v82yotpkittnmfpq9lcy",
+    "name": "블록 이름"
+  },
+  "userRequest": {
+    "timezone": "Asia/Seoul",
+    "params": {
+      "ignoreMe": "true"
+    },
+    "block": {
+      "id": "ttc0v82yotpkittnmfpq9lcy",
+      "name": "블록 이름"
+    },
+    "utterance": "발화 내용",
+    "lang": 'null',
+    "user": {
+      "id": "616332",
+      "type": "accountId",
+      "properties": {}
+    }
+  },
+  "bot": {
+    "id": "5e0f180affa74800014bd33d",
+    "name": "봇 이름"
+  },
+  "action": {
+    "name": "o8fhv36eao",
+    "clientExtra": 'null',
+    "params": {
+      "weather": "정왕 날씨 궁금해"
+    },
+    "id": "koow1xlhycjsjacfcqy49w6w",
+    "detailParams": {
+      "weather": {
+        "origin": "정왕 날씨 궁금해",
+        "value": "정왕 날씨 궁금해",
+        "groupName": ""
+      }
+    }
+  }
+}
+}
+TEST_EVENT = json.dumps(JSON_DATA)
+def lambda_handler(context, event):
+    # request_body = json.loads(base64.b64decode(event))
+    request_body = json.loads(event)
+    param = request_body['body']['action']['params']
+    key = list(param.keys())
     try:
-        request_body = event['body']
-        request_body = json.loads(base64.b64decode(request_body))
-        param = request_body['action']['params']
-        # key = list(param.keys())  # 입력으로 들어오는 값을 여기서 처리함
+        function_params = key[1:]
     except Exception as e:
         print(e)
+        pass
 
     return_string = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
-                    "simpleText": {
-                        "text": f"{str(param)}\n산돌이 기능 개선중입니다 금방 돌아올게요!"
+                    'simpleText': {
+                        "text": f"{str(param)}\n\n산돌이 기능개선중입니다 금방 돌아올게요!"
                     }
                 }
             ],
@@ -44,4 +90,4 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
-event =
+pprint.pprint(lambda_handler(".", TEST_EVENT))
