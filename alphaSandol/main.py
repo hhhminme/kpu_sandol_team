@@ -7,7 +7,7 @@ if __name__ == '__main__':
 import json
 
 # import lambda_module as Module
-# import resource as Resource
+import resource as Resource
 
 import base64
 
@@ -18,7 +18,7 @@ def lambda_handler(event, context):
             "outputs": [
                 {
                     "simpleText": {
-                        "text": "[Main Function Error]" + str("test")
+                        "text": "산돌이 기능 개선중입니다 금방 돌아올게요!"
                     }
                 }
             ],
