@@ -1,5 +1,5 @@
 from return_type_generator import *
-from .lambda_module import *
+from lambda_module import *
 
 class Constant:
 

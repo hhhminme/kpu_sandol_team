@@ -1,5 +1,11 @@
+if __name__ == '__main__':
+    # main 파일을 엔트리포인트로 사용할 경우, path에 폴더 경로를 추가해 절대 경로로 임포트가 가능하게 함
+    from sys import path
+    import os
+    path.append(os.path.dirname(__file__))
+
 import json
-from . import lambda_module as module
+import lambda_module as module
 # from . import resource as Resource
 import base64
 
