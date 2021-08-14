@@ -14,7 +14,7 @@ import resource
 import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
-GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
+# GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
 Constant = resource.Constant
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):

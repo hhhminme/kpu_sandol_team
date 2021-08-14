@@ -188,14 +188,6 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
 class Common_params:
 
-    #kwargs로 들어올 수 있는 값은 DOCS를 참조
-    # label = string
-    # action = string
-    # webLinkUrl = string | action = webLink
-    # messageText = string | action = message or block
-    # phoneNumber = string | action = phone
-    # blockId = string | action = block
-    # extra ...
     def Button(self, **kwargs):
         data = {}
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']

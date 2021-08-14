@@ -36,3 +36,4 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
+print ("A")

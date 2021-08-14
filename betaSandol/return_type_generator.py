@@ -186,7 +186,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return self.return_json
 
 
-class Common_params:
+class common_params:
 
     #kwargs로 들어올 수 있는 값은 DOCS를 참조
     # label = string
