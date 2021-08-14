@@ -435,7 +435,7 @@ class s3IOEvent():
 
         try:
             # local_file = "./restaurant_menu/" + store_file
-            s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/t`1mp/restaurant_menu.txt')
+            s3.meta.client.download_file("sandol", "restaurant_menu.txt", '/tmp/restaurant_menu.txt')
 
         except Exception as e:
             return gen.set_text("[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다." + imoge_mapping['emotion']['sad'])
