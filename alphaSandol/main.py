@@ -1,5 +1,5 @@
 import json
-from .lambda_module import *
+# from .lambda_module import *
 from .resource import *
 import base64
 
