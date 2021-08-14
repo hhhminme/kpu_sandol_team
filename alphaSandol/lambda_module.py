@@ -10,12 +10,12 @@ except ImportError:
 # 따라서 버킷에 접근하는 코드의 경우, 메인에 올려서 직접 실행해봐야함.
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 
-from .resource import Constant as Constant
+from . import resource
 from . import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
 GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
-
+Constant = resource.Constant
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
         self.DATE = 0
