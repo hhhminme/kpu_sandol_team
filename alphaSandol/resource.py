@@ -1,5 +1,5 @@
-from return_type_generator import *
-from lambda_module import *
+# from return_type_generator import *
+# from lambda_module import *
 
 class Constant:
     ####################################################################################################################
@@ -63,18 +63,18 @@ class Constant:
     SANDOL_PROFILE1: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo_profile1.png"  # 산돌이 프로필 (필요시 사용)
 
     ####################################################################################################################
-
-    KEY_SET:dict = {
-        'weather': Module.Weather().weather,
-        'covid': Module.Covid().today_covid,
-        'feedback_upload': Module.Feedback().upload_feedback,
-        'read_feedback' : Module.Feedback().read_feedback,
-        'perm_chk' : None,
-        'store_name' : Module.AboutMeal().upload_meal,
-        'read_meal' : Module.AboutMeal().read_meal,
-        'reset_meal' : Module.AboutMeal().reset_meal,
-        'subway' : Module.LiveSubwayTraffic(),
-        'ann' : Module.Announcement().announce,
-        'last_subway' : Module.LastTraffic().real_time_traffic(),
-        'param1' : Module.Test()
-    }
+    #
+    # KEY_SET:dict = {
+    #     'weather': Module.Weather().weather,
+    #     'covid': Module.Covid().today_covid,
+    #     'feedback_upload': Module.Feedback().upload_feedback,
+    #     'read_feedback' : Module.Feedback().read_feedback,
+    #     'perm_chk' : None,
+    #     'store_name' : Module.AboutMeal().upload_meal,
+    #     'read_meal' : Module.AboutMeal().read_meal,
+    #     'reset_meal' : Module.AboutMeal().reset_meal,
+    #     'subway' : Module.LiveSubwayTraffic(),
+    #     'ann' : Module.Announcement().announce,
+    #     'last_subway' : Module.LastTraffic().real_time_traffic(),
+    #     'param1' : Module.Test()
+    # }
