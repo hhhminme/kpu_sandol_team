@@ -1,4 +1,6 @@
 import json
+
+# alphaSandol에서는 쓰지 않음. 임포트 삭제 후 모듈 관련 코드 미그레이션 필요
 import lambda_prototype_module as Module
 import return_type_generator as Generator
 import base64
