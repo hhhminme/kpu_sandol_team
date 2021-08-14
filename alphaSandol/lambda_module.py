@@ -1,10 +1,8 @@
 from bs4 import BeautifulSoup
-from typing import Type, List
+from typing import List
 import requests
-import random
 import datetime
 import json
-import time
 
 try:
     import boto3
@@ -15,7 +13,7 @@ except ImportError:
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 
 from Resource import *
-from kpu_sandol_team.betaSandol import return_type_generator as return_type
+from kpu_sandol_team.alphaSandol import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
 GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param

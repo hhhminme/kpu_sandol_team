@@ -213,9 +213,3 @@ class Common_params:
         return {
             'web' : url
         }
-
-# a = Common_params()
-# b = Return_Type()
-# print(b.is_Card("asd",a.Button(label='true', action='false', ff="ff"), is_title="title", is_description="asdf"))
-# print(a.Button(label="test", action="weblink", weblinkUrl="https://www.naver.com"))
-#print(b.is_Carousel("basicCard",3,("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자2", "보물상자 안에는 뭐가 있을까"),("http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg", "보물상자3", "보물상자 안에는 뭐가 있을까")))

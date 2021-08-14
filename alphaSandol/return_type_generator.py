@@ -1,6 +1,6 @@
 class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
-    def __init__(self)->None:
-        self.return_json:dict = {
+    def __init__(self):
+        self.return_json = {
             "version": "2.0",
             "template": {
                 "outputs": [
@@ -14,9 +14,9 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 ]
             }
         }
-        self.common_params = Common_Params()
+        self.common_params = Common_params()
 
-    def init_json(self)->None:
+    def init_json(self):
         self.return_json = {
             "version": "2.0",
             "template": {
@@ -32,7 +32,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             }
         }
 
-    def is_Text(self, text: str, is_init = True)->dict:  #텍스트 형식
+    def is_Text(self, text, is_init = True):  #텍스트 형식
         if (is_init == True):
             self.init_json()
         basic_text ={
@@ -43,9 +43,9 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_text)
         return self.return_json
 
-    def is_Card(self,thumb_img, *is_buttons, is_title: str = None, is_description = None, flag = False)->dict:  #카드 형식
+    def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None, flag = False):  #카드 형식
         self.init_json()
-        basic_card: dict = {
+        basic_card = {
             "thumbnail": {
                 "imageUrl": thumb_img
             }
@@ -76,7 +76,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             self.return_json["template"]["outputs"].append({"basicCard": basic_card})
             return self.return_json
 
-    def is_Image(self, src, text = None)->dict: # 이미지 반환 형식
+    def is_Image(self, src, text = None): # 이미지 반환 형식
         self.init_json()
         basic_image ={
         "simpleImage": {
@@ -90,7 +90,55 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_image)
         return self.return_json
 
-    def is_Carousel(self, card_type, card_num, *params)->dict:  #케로셀 반환 형식    #(link, Title, description)
+    def is_commerce(self,thumbnail, description, price, currency, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None, **kwargs):  # 커머스 반환 형식
+        self.common_params.Button(**kwargs)
+        return_json = {
+                          "version": "2.0",
+                          "template": {
+                            "outputs": [
+                              {
+                                "commerceCard": {
+                                  "description": "따끈따끈한 보물 상자 팝니다",
+                                  "price": 10000,
+                                  "discount": 1000,
+                                  "currency": "won",
+                                  "thumbnails": [
+                                    {
+                                      "imageUrl": "http://k.kakaocdn.net/dn/83BvP/bl20duRC1Q1/lj3JUcmrzC53YIjNDkqbWK/i_6piz1p.jpg",
+                                      "link": {
+                                        "web": "https://store.kakaofriends.com/kr/products/1542"
+                                      }
+                                    }
+                                  ],
+                                  "profile": {
+                                    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4BJ9LU4Ikr_EvZLmijfcjzQKMRCJ2bO3A8SVKNuQ78zu2KOqM",
+                                    "nickname": "보물상자 팝니다"
+                                  },
+                                  "buttons": [
+                                    {
+                                      "label": "구매하기",
+                                      "action": "webLink",
+                                      "webLinkUrl": "https://store.kakaofriends.com/kr/products/1542"
+                                    },
+                                    {
+                                      "label": "전화하기",
+                                      "action": "phone",
+                                      "phoneNumber": "354-86-00070"
+                                    },
+                                    {
+                                      "label": "공유하기",
+                                      "action": "share"
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+        return return_json
+
+
+    def is_Carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
         self.init_json()
         basic_carousel =  {
                         "carousel": {
@@ -108,7 +156,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
 
-    def is_List(self, title: str, data: list, is_Button = None)->dict:     # [title, desc, url], 만약 없으면 None #data = list
+    def is_List(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None #data = list
         self.init_json()
         order = ['title', 'description', 'link']
         basic_list = {
@@ -138,7 +186,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return self.return_json
 
 
-class Common_Params:
+class Common_params:
 
     #kwargs로 들어올 수 있는 값은 DOCS를 참조
     # label = string
@@ -148,7 +196,7 @@ class Common_Params:
     # phoneNumber = string | action = phone
     # blockId = string | action = block
     # extra ...
-    def Button(self, **kwargs)->dict:
+    def Button(self, **kwargs):
         data = {}
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
         for item in kwargs.items():
@@ -161,7 +209,7 @@ class Common_Params:
 
         return data
 
-    def Link(self, url)->dict:
+    def Link(self, url):
         return {
             'web' : url
         }
