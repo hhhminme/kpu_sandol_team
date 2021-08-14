@@ -1,8 +1,7 @@
-from return_type_generator import *
-from .lambda_module import *
+from . import return_type_generator
+from . import lambda_module as Module
 
 class Constant:
-
     ####################################################################################################################
     IMOGE: dict = {
         'emotion': {
@@ -66,16 +65,16 @@ class Constant:
     ####################################################################################################################
 
     KEY_SET:dict = {
-        'weather': Weather().weather,
-        'covid': Covid().today_covid,
-        'feedback_upload': Feedback().upload_feedback,
-        'read_feedback' : Feedback().read_feedback,
+        'weather': Module.Weather().weather,
+        'covid': Module.Covid().today_covid,
+        'feedback_upload': Module.Feedback().upload_feedback,
+        'read_feedback' : Module.Feedback().read_feedback,
         'perm_chk' : None,
-        'store_name' : AboutMeal().upload_meal,
-        'read_meal' : AboutMeal().read_meal,
-        'reset_meal' : AboutMeal().reset_meal,
-        'subway' : LiveSubwayTraffic(),
-        'ann' : Announcement().announce,
-        'last_subway' : LastTraffic().real_time_traffic(),
-        'param1' : Test()
+        'store_name' : Module.AboutMeal().upload_meal,
+        'read_meal' : Module.AboutMeal().read_meal,
+        'reset_meal' : Module.AboutMeal().reset_meal,
+        'subway' : Module.LiveSubwayTraffic(),
+        'ann' : Module.Announcement().announce,
+        'last_subway' : Module.LastTraffic().real_time_traffic(),
+        'param1' : Module.Test()
     }
