@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+bs4 = "*"
+boto3 = "*"
+troposphere = { version = "<3.0", ignore = ["zappa"] }
+zappa = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"

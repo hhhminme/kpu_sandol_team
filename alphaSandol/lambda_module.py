@@ -13,7 +13,7 @@ except ImportError:
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 
 from .resource import *
-from kpu_sandol_team.alphaSandol import return_type_generator as return_type
+from . import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
 GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
