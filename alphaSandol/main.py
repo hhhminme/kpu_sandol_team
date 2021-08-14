@@ -7,7 +7,7 @@ if __name__ == '__main__':
 import json
 import base64
 
-def lambda_handler(context, event):
+def lambda_handler(event, context):
     request_body = event['body']
     request_body = json.loads(base64.b64decode(request_body))
     param = request_body['action']['params']
