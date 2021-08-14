@@ -1,6 +1,6 @@
 import json
-from . import lambda_module as module
-# from . import resource as Resource
+import lambda_module as Module
+import resource as Resource
 import base64
 
 def lambda_handler(event, context):
