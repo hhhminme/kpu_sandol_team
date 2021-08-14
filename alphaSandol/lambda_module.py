@@ -1,9 +1,7 @@
 from bs4 import BeautifulSoup
-from typing import List
 import requests
 import datetime
 import json
-
 try:
     import boto3
 except ImportError:
@@ -17,7 +15,7 @@ import return_type_generator as return_type
 
 GEN: return_type.Return_Type = return_type.Return_Type()    # kakao-i type json generator
 GEN_OPTION: return_type.Common_Params = return_type.Common_Params() # generator optional param
-
+Constant = resource.Constant
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
         self.DATE = 0
