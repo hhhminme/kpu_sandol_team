@@ -32,7 +32,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             }
         }
 
-    def is_Text(self, text, is_init = True):  #텍스트 형식
+    def set_text(self, text, is_init = True):  #텍스트 형식
         if (is_init == True):
             self.init_json()
         basic_text ={
@@ -43,7 +43,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_text)
         return self.return_json
 
-    def is_Card(self,thumb_img, *is_buttons, is_title = None, is_description = None, flag = False):  #카드 형식
+    def set_card(self,thumb_img, *is_buttons, is_title = None, is_description = None, flag = False):  #카드 형식
         self.init_json()
         basic_card = {
             "thumbnail": {
@@ -76,7 +76,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             self.return_json["template"]["outputs"].append({"basicCard": basic_card})
             return self.return_json
 
-    def is_Image(self, src, text = None): # 이미지 반환 형식
+    def set_image(self, src, text = None): # 이미지 반환 형식
         self.init_json()
         basic_image ={
         "simpleImage": {
@@ -90,7 +90,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_image)
         return self.return_json
 
-    def is_commerce(self,thumbnail, description, price, currency, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None, **kwargs):  # 커머스 반환 형식
+    def set_commerce(self,thumbnail, description, price, currency, is_discount = None, is_discountRate = None, is_discountedPrice = None, profile = None, **kwargs):  # 커머스 반환 형식
         self.common_params.Button(**kwargs)
         return_json = {
                           "version": "2.0",
@@ -138,7 +138,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return return_json
 
 
-    def is_Carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
+    def set_carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
         self.init_json()
         basic_carousel =  {
                         "carousel": {
@@ -156,7 +156,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
 
-    def is_List(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None #data = list
+    def set_list(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None #data = list
         self.init_json()
         order = ['title', 'description', 'link']
         basic_list = {

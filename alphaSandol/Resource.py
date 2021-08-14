@@ -1,4 +1,5 @@
 from return_type_generator import *
+from .lambda_module import *
 
 class Constant:
 
@@ -64,5 +65,17 @@ class Constant:
 
     ####################################################################################################################
 
-    def Return_A(self)-> str:
-        return "A"
+    KEY_SET:dict = {
+        'weather': Weather().weather,
+        'covid': Covid().today_covid,
+        'feedback_upload': Feedback().upload_feedback,
+        'read_feedback' : Feedback().read_feedback,
+        'perm_chk' : None,
+        'store_name' : AboutMeal().upload_meal,
+        'read_meal' : AboutMeal().read_meal,
+        'reset_meal' : AboutMeal().reset_meal,
+        'subway' : LiveSubwayTraffic(),
+        'ann' : Announcement().announce,
+        'last_subway' : LastTraffic().real_time_traffic(),
+        'param1' : Test()
+    }
