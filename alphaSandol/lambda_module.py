@@ -258,33 +258,6 @@ class Feedback:
         # if token not in list(Constant.SANDOL_ACCESS_ID.values()):
         #     return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
 
-        def read_feedback():
-            try:
-                self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
-            except Exception as e:
-                GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
-
-            try:
-                with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
-                    txt = ''.join(f.readlines())
-                    return GEN.set_text(txt)
-
-            except Exception as e:
-                return GEN.set_text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
-
-        def delete_feedback():
-            basic_text = "#feedbacks\n"
-            try:
-                self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
-            except Exception as e:
-                return GEN.set_text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
-
-            try:
-                with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
-                    f.writelines(basic_text)
-
-            except Exception as e:
-                return GEN.set_text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
 
         try:
             if option == 2:
@@ -296,7 +269,35 @@ class Feedback:
         except Exception as e:
             return GEN.set_text(f"error : {e}\n{token}")
 
+    def read_feedback(self):
+        try:
+            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
 
+        except Exception as e:
+            GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
+
+        try:
+            with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
+                txt = ''.join(f.readlines())
+                return GEN.set_text(txt)
+
+        except Exception as e:
+            return GEN.set_text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
+
+    def delete_feedback(self):
+        basic_text = "#feedbacks\n"
+        try:
+            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+        except Exception as e:
+            return GEN.set_text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
+
+        try:
+            with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
+                f.writelines(basic_text)
+
+        except Exception as e:
+            return GEN.set_text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
+        return GEN.set_text("정상적으로 삭제했습니다")
 class Covid:
     def __init__(self):
         self.return_string = ""
