@@ -62,12 +62,13 @@ class AboutMeal:  # 학식 관련 클래스
                 "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
+        MEAL_GEN = return_type()
         if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(Constant.SANDOL_ACCESS_ID.values()):
-            return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
+            return MEAL_GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
         if store_name not in Constant.RESTAURANT_ACCESS_ID.keys():
-            return GEN.set_text(f"[Not-Found-Error #121-2] 해당하는 식당이 없습니다.{Constant.IMOGE['emotion']['sad']}")
+            return MEAL_GEN.set_text(f"[Not-Found-Error #121-2] 해당하는 식당이 없습니다.{Constant.IMOGE['emotion']['sad']}")
         # 식당 존재 여부 확인
 
         try:
@@ -75,7 +76,7 @@ class AboutMeal:  # 학식 관련 클래스
                                               Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.set_text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return MEAL_GEN.set_text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding="UTF-8") as f:
             try:
@@ -109,7 +110,7 @@ class AboutMeal:  # 학식 관련 클래스
                 return GEN.set_text(
                     f"[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
-        return GEN.set_text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
+        return MEAL_GEN.set_text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
 
     def reset_meal(self, bot_id, date) -> dict:  # 학식 초기화
         if bot_id not in list(Constant.SANDOL_ACCESS_ID.values()):
