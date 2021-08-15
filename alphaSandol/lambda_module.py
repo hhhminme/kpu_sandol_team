@@ -243,7 +243,7 @@ class Feedback:
             self.bucket.download_file(Constant.LOCAL_FEEDBACK_FILE, Constant.FEEDBACK_FILE)
 
         except Exception as e:
-            return GEN.is_Text(
+            return GEN.set_text(
                 f"[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         try:
@@ -251,16 +251,16 @@ class Feedback:
                 f.writelines(self.data)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #102] 파일을 저장 중 오류가 발생했습니다{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #102] 파일을 저장 중 오류가 발생했습니다{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         try:
             self.S3_client.upload_file(Constant.LOCAL_FEEDBACK_FILE, Constant.BUCKET_NAME, Constant.FEEDBACK_FILE)
 
         except Exception as e:
-            return GEN.is_Text(
+            return GEN.set_text(
                 f"[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{Constant.IMOGE['emotion']['sad']}\n{e}")
 
-        return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
+        return GEN.set_text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
     def manage_feedback(self, option, token):
         if token not in list(Constant.SANDOL_ACCESS_ID.values()):
