@@ -236,8 +236,8 @@ class Feedback:
         self.bucket = self.S3.Bucket(Constant.BUCKET_NAME)
         self.data = ""
 
-    def upload_feedback(self):
-        self.data = f"[{str(datetime.datetime.today())}] : {self.data}\n"
+    def upload_feedback(self, data):
+        self.data = f"[{str(datetime.datetime.today())}] : {data}\n"
 
         try:
             self.bucket.download_file(Constant.LOCAL_FEEDBACK_FILE, Constant.FEEDBACK_FILE)
