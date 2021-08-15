@@ -78,7 +78,7 @@ KEY_SET: dict = {
     'param1': Module.Test()
 }
 PARAM_EXIST_FUNCTION = {
-    'weather': ['location'],
+    'weather': [],
     'covid': [],
     'feedback_upload': ['data'],
     'read_feedback': ['option', 'bot_id'],

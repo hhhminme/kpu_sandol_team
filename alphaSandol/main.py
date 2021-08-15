@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
 import json
 import base64
-import lambda_module as Module
+import sandol_constant as Constant
 
 def lambda_handler(event, context):
     try:
@@ -16,12 +16,30 @@ def lambda_handler(event, context):
         param = request_body['action']['params']
         key = list(param.keys())
         func_name = key[0]
-        # ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
+        key_values = list(param.values())
+        ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
 
-        if func_name == 'weather':
-            return_string = Module.Weather.weather()
+        module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
+        input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
+
+        if len(input_params) == 0:
+            return_string = module_function()
+
+        elif len(input_params) == 1:
+            return_string = module_function(key_values[0])
+
         else:
-            raise Exception
+            if func_name == 'read_feedback':
+                return_string = module_function(str(key_values[0]), ACCESS_ID)
+
+            elif func_name == 'store_name':
+                upload_date = json.loads(key_values[3])
+                return_string = module_function(key_values[0], key_values[1], key_values[2], upload_date['date'],
+                                                ACCESS_ID)
+
+            elif func_name == 'reset_meal':
+                raise Exception(str(request_body))
+
 
     except Exception as e:
         return_string = {
