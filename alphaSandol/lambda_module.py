@@ -267,7 +267,7 @@ class Feedback:
         if id not in (Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text("권한이 없습니다")
         try:
-            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+            self.bucket.download_file(Constant.FEEDBACK_FILE, Constant.LOCAL_FEEDBACK_FILE)
 
         except Exception as e:
             GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
@@ -287,12 +287,12 @@ class Feedback:
 
         basic_text = "#feedbacks\n"
         try:
-            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+            self.bucket.download_file(Constant.FEEDBACK_FILE, Constant.LOCAL_FEEDBACK_FILE)
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
 
         try:
-            with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
+            with open(Constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
                 f.writelines(basic_text)
 
         except Exception as e:
@@ -300,12 +300,12 @@ class Feedback:
 
         try:
             s3 = boto3.client('s3')
-            s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
+            s3.upload_file(Constant.LOCAL_FEEDBACK_FILE, Constant.BUCKET_NAME, Constant.FEEDBACK_FILE)
 
         except Exception as e:
-            return gen.set_text(f"[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{e}")
+            return GEN.set_text(f"[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{e}")
 
-        return gen.set_text("성공적으로 파일 내용을 삭제했습니다")
+        return GEN.set_text("성공적으로 파일 내용을 삭제했습니다")
 class Covid:
     def __init__(self):
         self.return_string = ""
