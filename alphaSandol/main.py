@@ -18,6 +18,7 @@ def lambda_handler(event, context):
         func_name = key[0]
         key_values = list(param.values())
         ACCESS_ID = str(request_body['bot']['id'])  # 접근 권한을 가진 ID 확인용
+        ACCESS_ID2 = request_body['userRequest']['user']['id']
 
         module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
@@ -30,7 +31,7 @@ def lambda_handler(event, context):
 
         else:
             if func_name == 'read_feedback':
-                return_string = module_function(key_values[0], ACCESS_ID)
+                return_string = module_function(key_values[0], ACCESS_ID2)
 
             elif func_name == 'store_name':
                 upload_date = json.loads(key_values[3])
