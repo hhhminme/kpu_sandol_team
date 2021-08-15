@@ -2,11 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 import json
-
-try:
-    import boto3
-except ImportError:
-    pass
+import boto3
 # boto3는 AWS 버킷에 접근하기 위해  import한 모듈로서, 로컬에서 테스트하기에는 어려움이 있음.
 # 따라서 버킷에 접근하는 코드의 경우, 메인에 올려서 직접 실행해봐야함.
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
