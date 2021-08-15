@@ -16,8 +16,7 @@ def lambda_handler(event, context):
         param = request_body['action']['params']
         key = list(param.keys())
         func_name = key[0]
-        key_values = list(param.values())
-        ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
+        # ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
 
         if func_name == 'weather':
             return_string = Module.Weather.weather()
