@@ -263,16 +263,15 @@ class Feedback:
         return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
     def manage_feedback(self, option, token):
-        # if token not in list(Constant.SANDOL_ACCESS_ID.values()):
-        #     return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
-
+        if token not in list(Constant.SANDOL_ACCESS_ID.values()):
+            return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
 
         try:
             if option == 2:
-                delete_feedback()
+                self.delete_feedback()
 
             else:
-                read_feedback()
+                self.read_feedback()
 
         except Exception as e:
             return GEN.set_text(f"error : {e}\n{token}")
@@ -287,10 +286,11 @@ class Feedback:
         try:
             with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
                 txt = ''.join(f.readlines())
-                return GEN.set_text(txt)
 
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
+
+        return GEN.set_text(txt)
 
     def delete_feedback(self):
         basic_text = "#feedbacks\n"
@@ -305,7 +305,15 @@ class Feedback:
 
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
-        return GEN.set_text("정상적으로 삭제했습니다")
+
+        try:
+            s3 = boto3.client('s3')
+            s3.upload_file("/tmp/feedback.txt", 'sandol', 'feedback.txt')
+
+        except Exception as e:
+            return gen.set_text(f"[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{e}")
+
+        return gen.set_text("성공적으로 파일 내용을 삭제했습니다")
 class Covid:
     def __init__(self):
         self.return_string = ""
