@@ -255,8 +255,8 @@ class Feedback:
         return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
     def manage_feedback(self, option, token):
-        if token not in list(Constant.SANDOL_ACCESS_ID.values()):
-            return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
+        # if token not in list(Constant.SANDOL_ACCESS_ID.values()):
+        #     return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
 
         def read_feedback():
             try:
@@ -294,7 +294,7 @@ class Feedback:
                 read_feedback()
 
         except Exception as e:
-            return GEN.set_text(f"error : {e}")
+            return GEN.set_text(f"error : {e}\n{token}")
 
 
 class Covid:
