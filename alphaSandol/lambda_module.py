@@ -137,7 +137,7 @@ class AboutMeal:  # 학식 관련 클래스
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
-
+        return GEN.set_text(f"파일을 정상적으로 초기화했습니다")
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
 
