@@ -6,37 +6,19 @@ if __name__ == '__main__':
 
 import json
 import base64
+import sandol_constant as Constant
 
 def lambda_handler(event, context):
     request_body = event['body']
     request_body = json.loads(base64.b64decode(request_body))
     param = request_body['action']['params']
-    # key = list(param.keys())
-    # try:
-    #     function_params = key[1:]
-    # except Exception as e:
-    #     print(e)
-    #     pass
-
-    return_string = {
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    'simpleText': {
-                        "text": f"{str(param)}\n\n산돌이 기능개선중입니다 금방 돌아올게요!"
-                    }
-                }
-            ],
-            "quickReplies": [
-                {
-                    "messageText": "도움말",
-                    "action": "message",
-                    "label": "도움말"
-                }
-            ]
-        }
-    }
+    key = list(param.keys())
+    function_params = list(param.values())
+    print("a")
+    if key[0] in Constant.KEY_SET.keys():
+        module_function = Constant.KEY_SET[key[0]]
+        print(module_function)
+    print(return_string)
 
     return {
         'statusCode': 200,
@@ -45,4 +27,42 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
-# pprint.pprint(lambda_handler(".", TEST_EVENT))
+
+def test_lambda_handler(event):
+    return_string = ''
+    request_body = json.loads(event)
+    param = request_body['body']['action']['params']
+    key = list(param.keys())
+    func_name = key[0]
+    key_values = list(param.values())
+    ACCESS_ID = str(request_body['userRequest']['user']['properties']['botUserKey'])    #접근 권한을 가진 ID 확인용
+
+    module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
+    input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
+
+    if len(input_params) == 0:
+        return_string = module_function()
+
+    elif len(input_params) == 1:
+            return_string = module_function(key_values[0])
+
+    else:
+        if func_name == 'read_feedback':
+            return_string = module_function(key_values[0], ACCESS_ID)
+
+        elif func_name == 'store_name':
+            upload_date = json.loads(key_values[3])
+            return_string = module_function(key_values[0], key_values[1], key_values[2], upload_date['date'], ACCESS_ID)
+
+        elif func_name == 'reset_meal':
+            upload_date = json.loads(key_values[3])
+            return_string = module_function(ACCESS_ID, upload_date)
+
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(return_string),
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+        }
+    }

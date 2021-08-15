@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 import json
+
 try:
     import boto3
 except ImportError:
@@ -10,14 +11,15 @@ except ImportError:
 # 따라서 버킷에 접근하는 코드의 경우, 메인에 올려서 직접 실행해봐야함.
 # 로컬에서 다른 코드 테스트시 오류 방지 하기 위함.
 #
-import resource
+# from resource import Constant
 from return_type_generator import return_type
 from return_type_generator import common_params
+import sandol_constant as Constant
+
+GEN = return_type()  # kakao-i type json generator
+GEN_OPTION = common_params()  # generator optional param
 
 
-GEN =  return_type()    # kakao-i type json generator
-GEN_OPTION = common_params() # generator optional param
-Constant = resource.Constant
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
         self.DATE = 0
@@ -26,7 +28,7 @@ class AboutMeal:  # 학식 관련 클래스
 
         self.S3 = boto3.resource('s3')
         self.S3_client = boto3.client('s3')
-        self.bucket = s3.Bucket(Constant.BUCKET_NAME)
+        self.bucket = self.S3.Bucket(Constant.BUCKET_NAME)
         self.data = ""
         self.URL_MENU = "https://ibook.kpu.ac.kr/Viewer/menu01"
 
@@ -35,14 +37,15 @@ class AboutMeal:  # 학식 관련 클래스
             self.bucket.download_file(Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(
+                f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
         # 버킷을 로컬 임시 폴더에 다운로드
 
         try:
             weekday = ['월', '화', '수', '목', '금', '토', '일']
             with open(local_file, "r", encoding='UTF-8') as f:
                 data = f.readlines()
-                for restaurant in range(0, len(data), 2):   # 파일에서 식당 구분이 2칸 간격으로 되어있음
+                for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
@@ -52,33 +55,38 @@ class AboutMeal:  # 학식 관련 클래스
                     ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일\n]" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
-                    meal_gen.is_Text(ret, is_init=False)
+                    meal_gen.set_text(ret, is_init=False)
 
-            return_string = meal_gen.is_Text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}", is_init=False)
+            return_string = meal_gen.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+                                              is_init=False)
             return return_string
 
         except Exception as e:
-            return gen.is_Text("[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
+            return gen.set_text(
+                "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
 
-
-    def upload_meal(self, store_name, owner_id) -> dict:  # 학식 업로드
-        if (Constant.RESTAURANT_ACCESS_ID[store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.value():
-            return GEN.is_Text(f"[Permission-Error #121-1] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
+    def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
+        if (Constant.RESTAURANT_ACCESS_ID[
+                store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.value():
+            return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
         if store_name not in Constant.RESTAURANT_ACCESS_ID.keys():
-            return GEN.is_Text(f"[Not-Found-Error #121-2] 해당하는 식당이 없습니다.{Constant.IMOGE['emotion']['sad']}")
+            return GEN.set_text(f"[Not-Found-Error #121-2] 해당하는 식당이 없습니다.{Constant.IMOGE['emotion']['sad']}")
         # 식당 존재 여부 확인
 
         try:
-            self.S3.meta.client.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
+            self.S3.meta.client.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU,
+                                              Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+
         with open(local_file, "r", encoding="UTF-8") as f:
             try:
-                data: List[str] = f.readlines()
-                menu_info = data[data.index("🐾"+store_name+"\n") + 1].replace('\'', '').replace("\n", "").split(", ")
+                data = f.readlines()
+                menu_info = data[data.index("🐾" + store_name + "\n") + 1].replace('\'', '').replace("\n", "").split(
+                    ", ")
                 menu_info[self.DATE] = input_date
 
                 menu_info[self.LUNCH] = lunch_list.replace(", ", ",").replace(" ", ",")
@@ -90,32 +98,34 @@ class AboutMeal:  # 학식 관련 클래스
                 menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
                 menu_info[self.DINNER] = dinner_list.replace(" ", ",")
 
-                data[data.index("🐾"+store_name+"\n") + 1] = str(menu_info)[1:-1] + "\n" #최종 문자열
+                data[data.index("🐾" + store_name + "\n") + 1] = str(menu_info)[1:-1] + "\n"  # 최종 문자열
                 with open(local_file, "w", encoding='UTF-8') as rf:
                     rf.writelines(data)
 
             except Exception as e:
-                return GEN.is_Text(f"[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+                return GEN.set_text(
+                    f"[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
             try:
                 s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
                 s3.upload_file(local_file, 'sandol', store_file)
 
             except Exception as e:
-                return GEN.is_Text(
+                return GEN.set_text(
                     f"[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
-        return GEN.is_Text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
+        return GEN.set_text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
 
     def reset_meal(self, bot_id, date) -> dict:  # 학식 초기화
         if bot_id not in Constant.SANDOL_ACCESS_ID.value():
-            return GEN.is_Text(f"[Permission-Error #141] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
+            return GEN.set_text(f"[Permission-Error #141] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
 
         try:
-            self.S3.meta.clinet.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
+            self.S3.meta.clinet.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU,
+                                              Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         try:
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
@@ -131,7 +141,7 @@ class AboutMeal:  # 학식 관련 클래스
                 f.writelines(return_string)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
 
 class LastTraffic:  # 교통 관련 클래스
@@ -142,8 +152,9 @@ class LastTraffic:  # 교통 관련 클래스
 
     def real_time_traffic(self):
         context = ""
-        header = [f"{Constant.IMOGE['emotion']['walk']}4호선 막차시간입니다\n", f"\n{Constant.IMOGE['emotion']['walk']}수인선 막차시간입니다\n"]
-        for iteration in range (len(self.SUBWAY_URL)):
+        header = [f"{Constant.IMOGE['emotion']['walk']}4호선 막차시간입니다\n",
+                  f"\n{Constant.IMOGE['emotion']['walk']}수인선 막차시간입니다\n"]
+        for iteration in range(len(self.SUBWAY_URL)):
             context += ''.join(header[iteration])
             html = requests.get(self.SUBWAY_URL[iteration])
             soup = BeautifulSoup(html.text, 'html.parser')
@@ -218,7 +229,7 @@ class Feedback:
     def __init__(self):
         self.S3 = boto3.resource('s3')
         self.S3_client = boto3.client('s3')
-        self.bucket = s3.Bucket(Constant.BUCKET_NAME)
+        self.bucket = self.S3.Bucket(Constant.BUCKET_NAME)
         self.data = ""
 
     def upload_feedback(self):
@@ -228,7 +239,8 @@ class Feedback:
             self.bucket.download_file(Constant.LOCAL_FEEDBACK_FILE, Constant.FEEDBACK_FILE)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.is_Text(
+                f"[File-Open-Error #101] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         try:
             with open(Constant.LOCAL_FEEDBACK_FILE, "a", encoding="UTF-8") as f:
@@ -241,40 +253,48 @@ class Feedback:
             self.S3_client.upload_file(Constant.LOCAL_FEEDBACK_FILE, Constant.BUCKET_NAME, Constant.FEEDBACK_FILE)
 
         except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.is_Text(
+                f"[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
-    def delete_feedback(self):
-        basic_text = "#feedbacks\n"
-        try:
-            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
-        except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
-
-        try:
-            with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
-                f.writelines(basic_text)
-
-        except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
-
-    def read_feedback(self, token):
+    def manage_feedback(self, option, token):
         if token not in Constant.SANDOL_ACCESS_ID.value():
-            return GEN.is_Text("피드백을 읽을 권한이 없습니다")
+            return GEN.set_text("피드백을 읽을 권한이 없습니다")
 
-        try:
-            self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
-        except Exception as e:
-            GEN.is_Text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
+        def read_feedback():
+            try:
+                self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+            except Exception as e:
+                GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
 
-        try:
-            with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
-                txt = ''.join(f.readlines())
-                return GEN.is_Text(txt)
+            try:
+                with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
+                    txt = ''.join(f.readlines())
+                    return GEN.set_text(txt)
 
-        except Exception as e:
-            return GEN.is_Text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
+            except Exception as e:
+                return GEN.set_text(f"[File-Open-Error #112] 파일을 읽는 중 오류가 발생했습니다\n{e}")
+
+        def delete_feedback():
+            basic_text = "#feedbacks\n"
+            try:
+                self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
+            except Exception as e:
+                return GEN.set_text(f"[File-Open-Error #113] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
+
+            try:
+                with open(constant.LOCAL_FEEDBACK_FILE, 'w', encoding="UTF-8") as f:
+                    f.writelines(basic_text)
+
+            except Exception as e:
+                return GEN.set_text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
+
+        if option == 2:
+            delete_feedback()
+
+        else:
+            read_feedback()
 
 
 class Covid:
@@ -292,12 +312,12 @@ class Covid:
                      f"코로나 조심하세요!{Constant.IMOGE['emotion']['nexpression']}"
             # 결과 컨텍스트
 
-            self.return_string = GEN.is_Card(Constant.SANDOL_COVID_IMG, is_title="코로나 확진자 수",
-                                             is_description=result)
+            self.return_string = GEN.set_card(Constant.SANDOL_COVID_IMG, is_title="코로나 확진자 수",
+                                              is_description=result)
 
         except Exception as e:
             description = f"코로나 확진자 정보를 불러오는데 실패했어요{Constant.IMOGE['emotion']['sad']}\n"
-            self.return_string = GEN.is_Card(Constant.SANDOL_COVID_IMG, is_title=f"{e}", is_description=description)
+            self.return_string = GEN.set_card(Constant.SANDOL_COVID_IMG, is_title=f"{e}", is_description=description)
 
         finally:
             return self.return_string
@@ -356,7 +376,7 @@ class Weather:
                  f"자외선 : {today_temp_ray}이에요!\n\n" \
                  f"{update_date}시에 업데이트된 네이버 날씨 정보입니다!"
 
-        return GEN.is_Text(result)
+        return GEN.set_text(result)
 
 
 class Announcement:
@@ -378,20 +398,20 @@ class Announcement:
                            announce_list[i].find_all("td")[4].text.strip(),
                            self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
 
-        return GEN.is_List(self.TITLE, result,
-                           is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
+        return GEN.set_list(self.TITLE, result,
+                            is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
+
 
 class LiveSubwayTraffic:
-    def __init__(self, time: str = "00:00:00", station_no: str = "455") ->None:
+    def __init__(self, station_no: str = ["455", "11120"]) -> None:
         self.URL = "https://map.naver.com/v5/api/transit/subway/stations/"
-        self.time = datetime.datetime.strptime(time, '%H:%M:%S')    #time 모듈로 변환
-        self.station_no = station_no
-        self.rail: str
+        self.time = None
         self.station_name: str
-        self.data = self.get_data()
+        self.return_data = ''
+        self.station_no = station_no
 
     def get_data(self) -> dict:
-        URL = self.URL+ self.station_no+ "/schedule?lang=ko&stationID="+self.station_no
+        URL = self.URL + self.station_no + "/schedule?lang=ko&stationID=" + self.station_no
         html = requests.get(URL).text
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -399,9 +419,7 @@ class LiveSubwayTraffic:
         # print(json_data)
         return json_data
 
-    def arrival_time(self) -> str:
-        return_data = ''
-
+    def arrival_time(self):
         try:
             if self.data['todayServiceDay']['name'] == '평일':  # 평일 시간표
                 schedule_data_up = self.data['weekdaySchedule']['up']
@@ -412,23 +430,25 @@ class LiveSubwayTraffic:
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['headsign'] +"방면 "+ i['departureTime'] + ", " + it.__next__()['departureTime']
+                        self.return_data += i['headsign'] + " 방면 " + i['departureTime'] + ", "\
+                                            + it.__next__()['departureTime'] + "\n"
                         flag = True
                         break
                     else:
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime']+ " 막차입니다"
+                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime'] + " 막차입니다"
 
-                return_data +=  "\n\n"
+                self.return_data += "\n\n"
 
                 flag = False
                 it = schedule_data_down.__iter__()  # 하행선
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        self.return_data += i['headsign'] + "방면 " + i['departureTime'] + ", " \
+                                            + it.__next__()['departureTime'] + "\n"
                         flag = True
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'], end=' ')
@@ -438,7 +458,8 @@ class LiveSubwayTraffic:
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_down[-1]['headsign'] + schedule_data_down[-1]['departureTime']+ " 막차입니다"
+                    self.return_data += schedule_data_down[-1]['headsign'] + schedule_data_down[-1][
+                        'departureTime'] + " 막차입니다"
 
             else:  # 주말 시간표
                 schedule_data_up = self.data['sundaySchedule']['up']
@@ -450,7 +471,8 @@ class LiveSubwayTraffic:
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        self.return_data += i['headsign'] + "방면 " + i['departureTime'] + ", " \
+                                            + it.__next__()['departureTime'] + "\n"
                         flag = True
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'])
@@ -460,15 +482,15 @@ class LiveSubwayTraffic:
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_up[-1]['headsign'] +schedule_data_up[-1]['departureTime']+ " 막차입니다"
-                return_data += "\n\n"
+                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime'] + " 막차입니다"
 
                 flag = False
                 it = schedule_data_down.__iter__()
                 for i in schedule_data_down:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        return_data += i['headsign'] +"방면 "+i['departureTime'] + ", " + it.__next__()['departureTime']
+                        self.return_data += i['headsign'] + "방면 " + i['departureTime'] + ", " \
+                                            + it.__next__()['departureTime'] + "\n"
                         flag = True
                         # print(i['departureTime'], end=' ')
                         # print(it.__next__()['departureTime'])
@@ -478,16 +500,26 @@ class LiveSubwayTraffic:
                         continue
 
                 if flag == False:
-                    return_data += schedule_data_down[-1]['headsign'] +schedule_data_down[-1]['departureTime'] + " 막차입니다"
+                    self.return_data += schedule_data_down[-1]['headsign'] + schedule_data_down[-1][
+                        'departureTime'] + " 막차입니다"
 
         except Exception as e:
             return str(e)
 
-        return return_data
 
     def get_time(self) -> dict:
-        return gen.is_Text(self.time)
+        return gen.set_text(self.time)
 
-class Test: # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
+    def get_string(self, time):
+        self.time = datetime.datetime.strptime(time, '%H:%M:%S')  # time 모듈로 변환
+        for subway in self.station_no:
+            self.station_no = subway
+            self.data = self.get_data()
+            self.arrival_time()
+        return self.return_data
+
+
+
+class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
     def __init__(self):
         pass
