@@ -62,7 +62,7 @@ class AboutMeal:  # 학식 관련 클래스
                 "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
-        if (Constant.RESTAURANT_ACCESS_ID[store_name] != owner_id) or owner_id not in list(Constant.SANDOL_ACCESS_ID.values()):
+        if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
