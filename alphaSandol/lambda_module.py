@@ -117,10 +117,11 @@ class AboutMeal:  # 학식 관련 클래스
             return GEN.set_text(f"[Permission-Error #141] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
 
         try:
-            self.S3.meta.client.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
+            self.S3.meta.client.download_file(Constant.BUCKET_NAME, Constant.RESTAURANT_MENU,
+                                              Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.set_text(f"[File-Open-Error #142] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         try:
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
