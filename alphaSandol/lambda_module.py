@@ -155,7 +155,7 @@ class LastTraffic:  # 교통 관련 클래스
                            "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"]
 
     def real_time_traffic(self):
-        context = ""
+        context = None
         header = [f"{Constant.IMOGE['emotion']['walk']}4호선 막차시간입니다\n",
                   f"\n{Constant.IMOGE['emotion']['walk']}수인선 막차시간입니다\n"]
         for iteration in range(len(self.SUBWAY_URL)):
@@ -226,7 +226,7 @@ class LastTraffic:  # 교통 관련 클래스
                     context += "".join(f"(휴일) {find_arrival_time_down2(find_weekend2(arv))}\n")  # 휴일 시간이 있으면 시간 추가
                 except Exception:
                     context += "".join("\n")  # 휴일 시간 없으면 개행문자 넣고 pass
-        return context[:-1]
+        return GEN.set_text(context[:-1])
 
 
 class Feedback:
