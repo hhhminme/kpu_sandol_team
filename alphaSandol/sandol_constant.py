@@ -67,7 +67,7 @@ KEY_SET: dict = {
     'weather': Module.Weather().weather,
     'covid': Module.Covid().today_covid,
     'feedback_upload': Module.Feedback().upload_feedback,
-    'read_feedback': Module.Feedback().manage_feedback,
+    'read_feedback': [Module.Feedback().read_feedback, Module.Feedback().delete_feedback],
     'perm_chk': None,
     'store_name': Module.AboutMeal().upload_meal,
     'read_meal': Module.AboutMeal().read_meal,
