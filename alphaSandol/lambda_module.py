@@ -99,7 +99,7 @@ class AboutMeal:  # 학식 관련 클래스
                     rf.writelines(data)
 
             except Exception as e:
-                return GEN.set_text(
+                return MEAL_GEN.set_text(
                     f"[File-Open-Error #123]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
             try:
@@ -107,7 +107,7 @@ class AboutMeal:  # 학식 관련 클래스
                 s3.upload_file(Constant.LOCAL_RESTAURANT_MENU, 'sandol', Constant.RESTAURANT_MENU)
 
             except Exception as e:
-                return GEN.set_text(
+                return MEAL_GEN.set_text(
                     f"[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         return MEAL_GEN.set_text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
