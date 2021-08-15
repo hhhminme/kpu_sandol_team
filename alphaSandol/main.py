@@ -42,7 +42,7 @@ def lambda_handler(event, context):
                                                 ACCESS_ID)
 
             elif func_name == 'reset_meal':
-                date = json.loads(param[key[1]])['date']
+                date = json.loads(param[key[0]])['date']
                 return_string = module_function(ACCESS_ID, date)
 
 
