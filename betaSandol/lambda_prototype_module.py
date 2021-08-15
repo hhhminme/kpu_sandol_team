@@ -35,7 +35,7 @@ imoge_mapping = {
     }
 }
 gen = Generator.Return_Type()
-opt = Generator.Common_params()
+opt = Generator.common_params()
 class CrawlingFunction():
     def subway(self, station='정왕'):
         try:

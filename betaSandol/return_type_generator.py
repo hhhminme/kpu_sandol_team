@@ -14,7 +14,7 @@ class Return_Type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 ]
             }
         }
-        self.common_params = Common_params()
+        self.common_params = common_params()
 
     def init_json(self):
         self.return_json = {

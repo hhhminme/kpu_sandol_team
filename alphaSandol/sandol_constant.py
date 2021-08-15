@@ -1,4 +1,4 @@
-# from return_type_generator import *
+from return_type_generator import *
 import lambda_module as Module
 
 ####################################################################################################################

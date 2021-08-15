@@ -34,7 +34,7 @@ def lambda_handler(event, context):
 
         else:
             if func_name == 'read_feedback':
-                if(str(key_values[0]) == '2'):
+                if(str(key_values[0]) != '2'):
                     return_string = module_function[0](ACCESS_ID)
                 else:
                     return_string = module_function[1](ACCESS_ID)

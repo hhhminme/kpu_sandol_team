@@ -412,7 +412,7 @@ class Announcement:
 
 
 class LiveSubwayTraffic:
-    def __init__(self, station_no: str = ["455", "11120"]) -> None:
+    def __init__(self, station_no = ["455", "11120"]) -> None:
         self.URL = "https://map.naver.com/v5/api/transit/subway/stations/"
         self.time = None
         self.station_name: str
