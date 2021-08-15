@@ -139,6 +139,14 @@ class AboutMeal:  # 학식 관련 클래스
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #143]파일을 수정하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
+        try:
+            s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
+            s3.upload_file(Constant.LOCAL_RESTAURANT_MENU, 'sandol', Constant.RESTAURANT_MENU)
+
+        except Exception as e:
+            return GEN.set_text(
+                f"[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+
         return GEN.set_text(f"파일을 정상적으로 초기화했습니다")
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
