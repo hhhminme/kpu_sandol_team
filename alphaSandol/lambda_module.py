@@ -39,7 +39,7 @@ class AboutMeal:  # 학식 관련 클래스
 
         try:
             weekday = ['월', '화', '수', '목', '금', '토', '일']
-            with open(local_file, "r", encoding='UTF-8') as f:
+            with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
                 data = f.readlines()
                 for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
@@ -78,7 +78,7 @@ class AboutMeal:  # 학식 관련 클래스
         except Exception as e:
             return GEN.set_text(f"[File-Open-Error #122] 저장소에서 파일을 찾을 수 없습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
-        with open(local_file, "r", encoding="UTF-8") as f:
+        with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding="UTF-8") as f:
             try:
                 data = f.readlines()
                 menu_info = data[data.index("🐾" + store_name + "\n") + 1].replace('\'', '').replace("\n", "").split(
@@ -95,7 +95,7 @@ class AboutMeal:  # 학식 관련 클래스
                 menu_info[self.DINNER] = dinner_list.replace(" ", ",")
 
                 data[data.index("🐾" + store_name + "\n") + 1] = str(menu_info)[1:-1] + "\n"  # 최종 문자열
-                with open(local_file, "w", encoding='UTF-8') as rf:
+                with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding='UTF-8') as rf:
                     rf.writelines(data)
 
             except Exception as e:
@@ -104,7 +104,7 @@ class AboutMeal:  # 학식 관련 클래스
 
             try:
                 s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
-                s3.upload_file(local_file, 'sandol', store_file)
+                s3.upload_file(Constant.LOCAL_RESTAURANT_MENU, 'sandol', store_file)
 
             except Exception as e:
                 return GEN.set_text(
