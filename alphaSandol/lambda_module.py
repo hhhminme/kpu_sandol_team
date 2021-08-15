@@ -273,7 +273,7 @@ class Feedback:
             GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
 
         try:
-            with open(constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
+            with open(Constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
                 txt = ''.join(f.readlines())
 
         except Exception as e:
