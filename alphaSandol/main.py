@@ -42,7 +42,7 @@ def lambda_handler(event, context):
                                                 ACCESS_ID)
 
             elif func_name == 'reset_meal':
-                raise Exception(str(request_body))
+                return_string = module_function(ACCESS_ID)
 
 
     except Exception as e:
