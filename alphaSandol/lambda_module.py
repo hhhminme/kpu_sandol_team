@@ -286,11 +286,15 @@ class Feedback:
             except Exception as e:
                 return GEN.set_text(f"[File-Open-Error #114] 파일 데이터를 삭제 중 오류가 발생했습니다{e}")
 
-        if option == 2:
-            delete_feedback()
+        try:
+            if option == 2:
+                delete_feedback()
 
-        else:
-            read_feedback()
+            else:
+                read_feedback()
+
+        except Exception as e:
+            return GEN.set_text(f"error : {e}")
 
 
 class Covid:
