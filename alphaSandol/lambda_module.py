@@ -51,14 +51,14 @@ class AboutMeal:  # 학식 관련 클래스
                     ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일\n]" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
-                    meal_gen.set_text(ret, is_init=False)
+                    GEN.set_text(ret, is_init=False)
 
-            return_string = meal_gen.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+            return_string = GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
                                               is_init=False)
             return return_string
 
         except Exception as e:
-            return gen.set_text(
+            return GEN.set_text(
                 "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
