@@ -44,10 +44,24 @@ def lambda_handler(event, context):
 
     except Exception as e:
         return_string = {
-                            "simpleText": {
-                                "text": str(e)
-                            }
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": f"산돌이 기능 업데이트중입니다! 일부 기능이 사용이 제한됩니다\{e}"
                         }
+                    }
+                ],
+                "quickReplies": [
+                    {
+                        "messageText": "도움말",
+                        "action": "message",
+                        "label": "도움말"
+                    }
+                ]
+            }
+        }
 
     return {
         'statusCode': 200,
