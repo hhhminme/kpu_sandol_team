@@ -17,7 +17,7 @@ def lambda_handler(event, context):
         key = list(param.keys())
         func_name = key[0]
         key_values = list(param.values())
-        ACCESS_ID = str(request_body['bot']['id'])  # 접근 권한을 가진 ID 확인용
+        ACCESS_ID = str(request_body['userRequest'])  # 접근 권한을 가진 ID 확인용
 
         module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
