@@ -35,9 +35,9 @@ def lambda_handler(event, context):
         else:
             if func_name == 'read_feedback':
                 if(key_values[0] == 2):
-                    return_string = module_function[0](key_values[0])
+                    return_string = module_function[0](ACCESS_ID)
                 else:
-                    return_string = module_function[1](key_values[0])
+                    return_string = module_function[1](ACCESS_ID)
 
             elif func_name == 'store_name':
                 upload_date = json.loads(key_values[3])

@@ -263,7 +263,9 @@ class Feedback:
         return GEN.set_text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
 
-    def read_feedback(self):
+    def read_feedback(self, id):
+        if id not in (Constant.SANDOL_ACCESS_ID.values()):
+            return GEN.set_text("권한이 없습니다")
         try:
             self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
 
@@ -279,7 +281,10 @@ class Feedback:
 
         return GEN.set_text(txt)
 
-    def delete_feedback(self):
+    def delete_feedback(self, id):
+        if id not in (Constant.SANDOL_ACCESS_ID.values()):
+            return GEN.set_text("권한이 없습니다")
+
         basic_text = "#feedbacks\n"
         try:
             self.bucket.download_file(constant.FEEDBACK_FILE, constant.LOCAL_FEEDBACK_FILE)
