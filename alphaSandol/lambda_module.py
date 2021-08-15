@@ -47,7 +47,7 @@ class AboutMeal:  # 학식 관련 클래스
                     if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
                         continue
 
-                    form = data[restaurant].replace("\n", '').replace("🐾", imoge_mapping['emotion']['walk'])
+                    form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
                     ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일\n]" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
@@ -59,7 +59,7 @@ class AboutMeal:  # 학식 관련 클래스
 
         except Exception as e:
             return GEN.set_text(
-                "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + imoge_mapping['emotion']['sad'] + str(e))
+                "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
         if (Constant.RESTAURANT_ACCESS_ID[
