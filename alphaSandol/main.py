@@ -43,7 +43,8 @@ def lambda_handler(event, context):
 
             elif func_name == 'reset_meal':
                 date = json.loads(param[key[0]])['date']
-                return_string = module_function(ACCESS_ID, date)
+                raise Exception(str(date))
+                # return_string = module_function(ACCESS_ID, date)
 
 
     except Exception as e:
