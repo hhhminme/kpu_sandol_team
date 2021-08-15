@@ -529,7 +529,7 @@ class LiveSubwayTraffic:
             self.station_no = subway
             self.data = self.get_data()
             self.arrival_time()
-        return self.return_data
+        return GEN.set_text(self.return_data)
 
 
 
