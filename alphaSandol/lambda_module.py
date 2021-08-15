@@ -103,7 +103,7 @@ class AboutMeal:  # 학식 관련 클래스
 
             try:
                 s3 = boto3.client('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
-                s3.upload_file(Constant.LOCAL_RESTAURANT_MENU, 'sandol', store_file)
+                s3.upload_file(Constant.LOCAL_RESTAURANT_MENU, 'sandol', Constant.RESTAURANT_MENU)
 
             except Exception as e:
                 return GEN.set_text(
