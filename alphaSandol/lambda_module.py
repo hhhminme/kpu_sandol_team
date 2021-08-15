@@ -63,7 +63,7 @@ class AboutMeal:  # 학식 관련 클래스
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
         if (Constant.RESTAURANT_ACCESS_ID[
-                store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.values():
+                store_name] != owner_id) and store_name not in list(Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 

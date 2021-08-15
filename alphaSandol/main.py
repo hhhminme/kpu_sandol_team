@@ -26,7 +26,11 @@ def lambda_handler(event, context):
             return_string = module_function()
 
         elif len(input_params) == 1:
-            return_string = module_function(key_values[0])
+            if func_name == 'subway':
+                time = str(json.loads(request_body['action']['detailParams']['date_time']['value'])['time'])
+                return_string = module_function(time)
+            else:
+                return_string = module_function(key_values[0])
 
         else:
             if func_name == 'read_feedback':
