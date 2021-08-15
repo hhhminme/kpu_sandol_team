@@ -256,7 +256,7 @@ class Feedback:
 
     def manage_feedback(self, option, token):
         if token not in list(Constant.SANDOL_ACCESS_ID.values()):
-            return GEN.set_text("피드백을 읽을 권한이 없습니다")
+            return GEN.set_text(f"피드백을 읽을 권한이 없습니다\n{token}")
 
         def read_feedback():
             try:
