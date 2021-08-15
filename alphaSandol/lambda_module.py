@@ -48,8 +48,8 @@ class AboutMeal:  # 학식 관련 클래스
                         continue
 
                     form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
-                    ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일\n]" \
-                          f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}" \
+                    ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                          f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
                     GEN.set_text(ret, is_init=False)
 
@@ -63,7 +63,7 @@ class AboutMeal:  # 학식 관련 클래스
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
         if (Constant.RESTAURANT_ACCESS_ID[
-                store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.value():
+                store_name] != owner_id) and store_name not in Constant.SANDOL_ACCESS_ID.values():
             return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
@@ -113,7 +113,7 @@ class AboutMeal:  # 학식 관련 클래스
         return GEN.set_text(f"네! 학생들에게 잘 전달할게요! 감사합니다!{Constant.IMOGE['emotion']['walk']}")
 
     def reset_meal(self, bot_id, date) -> dict:  # 학식 초기화
-        if bot_id not in Constant.SANDOL_ACCESS_ID.value():
+        if bot_id not in list(Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text(f"[Permission-Error #141] 권한이 없습니다{Constant.IMOGE['emotion']['angry']}")
 
         try:
@@ -255,7 +255,7 @@ class Feedback:
         return GEN.is_Text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
     def manage_feedback(self, option, token):
-        if token not in Constant.SANDOL_ACCESS_ID.value():
+        if token not in list(Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text("피드백을 읽을 권한이 없습니다")
 
         def read_feedback():
