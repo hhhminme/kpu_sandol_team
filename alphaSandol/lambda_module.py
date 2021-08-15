@@ -240,7 +240,7 @@ class Feedback:
         self.data = f"[{str(datetime.datetime.today())}] : {data}\n"
 
         try:
-            self.bucket.download_file(Constant.LOCAL_FEEDBACK_FILE, Constant.FEEDBACK_FILE)
+            self.bucket.download_file(Constant.FEEDBACK_FILE, Constant.LOCAL_FEEDBACK_FILE)
 
         except Exception as e:
             return GEN.set_text(
