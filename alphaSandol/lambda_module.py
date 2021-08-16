@@ -46,7 +46,7 @@ class AboutMeal:  # 학식 관련 클래스
                 for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant == 2 or restaurant == 3:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
+                    if restaurant == 2 or restaurant == 4:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
                         continue
 
                     form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
