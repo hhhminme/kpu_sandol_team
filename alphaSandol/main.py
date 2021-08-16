@@ -50,7 +50,7 @@ def lambda_handler(event, context):
                 date = str(json.loads(param[key[0]])['date'])
                 return_string = module_function(ACCESS_ID, date)
         random_image = Constant.Commerce_image[random.randint(0, 4)]
-        return_string['template']['outputs'].insert(Constant.Commerce_test(random_image))
+        return_string['template']['outputs'].insert(0,Constant.Commerce_test(random_image))
     except Exception as e:
         return_string = {
             "version": "2.0",
