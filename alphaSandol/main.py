@@ -7,6 +7,7 @@ if __name__ == '__main__':
 import json
 import base64
 import sandol_constant as Constant
+import random
 
 def lambda_handler(event, context):
     try:
@@ -48,7 +49,8 @@ def lambda_handler(event, context):
             elif func_name == 'reset_meal':
                 date = str(json.loads(param[key[0]])['date'])
                 return_string = module_function(ACCESS_ID, date)
-        return_string['template']['outputs'].append(Constant.Commerce_test)
+        random_image = Constant.Commerce_image[random.randint(0, 4)]
+        return_string['template']['outputs'].insert(Constant.Commerce_test(random_image))
     except Exception as e:
         return_string = {
             "version": "2.0",

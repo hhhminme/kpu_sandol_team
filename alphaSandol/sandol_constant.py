@@ -92,15 +92,15 @@ PARAM_EXIST_FUNCTION = {
     'param1': []
 }
 ####################################################################################################################
-import random
+
 Commerce_image = ['https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test1.png',
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test2.png',
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test3.png',
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test4.png',
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test5.png'
                   ]
-random_image = Commerce_image[random.randint(0, 4)]
-Commerce_test = {
+
+Commerce_test = lambda random_image : {
     "commerceCard": {
                                   "description": "산돌 분식",
                                   "price": 4000,
