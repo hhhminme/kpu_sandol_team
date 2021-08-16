@@ -99,7 +99,7 @@ Commerce_image = ['https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/ma
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test4.png',
                   'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test5.png'
                   ]
-random_image = random.choice(Commerce_image)
+random_image = Commerce_image[random.randint(0, 4)]
 Commerce_test = {
     "commerceCard": {
                                   "description": "산돌 분식",
