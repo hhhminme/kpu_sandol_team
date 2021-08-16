@@ -93,11 +93,11 @@ PARAM_EXIST_FUNCTION = {
 }
 ####################################################################################################################
 import random
-Commerce_image = ['https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test1.jpg',
-                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test2.jpg',
-                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test3.jpg',
-                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test4.jpg',
-                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test5.jpg'
+Commerce_image = ['https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test1.png',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test2.png',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test3.png',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test4.png',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test5.png'
                   ]
 random_image = random.choice(Commerce_image)
 Commerce_test = {
