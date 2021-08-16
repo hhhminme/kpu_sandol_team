@@ -91,3 +91,45 @@ PARAM_EXIST_FUNCTION = {
     'last_subway': [],
     'param1': []
 }
+####################################################################################################################
+import random
+Commerce_image = ['https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test1.jpg',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test2.jpg',
+                  'https://github.com/hhhminme/kpu_sandol_team/blob/main/commerce_img/commerce_test3.jpg']
+random_image = random.choice(Commerce_image)
+Commerce_test = {
+    "commerceCard": {
+                                  "description": "산돌 분식",
+                                  "price": 4000,
+                                  "discount": 3500,
+                                  "currency": "won",
+                                  "thumbnails": [
+                                    {
+                                      "imageUrl": random_image,
+                                      "link": {
+                                        "web": "http://naver.me/FMA7h2K7 "
+                                      }
+                                    }
+                                  ],
+                                  "profile": {
+                                    "imageUrl": random_image,
+                                    "nickname": "산돌 분식"
+                                  },
+                                  "buttons": [
+                                    {
+                                      "label": "네이버 플레이스 연결",
+                                      "action": "webLink",
+                                      "webLinkUrl": "http://naver.me/FMA7h2K7 "
+                                    },
+                                    {
+                                      "label": "전화하기",
+                                      "action": "phone",
+                                      "phoneNumber": "010-4183-2998"
+                                    },
+                                    {
+                                      "label": "공유하기",
+                                      "action": "share"
+                                    }
+                                  ]
+                                }
+}
