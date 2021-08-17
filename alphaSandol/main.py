@@ -23,11 +23,7 @@ def lambda_handler(event, context):
         module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
 
-        if func_name == 'commerce':
-            random_image = Constant.Commerce_image[random.randint(0, 4)]
-            return_string['template']['outputs'].insert(0, Constant.Commerce_test(random_image))
-
-        elif len(input_params) == 0:  # 파라미터가 없는 기능 함수의 경우 모두 여기서 처리 가능
+        if len(input_params) == 0:  # 파라미터가 없는 기능 함수의 경우 모두 여기서 처리 가능
             return_string = module_function()
 
         elif len(input_params) == 1:    # 파라미터가 1개인 경우, but subway는 플러그인을 가지므로, 따로 처리

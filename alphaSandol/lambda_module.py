@@ -537,3 +537,9 @@ class LiveSubwayTraffic:
 class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
     def __init__(self):
         pass
+
+    def commerce_test(self):
+        random_image = Constant.Commerce_image[random.randint(0, 4)]
+        a = GEN.init_json()
+        a['template']['outputs'].append(Constant.Commerce_test(random_image))
+        return a

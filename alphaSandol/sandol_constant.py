@@ -75,7 +75,7 @@ KEY_SET: dict = {
     'subway': Module.LiveSubwayTraffic().get_string,
     'ann': Module.Announcement().announce,
     'last_subway': Module.LastTraffic().real_time_traffic,
-    'param1': Module.Test
+    'commerce': Module.Test().commerce_test
 }
 PARAM_EXIST_FUNCTION = {
     'weather': [],
