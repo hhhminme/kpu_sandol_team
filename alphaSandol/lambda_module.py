@@ -537,9 +537,66 @@ class LiveSubwayTraffic:
 class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
     def __init__(self):
         pass
-
     def commerce_test(self):
-        random_image = Constant.Commerce_image[random.randint(0, 4)]
-        a = GEN.init_json()
-        a['template']['outputs'].append(Constant.Commerce_test(random_image))
-        return a
+        import random
+        return_json = return_json = {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                ],
+                "quickReplies": [
+                    {
+                        "messageText": "도움말",
+                        "action": "message",
+                        "label": "도움말"
+                    }
+                ]
+            }
+        }
+        Commerce_test = lambda random_image: {
+            "commerceCard": {
+                "description": "산돌 분식",
+                "price": 4000,
+                "discount": 3500,
+                "currency": "won",
+                "thumbnails": [
+                    {
+                        "imageUrl": random_image,
+                        "link": {
+                            "web": "http://naver.me/FMA7h2K7"
+                        }
+                    }
+                ],
+                "profile": {
+                    "imageUrl": random_image,
+                    "nickname": "산돌 분식"
+                },
+                "buttons": [
+                    {
+                        "label": "네이버 플레이스 연결",
+                        "action": "webLink",
+                        "webLinkUrl": "http://naver.me/FMA7h2K7 "
+                    },
+                    {
+                        "label": "전화하기",
+                        "action": "phone",
+                        "phoneNumber": "010-4183-2998"
+                    },
+                    {
+                        "label": "공유하기",
+                        "action": "share"
+                    }
+                ]
+            }
+        }
+        Commerce_image = [
+            'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test1.png',
+            'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test2.png',
+            'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test3.png',
+            'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test4.png',
+            'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test5.png'
+            ]
+
+        random_image = Commerce_image[random.randint(0, 4)]
+        return_json['template']['outputs'].append(Commerce_test(random_image))
+        return return_json
