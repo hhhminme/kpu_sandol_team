@@ -539,7 +539,7 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
         pass
     def commerce_test(self):
         import random
-        return_json = return_json = {
+        return_json = {
             "version": "2.0",
             "template": {
                 "outputs": [
@@ -600,3 +600,6 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
         random_image = Commerce_image[random.randint(0, 4)]
         return_json['template']['outputs'].append(Commerce_test(random_image))
         return return_json
+
+if __name__ == "__main__":
+    print(Test().commerce_test())
