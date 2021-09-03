@@ -46,7 +46,7 @@ class AboutMeal:  # 학식 관련 클래스
                 for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
                     menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant == 2 or restaurant == 4:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
+                    if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
                         continue
 
                     form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
@@ -149,6 +149,8 @@ class AboutMeal:  # 학식 관련 클래스
                 f"[File-Open-Error #124]파일을 저장소에 업로드하는 중 오류가 발생했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
 
         return GEN.set_text(f"파일을 정상적으로 초기화했습니다")
+
+
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
 
@@ -533,10 +535,10 @@ class LiveSubwayTraffic:
         return GEN.set_text(self.return_data)
 
 
-
 class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야하는경우에 해당 클래스에 작성 후 테스트 발화시 결과 나옴.)
     def __init__(self):
         pass
+
     def commerce_test(self):
         import random
         return_json = {
@@ -600,6 +602,7 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
         random_image = Commerce_image[random.randint(0, 4)]
         return_json['template']['outputs'].append(Commerce_test(random_image))
         return return_json
+
 
 if __name__ == "__main__":
     print(Test().commerce_test())
