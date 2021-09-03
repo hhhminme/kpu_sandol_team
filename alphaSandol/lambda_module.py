@@ -559,7 +559,7 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
             "commerceCard": {
                 "description": "산돌 분식",
                 "price": 4000,
-                "discount": 3500,
+                "discount": 500,
                 "currency": "won",
                 "thumbnails": [
                     {
