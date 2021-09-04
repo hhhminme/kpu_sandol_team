@@ -14,6 +14,7 @@ def lambda_handler(event, context):
         return_string = ''
         request_body = event['body']
         request_body = json.loads(base64.b64decode(request_body))
+
         param = request_body['action']['params']
         key = list(param.keys())
         func_name = key[0]
@@ -74,7 +75,7 @@ def lambda_handler(event, context):
                 ]
             }
         }
-
+    print(return_string)
     return {
         'statusCode': 200,
         'body': json.dumps(return_string),
@@ -82,3 +83,7 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
         }
     }
+
+# if __name__ == "__main__":
+#     from test_constant import *
+#     print(lambda_handler(JSON_DATA, "asdf"))

@@ -1,5 +1,5 @@
 import json
-PARAM = "ann"
+PARAM = "perm_chk"
 PARAM_DATA = '공지'
 
 JSON_DATA = {
