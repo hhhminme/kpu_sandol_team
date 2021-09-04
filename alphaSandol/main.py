@@ -20,8 +20,11 @@ def lambda_handler(event, context):
         key_values = list(param.values())
         ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
 
-        module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 ㅈ지정
+        module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 지정
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
+        if func_name == 'perm_chk':
+            import return_type_generator as GEN
+            return_string = GEN.set_text(ACCESS_ID)
 
         if len(input_params) == 0:  # 파라미터가 없는 기능 함수의 경우 모두 여기서 처리 가능
             return_string = module_function()
@@ -58,7 +61,7 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": f"산돌이 기능 업데이트중입니다! 일부 기능이 사용이 제한됩니다\{e}"
+                            "text": f"산돌이 기능 업데이트중입니다! 일부 기능이 사용이 제한됩니다{e}"
                         }
                     }
                 ],

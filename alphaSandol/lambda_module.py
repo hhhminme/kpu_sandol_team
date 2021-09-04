@@ -28,7 +28,7 @@ class AboutMeal:  # 학식 관련 클래스
         self.data = ""
         self.URL_MENU = "https://ibook.kpu.ac.kr/Viewer/menu01"
 
-    def read_meal(self) -> dict:  # 학식 불러오기
+    def read_meal(self, uid) -> dict:     # 학식 불러오기
         MEAL_GEN = return_type()    # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
                                     # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
         try:
@@ -39,29 +39,52 @@ class AboutMeal:  # 학식 관련 클래스
                 f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
         # 버킷을 로컬 임시 폴더에 다운로드
 
-        try:
-            weekday = ['월', '화', '수', '목', '금', '토', '일']
-            with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
-                data = f.readlines()
-                for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
-                    menu_list = data[restaurant + 1].replace("\'", '').split(", ")
-                    last_update_date = datetime.date.fromisoformat(menu_list[0])
-                    if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
-                        continue
+        rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())     # 식당이름만 뽑아낸 리스트
+        if uid not in rst_name:
+            try:
+                weekday = ['월', '화', '수', '목', '금', '토', '일']
+                with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
+                    data = f.readlines()
+                    for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
+                        menu_list = data[restaurant + 1].replace("\'", '').split(", ")
+                        last_update_date = datetime.date.fromisoformat(menu_list[0])
+                        if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
+                            continue
 
-                    form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
+                        form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
+                        ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
+                        MEAL_GEN.set_text(ret, is_init=False)
+
+                return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+                                                  is_init=False)
+                return return_string
+
+            except Exception as e:
+                return GEN.set_text(
+                    "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
+
+        else:
+            selected_restaurant = rst_name.index(uid) * 2  # 식당 이름
+            try:
+                weekday = ['월', '화', '수', '목', '금', '토', '일']
+                with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
+                    data = f.readlines()
+
+                    menu_list = data[selected_restaurant + 1].replace("\'", '').split(", ")
+                    last_update_date = datetime.date.fromisoformat(menu_list[0])
+                    form = data[selected_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
                     ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
-                    MEAL_GEN.set_text(ret, is_init=False)
+                    return_string = GEN.set_text(ret)
 
-            return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
-                                              is_init=False)
-            return return_string
+                return return_string
 
-        except Exception as e:
-            return GEN.set_text(
-                "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
+            except Exception as e:
+                return GEN.set_text(
+                    "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
         if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(Constant.SANDOL_ACCESS_ID.values()):
@@ -313,6 +336,8 @@ class Feedback:
             return GEN.set_text(f"[File-Open-Error #115] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{e}")
 
         return GEN.set_text("성공적으로 파일 내용을 삭제했습니다")
+
+
 class Covid:
     def __init__(self):
         self.return_string = ""
