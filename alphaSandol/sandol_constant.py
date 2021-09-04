@@ -49,7 +49,7 @@ SANDOL_ACCESS_ID: dict = {'MANAGER': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b
 #                               '웰스프레쉬': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
 #                               '푸드라운지': "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c"}
 
-RESTAURANT_ACCESS_ID: dict = {'미가식당': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
+RESTAURANT_ACCESS_ID: dict = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
                               '웰스프레쉬': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
                               '푸드라운지': "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c"}
 
