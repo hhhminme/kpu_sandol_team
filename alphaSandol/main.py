@@ -23,12 +23,15 @@ def lambda_handler(event, context):
 
         module_function = Constant.KEY_SET[key[0]]  # 입력된 파라미터에 맞는 함수 지정
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
-        if func_name == 'perm_chk':
-            from return_type_generator import return_type as GEN
-            return_string = GEN().set_text(ACCESS_ID)
 
         if len(input_params) == 0:  # 파라미터가 없는 기능 함수의 경우 모두 여기서 처리 가능
-            return_string = module_function()
+
+            if func_name == 'perm_chk':
+                from return_type_generator import return_type as GEN
+                return_string = GEN().set_text(ACCESS_ID)
+
+            else:
+                return_string = module_function()
 
         elif len(input_params) == 1:    # 파라미터가 1개인 경우, but subway는 플러그인을 가지므로, 따로 처리
             if func_name == 'subway':
