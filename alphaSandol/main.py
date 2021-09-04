@@ -25,7 +25,7 @@ def lambda_handler(event, context):
         input_params = Constant.PARAM_EXIST_FUNCTION[key[0]]
         if func_name == 'perm_chk':
             from return_type_generator import return_type as GEN
-            return_string = GEN.set_text(ACCESS_ID)
+            return_string = GEN().set_text(ACCESS_ID)
 
         if len(input_params) == 0:  # 파라미터가 없는 기능 함수의 경우 모두 여기서 처리 가능
             return_string = module_function()
