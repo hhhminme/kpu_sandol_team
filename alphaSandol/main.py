@@ -38,6 +38,8 @@ def lambda_handler(event, context):
                 time = str(json.loads(request_body['action']['detailParams']['date_time']['value'])['time'])
                 return_string = module_function(time)
 
+            elif func_name == 'read_meal':
+                return_string = module_function(ACCESS_ID)
             else:
                 return_string = module_function(key_values[0])
 

@@ -89,7 +89,7 @@ PARAM_EXIST_FUNCTION = {
     'read_feedback': ['option', 'bot_id'],
     'perm_chk':[],
     'store_name': ['store_name', 'lunch_list', 'dinner_list', 'input_data', 'owner_id'],
-    'read_meal': [],
+    'read_meal': ['bot_id'],
     'reset_meal': ['bot_id', 'date'],
     'subway': ['time'],
     'ann': [],
