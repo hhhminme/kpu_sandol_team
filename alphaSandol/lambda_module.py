@@ -441,7 +441,7 @@ class Announcement:
                                self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
 
             return GEN.set_list(self.TITLE, result,
-                                is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
+                                is_Button=GEN_OPTION.Button(label="바로가기", action="webLink", webLinkUrl=self.webLinkUrl))
 
         except Exception as e:
             return GEN.set_text(f"{e}")
@@ -636,4 +636,4 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
 
 
 if __name__ == "__main__":
-    print(Test().commerce_test())
+    print(Announcement().announce())

@@ -137,7 +137,6 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                         }
         return return_json
 
-
     def set_carousel(self, card_type, card_num, *params):  #케로셀 반환 형식    #(link, Title, description)
         self.init_json()
         basic_carousel =  {
@@ -156,7 +155,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
 
-    def set_list(self, title, data, is_Button = None):     # [title, desc, url], 만약 없으면 None #data = list
+    def set_list(self, title, data, is_Button= None):     # [title, desc, url], 만약 없으면 None #data = list
         self.init_json()
         order = ['title', 'description', 'link']
         basic_list = {
@@ -178,7 +177,8 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                         item[order[idx]] = dat
 
             basic_list['listCard']['items'].append(item)
-            if is_Button != None:
+
+            if is_Button is not None:
                 basic_list['listCard']['buttons'] = list()
                 basic_list['listCard']['buttons'].append(is_Button)
 
@@ -187,7 +187,6 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
 
 class common_params:
-
     def Button(self, **kwargs):
         data = {}
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
