@@ -429,18 +429,22 @@ class Announcement:
         self.webLinkUrl = "http://www.kpu.ac.kr/contents/main/cor/noticehaksa.html"
 
     def announce(self) -> dict:
-        req = requests.get(self.URL)
-        soup = BeautifulSoup(req.text, 'html.parser')
-        announce_list = soup.find('table').find('tbody').find_all('tr')
-        result = []  # title, date, URl
+        try:
+            req = requests.get(self.URL)
+            soup = BeautifulSoup(req.text, 'html.parser')
+            announce_list = soup.find('table').find('tbody').find_all('tr')
+            result = []  # title, date, URl
 
-        for i in range(self.MAX_ANNOUNCEMENT_CNT):
-            result.append([announce_list[i].find_all("td")[1].find('a').text.strip(),
-                           announce_list[i].find_all("td")[4].text.strip(),
-                           self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
+            for i in range(self.MAX_ANNOUNCEMENT_CNT):
+                result.append([announce_list[i].find_all("td")[1].find('a').text.strip(),
+                               announce_list[i].find_all("td")[4].text.strip(),
+                               self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
 
-        return GEN.set_list(self.TITLE, result,
-                            is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
+            return GEN.set_list(self.TITLE, result,
+                                is_Button=GEN_OPTION.Button(label="바로가기", action="weblink", weblinkUrl=self.webLinkUrl))
+
+        except Exception as e:
+            return GEN.set_text(f"{e}")
 
 
 class LiveSubwayTraffic:
