@@ -7,7 +7,6 @@ name = "pypi"
 requests = "*"
 bs4 = "*"
 boto3 = "*"
-troposphere = { version = "<3.0", ignore = ["zappa"] }
 zappa = "*"
 
 [dev-packages]
