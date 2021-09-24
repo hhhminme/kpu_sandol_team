@@ -150,7 +150,7 @@ class AboutMeal:  # 학식 관련 클래스
         try:
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
                 rest_name = [f"{Constant.IMOGE['emotion']['paw']}미가식당\n",
-                             f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n",
+                             f"{Constant.IMOGE['emotion']['paw']}세미콘\n",
                              f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n"]
 
                 return_string = ''
@@ -633,7 +633,6 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
         random_image = Commerce_image[random.randint(0, 5)]
         return_json['template']['outputs'].append(Commerce_test(random_image))
         return return_json
-
 
 if __name__ == "__main__":
     print(Announcement().announce())
