@@ -387,9 +387,12 @@ class Weather:
         for i in chart_list.find_all("li"):
             chart.append(i.get_text().strip().split(" ")[1])
 
-        result = f"오늘 {location}의 날씨는 {Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고, " \
+        result = f"오늘 {location}의 날씨를 알려드릴게요!\n" \
+                 f"{Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고,\n" \
                  f"기온은 {temp}C 으로 {compare_yesterday}\n"\
-                 f"미세먼지는 {chart[0]}, 초미세먼지는 {chart[1]}이며, 자외선은 {chart[2]} 입니다!\n"
+                 f"미세먼지는 {chart[0]}, \n" \
+                 f"초미세먼지는 {chart[1]}이며, \n" \
+                 f"자외선은 {chart[2]} 입니다!"
         return GEN.set_text(result)
 
 
