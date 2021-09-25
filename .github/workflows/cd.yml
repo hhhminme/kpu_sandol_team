@@ -1,5 +1,5 @@
 name: Deploy on AWS Lambda
-on: 
+on:
   push:
     branches:
       - master
@@ -8,21 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v1
-    
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.8
-      
-    - name: Install Dependencies
-      run: cd alphaSandol && pip install pipenv && pipenv install
-    
-    - name: Deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: cd alphaSandol && pipenv run zappa update
+      - name: Checkout Code
+        uses: actions/checkout@v1
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Dependencies and Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: cd alphaSandol && pip install pipenv && pipenv install && pipenv run zappa update
