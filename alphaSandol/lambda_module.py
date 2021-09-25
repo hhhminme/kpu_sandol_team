@@ -373,50 +373,23 @@ class Weather:
         url = self.URL + (location + "날씨")
         html = requests.get(url).text
         soup = BeautifulSoup(html, 'html.parser')
+        weather_box = soup.find('section', {'class': 'sc_new cs_weather_new _cs_weather'})
+        info = weather_box.find('div', {'class': 'weather_graphic'})
+        weather_info = info.find("div", {"class": "weather_main"}).get_text()
+        temp = info.find("div", {"class": "temperature_text"}).get_text()
+        temp = temp[temp.find("도") + 1:]
 
-        form = soup.find("div", {'class': 'api_subject_bx'}).find("div", {'class': 'main_info'}).find("div", {
-            'class': 'info_data'})
-        sub_form = soup.find("div", {'class': 'api_subject_bx'}).find("div", {'class': 'sub_info'}).find("div", {
-            'class': 'detail_box'})
+        temp_summary = weather_box.find("div", {"class": "temperature_info"})
+        compare_yesterday = temp_summary.find("p").get_text().split('  ')[0]
 
-        today_temp = form.find("span", {'class': 'todaytemp'}).text
+        chart_list = weather_box.find("div", {"class": "report_card_wrap"})
+        chart = []  # 미세먼지, 초미세먼지, 자외선, 일몰 순서
+        for i in chart_list.find_all("li"):
+            chart.append(i.get_text().strip().split(" ")[1])
 
-        try:
-            today_temp_min = form.find("span", {'class': 'min'}).text
-        except Exception:
-            today_temp_min = "-"
-
-        try:
-            today_temp_max = form.find("span", {'class': 'max'}).text
-        except Exception():
-            today_temp_max = "-"
-
-        try:
-            today_temp_ray = form.find("span", {'class': 'indicator'}).find("span").text
-        except Exception:
-            today_temp_ray = "-"
-
-        update_date = soup.find("div", {'class': 'guide_bx _guideBox'}).find("span", {'class': 'guide_txt'}) \
-            .find('span', {'class': 'update'}).text
-
-        today_weather = form.find("ul").find("li").text.strip()  # 날씨 정보
-        today_dust_list = sub_form.find_all("dd")  # 미세먼지 폼
-        today_dust10 = today_dust_list[0].text.replace("㎥", "㎥, ")  # 미세먼지 정보
-        today_dust25 = today_dust_list[1].text.replace("㎥", "㎥, ")  # 초미세먼지 정보
-
-        try:
-            weather_icon = Constant.IMOGE['weather'][today_weather.split(', ')[0]]
-
-        except Exception:
-            weather_icon = ''
-
-        result = f"{Constant.IMOGE['emotion']['walk']}{location}의 기상정보입니다\n\n" \
-                 f"기온 : {today_temp}°C ({today_temp_min}°C / {today_temp_max}°C) {weather_icon}\n" \
-                 f"미세먼지 : {today_dust10}\n" \
-                 f"초미세먼지 : {today_dust25}\n" \
-                 f"자외선 : {today_temp_ray}이에요!\n\n" \
-                 f"{update_date}시에 업데이트된 네이버 날씨 정보입니다!"
-
+        result = f"오늘 {location}의 날씨는 {Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고, " \
+                 f"기온은 {temp}C 으로 {compare_yesterday}\n"\
+                 f"미세먼지는 {chart[0]}, 초미세먼지는 {chart[1]}이며, 자외선은 {chart[2]} 입니다!\n"
         return GEN.set_text(result)
 
 
@@ -634,5 +607,6 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
         return_json['template']['outputs'].append(Commerce_test(random_image))
         return return_json
 
+
 if __name__ == "__main__":
-    print(Announcement().announce())
+    print(Weather().weather())
