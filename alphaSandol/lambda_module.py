@@ -56,7 +56,7 @@ class AboutMeal:  # 학식 관련 클래스
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
+                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
 
                 #         MEAL_GEN.set_text(ret, is_init=False)
                 #
