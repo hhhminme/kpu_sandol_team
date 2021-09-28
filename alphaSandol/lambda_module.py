@@ -51,14 +51,16 @@ class AboutMeal:  # 학식 관련 클래스
                         if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
                             continue
 
-                        form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
+                        form += data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
-                        MEAL_GEN.set_text(ret, is_init=False)
 
-                return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
-                                                  is_init=False)
+                #         MEAL_GEN.set_text(ret, is_init=False)
+                #
+                return_string = MEAL_GEN.set_text(form)
+                # return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+                #                                   is_init=False)
                 return return_string
 
             except Exception as e:
@@ -151,7 +153,8 @@ class AboutMeal:  # 학식 관련 클래스
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
                 rest_name = [f"{Constant.IMOGE['emotion']['paw']}미가식당\n",
                              f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n",
-                             f"{Constant.IMOGE['emotion']['paw']}세미콘식당\n"]
+                             f"{Constant.IMOGE['emotion']['paw']}세미콘식당\n",
+                             f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n"]
 
                 return_string = ''
                 for i in range(len(rest_name)):
