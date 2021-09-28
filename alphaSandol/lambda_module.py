@@ -60,7 +60,9 @@ class AboutMeal:  # 학식 관련 클래스
 
                 #         MEAL_GEN.set_text(ret, is_init=False)
                 #
+                ret += f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}"
                 return_string = MEAL_GEN.set_text(ret)
+
                 # return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
                 #                                   is_init=False)
                 return return_string
