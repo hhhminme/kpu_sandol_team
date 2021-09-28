@@ -31,6 +31,7 @@ class AboutMeal:  # 학식 관련 클래스
     def read_meal(self, uid) -> dict:     # 학식 불러오기
         MEAL_GEN = return_type()    # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
                                     # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
+        ret = ''
         try:
             self.bucket.download_file(Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
 
