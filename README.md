@@ -41,6 +41,11 @@
   - [hhhminme](https://github.com/hhhminme) - **허민** - <huhmn0409@naver.com>
     경영지원 및 프론트엔드 개발
 
+## Honor
+### "우리 대학의 빛나는 주역들 (본교 학보 509호 5면)"
+<img src = "https://github.com/koptimizer/kakaotalk_chatbot_sandol/blob/master/pics/news2.jpg" height = "500px">
+<br/>
+
 ## License
 
 ```
