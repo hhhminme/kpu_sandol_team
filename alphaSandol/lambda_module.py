@@ -28,9 +28,9 @@ class AboutMeal:  # 학식 관련 클래스
         self.data = ""
         self.URL_MENU = "https://ibook.kpu.ac.kr/Viewer/menu01"
 
-    def read_meal(self, uid) -> dict:     # 학식 불러오기
-        MEAL_GEN = return_type()    # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
-                                    # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
+    def read_meal(self, uid) -> dict:  # 학식 불러오기
+        MEAL_GEN = return_type()  # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
+        # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
         ret = ''
         try:
             self.bucket.download_file(Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
@@ -40,31 +40,39 @@ class AboutMeal:  # 학식 관련 클래스
                 f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
         # 버킷을 로컬 임시 폴더에 다운로드
 
-        rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())     # 식당이름만 뽑아낸 리스트
+        rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())  # 식당이름만 뽑아낸 리스트
         if uid not in rst_name:
             try:
                 weekday = ['월', '화', '수', '목', '금', '토', '일']
                 with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
                     data = f.readlines()
-                    for restaurant in range(0, len(data), 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음
+                    for restaurant in range(0, len(data) - 2, 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음 교외식당
                         menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                         last_update_date = datetime.date.fromisoformat(menu_list[0])
-                        if restaurant == 2:  # 웰스프레쉬의 경우 건너뛴다 (링크로 대체)
-                            continue
-
+                        title = "[교외 식당 메뉴입니다!]\n"
                         form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
-                        ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                        ret += title + f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                                       f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                                       f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
 
-                #         MEAL_GEN.set_text(ret, is_init=False)
-                #
-                ret += f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}"
-                return_string = MEAL_GEN.set_text(ret)
+                    MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
 
-                # return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
-                #                                   is_init=False)
+                    ret = ''
+                    for school_restaurant in range(len(data) - 1, len(data), 2):
+                        menu_list = data[school_restaurant + 1].replace("\'", '').split(", ")
+                        last_update_date = datetime.date.fromisoformat(menu_list[0])
+                        title = "[교내 식당 메뉴입니다!]\n"
+                        form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
+
+                        ret += title + f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                                       f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                                       f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+
+                    ret += f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}"  # 링크로 대체하는 웰스프레쉬
+
+                return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+                                                  is_init=False)
                 return return_string
 
             except Exception as e:
@@ -93,7 +101,8 @@ class AboutMeal:  # 학식 관련 클래스
                     "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
     def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
-        if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(Constant.SANDOL_ACCESS_ID.values()):
+        if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(
+                Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
         # 권한 확인
 
@@ -299,7 +308,6 @@ class Feedback:
 
         return GEN.set_text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{Constant.IMOGE['emotion']['love']}")
 
-
     def read_feedback(self, id):
         if id not in (Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text("권한이 없습니다")
@@ -310,7 +318,7 @@ class Feedback:
             GEN.set_text(f"[File-Open-Error #111] 서버에서 피드백 파일을 불러오는 중 오류가 발생했어요\n{e}")
 
         try:
-            with open(Constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8')as f:
+            with open(Constant.LOCAL_FEEDBACK_FILE, 'r', encoding='UTF-8') as f:
                 txt = ''.join(f.readlines())
 
         except Exception as e:
@@ -396,7 +404,7 @@ class Weather:
 
         result = f"오늘 {location}의 날씨를 알려드릴게요!\n" \
                  f"오늘 날씨는{Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고,\n" \
-                 f"기온은 {temp}C 으로 {compare_yesterday}\n"\
+                 f"기온은 {temp}C 으로 {compare_yesterday}\n" \
                  f"미세먼지는 {chart[0]}, \n" \
                  f"초미세먼지는 {chart[1]}이며, \n" \
                  f"자외선은 {chart[2]} 입니다!"
@@ -431,7 +439,7 @@ class Announcement:
 
 
 class LiveSubwayTraffic:
-    def __init__(self, station_no = ["455", "11120"]) -> None:
+    def __init__(self, station_no=["455", "11120"]) -> None:
         self.URL = "https://map.naver.com/v5/api/transit/subway/stations/"
         self.time = None
         self.station_name: str
@@ -458,7 +466,7 @@ class LiveSubwayTraffic:
                 for i in schedule_data_up:
                     it.__next__()
                     if datetime.datetime.strptime(i['departureTime'], '%H:%M:%S') > self.time:
-                        self.return_data += i['headsign'] + " 방면 " + i['departureTime'] + ", "\
+                        self.return_data += i['headsign'] + " 방면 " + i['departureTime'] + ", " \
                                             + it.__next__()['departureTime'] + "\n"
                         flag = True
                         break
@@ -466,7 +474,8 @@ class LiveSubwayTraffic:
                         continue
 
                 if flag == False:
-                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime'] + " 막차입니다"
+                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1][
+                        'departureTime'] + " 막차입니다"
 
                 self.return_data += "\n\n"
 
@@ -510,7 +519,8 @@ class LiveSubwayTraffic:
                         continue
 
                 if flag == False:
-                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1]['departureTime'] + " 막차입니다"
+                    self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1][
+                        'departureTime'] + " 막차입니다"
 
                 flag = False
                 it = schedule_data_down.__iter__()
@@ -533,7 +543,6 @@ class LiveSubwayTraffic:
 
         except Exception as e:
             return str(e)
-
 
     def get_time(self) -> dict:
         return gen.set_text(self.time)
@@ -603,7 +612,7 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
                 ]
             }
         }
-        #1~5 산돌 분식, 6 산돌 카페
+        # 1~5 산돌 분식, 6 산돌 카페
         Commerce_image = [
             'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test1.png',
             'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test2.png',
@@ -611,7 +620,7 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
             'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test4.png',
             'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test5.png',
             'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test6.png'
-            ]
+        ]
 
         random_image = Commerce_image[random.randint(0, 5)]
         return_json['template']['outputs'].append(Commerce_test(random_image))
