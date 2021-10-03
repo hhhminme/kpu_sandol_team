@@ -56,23 +56,23 @@ class AboutMeal:  # 학식 관련 클래스
                                        f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                        f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
 
-                    MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
+                    return_string = MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
 
-                    ret = ''
-                    for school_restaurant in range(len(data) - 1, len(data), 2):
-                        menu_list = data[school_restaurant + 1].replace("\'", '').split(", ")
-                        last_update_date = datetime.date.fromisoformat(menu_list[0])
-                        title = "[교내 식당 메뉴입니다!]\n"
-                        form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
-
-                        ret += title + f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                                       f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                                       f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
-
-                    ret += f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}"  # 링크로 대체하는 웰스프레쉬
-
-                return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
-                                                  is_init=False)
+                #     ret = ''
+                #     for school_restaurant in range(len(data) - 1, len(data), 2):
+                #         menu_list = data[school_restaurant + 1].replace("\'", '').split(", ")
+                #         last_update_date = datetime.date.fromisoformat(menu_list[0])
+                #         title = "[교내 식당 메뉴입니다!]\n"
+                #         form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
+                #
+                #         ret += title + f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                #                        f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                #                        f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                #
+                #     ret += f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}"  # 링크로 대체하는 웰스프레쉬
+                #
+                # return_string = MEAL_GEN.set_text(f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬 [URL 참조]\n{self.URL_MENU}",
+                #                                   is_init=False)
                 return return_string
 
             except Exception as e:
