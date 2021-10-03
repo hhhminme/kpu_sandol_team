@@ -45,7 +45,7 @@ class AboutMeal:  # 학식 관련 클래스
                 weekday = ['월', '화', '수', '목', '금', '토', '일']
                 with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
                     data = f.readlines()
-                    ret = '[교외식당 메뉴입니다!]'
+                    ret = '[교외식당 메뉴입니다!]\n'
                     for restaurant in range(0, len(data) - 4, 2):  # 파일에서 식당 구분이 2칸 간격으로 되어있음 교외식당
                         menu_list = data[restaurant + 1].replace("\'", '').split(", ")
                         last_update_date = datetime.date.fromisoformat(menu_list[0])
@@ -54,9 +54,9 @@ class AboutMeal:  # 학식 관련 클래스
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
-
+                    ret = ret[:-2]
                     MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
-                    ret = '[교내식당 메뉴입니다!]'
+                    ret = '[교내식당 메뉴입니다!]\n'
                     for school_restaurant in range (len(data) - 4, len(data) - 2, 2):
                         menu_list = data[school_restaurant + 1].replace("\'", '').split(", ")
                         last_update_date = datetime.date.fromisoformat(menu_list[0])
