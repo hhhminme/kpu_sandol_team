@@ -162,8 +162,9 @@ class AboutMeal:  # 학식 관련 클래스
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
                 rest_name = [f"{Constant.IMOGE['emotion']['paw']}미가식당\n",
                              f"{Constant.IMOGE['emotion']['paw']}세미콘식당\n",
-                             f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n",
-                             f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n"]
+                             f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n",
+                             f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n"
+                             ]
 
                 return_string = ''
                 for i in range(len(rest_name)):
