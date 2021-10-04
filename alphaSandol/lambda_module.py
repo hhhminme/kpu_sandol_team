@@ -62,9 +62,9 @@ class AboutMeal:  # 학식 관련 클래스
                         last_update_date = datetime.date.fromisoformat(menu_list[0])
                         form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
-                        ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                        ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n한식메뉴 포장가능\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n한식메뉴 포장가능\n"
+                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
                     ret += "🐾웰스프레쉬 [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
 
                 return_string = MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
@@ -84,11 +84,15 @@ class AboutMeal:  # 학식 관련 클래스
                     menu_list = data[selected_restaurant + 1].replace("\'", '').split(", ")
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     form = data[selected_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
-                    ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
+                    
+                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c":
+                        ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n한식메뉴 포장가능\n" \
+                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                    else:
+                        ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
-                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c":
-                        ret += "한식메뉴 포장가능\n"
                     return_string = GEN.set_text(ret)
 
                 return return_string
