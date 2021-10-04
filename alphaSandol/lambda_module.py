@@ -62,7 +62,7 @@ class AboutMeal:  # 학식 관련 클래스
                         last_update_date = datetime.date.fromisoformat(menu_list[0])
                         form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
-                        ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\포장메뉴도 있어요\n" \
+                        ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
                     ret += "🐾웰스프레쉬 [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
