@@ -39,7 +39,7 @@ class AboutMeal:  # 학식 관련 클래스
                 f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
         # 버킷을 로컬 임시 폴더에 다운로드
 
-        rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())  # 식당이름만 뽑아낸 리스트
+        rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())  # 식당id만 뽑아낸 리스트
         if uid not in rst_name:
             try:
                 weekday = ['월', '화', '수', '목', '금', '토', '일']
@@ -85,7 +85,7 @@ class AboutMeal:  # 학식 관련 클래스
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     form = data[selected_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
                     
-                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c" or uid == Constant.RESTAURANT_ACCESS_ID['TEST']:
+                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c":
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n한식메뉴 포장가능\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
