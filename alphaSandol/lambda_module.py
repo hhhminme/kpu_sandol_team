@@ -64,7 +64,7 @@ class AboutMeal:  # 학식 관련 클래스
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n한식메뉴 포장가능"
 
                     ret += "🐾웰스프레쉬 [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
 
@@ -88,6 +88,8 @@ class AboutMeal:  # 학식 관련 클래스
                     ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}"
+                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c":
+                        ret += "한식메뉴 포장가능"
                     return_string = GEN.set_text(ret)
 
                 return return_string
