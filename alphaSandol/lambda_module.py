@@ -85,7 +85,7 @@ class AboutMeal:  # 학식 관련 클래스
                     last_update_date = datetime.date.fromisoformat(menu_list[0])
                     form = data[selected_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
                     
-                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c":
+                    if uid == "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c" or uid == Constant.RESTAURANT_ACCESS_ID['TEST']:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n한식메뉴 포장가능\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
