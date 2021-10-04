@@ -46,9 +46,9 @@ SANDOL_ACCESS_ID: dict = {'MANAGER': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b
                           'CONT3': "def99464e022b38389697fe68d54bbba723d1da291094c19bbf5eaace7b059a997"}
 # 산돌팀만 접근할 수 있는 컨텐츠에 인증 수단으로 사용 (현재 아이디의 정확한 위치가 기억이 나지 않아.. KEY를 메니저와, CONTRIBUTOR로 명명함.)
 RESTAURANT_ACCESS_ID: dict = {'미가식당': "32d8a05a91242ffb4c64b5630ec55953121dffd83a121d985e26e06e2c457197e6",
-                              '웰스프레쉬': "...",
                               '세미콘식당': "42132cfdb19516a94a1e94d01f80c5547167dda21dde2af64ece5af0a12645393d",
-                              '푸드라운지': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895"
+                              '푸드라운지': "d367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895",
+                              '웰스프레쉬': "...",
                               # '푸드라운지': "46f338132e6af63c32c07220c318f0e7c570e8eb6f375c9e8bb59ce33776f27c4c",
                               }
 
