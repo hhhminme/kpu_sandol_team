@@ -52,8 +52,8 @@ class AboutMeal:  # 학식 관련 클래스
                         form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
                     ret = ret[:-2]
                     MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
                     ret = '[교내식당 메뉴입니다!]\n'
@@ -63,8 +63,8 @@ class AboutMeal:  # 학식 관련 클래스
                         form = data[school_restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
                     ret += "🐾웰스프레쉬 [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
 
                 return_string = MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
@@ -87,8 +87,8 @@ class AboutMeal:  # 학식 관련 클래스
                     
                     if uid == Constant.RESTAURANT_ACCESS_ID['푸드라운지']:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                                f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
+                                f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
                     else:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
                           f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
@@ -166,10 +166,10 @@ class AboutMeal:  # 학식 관련 클래스
         try:
             with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding="UTF-8") as f:
                 rest_name = [f"{Constant.IMOGE['emotion']['paw']}미가식당\n",
-                             f"{Constant.IMOGE['emotion']['paw']}세미콘식당\n",
-                             f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n",
-                             f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n"
-                             ]
+                              f"{Constant.IMOGE['emotion']['paw']}세미콘식당\n",
+                              f"{Constant.IMOGE['emotion']['paw']}푸드라운지\n",
+                              f"{Constant.IMOGE['emotion']['paw']}웰스프레쉬\n"
+                            ]
 
                 return_string = ''
                 for i in range(len(rest_name)):
@@ -191,12 +191,22 @@ class AboutMeal:  # 학식 관련 클래스
 
         return GEN.set_text(f"파일을 정상적으로 초기화했습니다")
 
+    #식당 운영시간 함수
+    def time_meal(self) -> dict :
+      result = f"교외식당 운영시간입니다! \n" \
+                f"{Constant.IMOGE['emotion']['walk']}미가식당  \n" \
+                f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30 운영 시간 동안 항시 식사 가능합니다.\n\n" \
+                f"{Constant.IMOGE['emotion']['walk']}세미콘 식당 \n"\
+                f"{Constant.IMOGE['emotion']['paw']}운영시간 : 중식 :11:30 ~ 1:30까지, 석식 5:00 ~ 6:30분까지"
+                
+      return GEN.set_text(result)
+
 
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
 
         self.SUBWAY_URL = ["https://map.naver.com/v5/api/transit/subway/stations/455/schedule?lang=ko&stationID=455",
-                           "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"]
+                            "https://map.naver.com/v5/api/transit/subway/stations/11120/schedule?lang=ko&stationID=11120"]
 
     def real_time_traffic(self):
         context = ''
@@ -212,21 +222,21 @@ class LastTraffic:  # 교통 관련 클래스
                 last_arrival_weekend = json.loads(soup.text)['sundaySchedule']  # 주말 막차
                 if iteration == 0:
                     weekday_last = lambda sign: [last_arrival_weekday[sign][101 + i] for i in
-                                                 range(len(last_arrival_weekday[sign]) - 101)][::-1]
+                                                  range(len(last_arrival_weekday[sign]) - 101)][::-1]
                     weekend_last = lambda sign: [last_arrival_weekend[sign][85 + i] for i in
-                                                 range(len(last_arrival_weekend[sign]) - 85)][::-1]
+                                                  range(len(last_arrival_weekend[sign]) - 85)][::-1]
 
                 else:
                     weekday_last = lambda sign: [last_arrival_weekday[sign][i] for i in
-                                                 range(len(last_arrival_weekday[sign]))][::-1]
+                                                  range(len(last_arrival_weekday[sign]))][::-1]
                     weekend_last = lambda sign: [last_arrival_weekend[sign][i] for i in
-                                                 range(len(last_arrival_weekend[sign]))][::-1]
+                                                  range(len(last_arrival_weekend[sign]))][::-1]
                 # usage : weekend_last('up')
                 # 마지막에 있는 열차 10개 정도를 가지고 와서 각 막차 시간 비교
                 # 모두 불러오지 않는 이유는 속도 때문
                 station = [i['headsign'] for i in weekday_last('up')]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
                 station_weekend = [i['headsign'] for i in
-                                   weekend_last('up')]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
+                                    weekend_last('up')]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
                 # 상행선에서의 막차별 역을 저장하는 리스트 (역 중복 가능)
 
                 station2 = [i['headsign'] for i in weekday_last('down')]  # headsign이 가장 처음으로 나오는 경우의 인덱스를 반환하기 위한 리스트
@@ -365,9 +375,9 @@ class Covid:
             html = requests.get(url).text
             data = json.loads(html)
             result = f"{data['result']['list'][-1]['date']}일까지 코로나 발생현황이에요 {Constant.IMOGE['emotion']['walk']}\n" \
-                     f"{Constant.IMOGE['emotion']['paw']}지역발생 : {data['result']['list'][-1]['local']}명\n" \
-                     f"{Constant.IMOGE['emotion']['paw']}해외발생 : {data['result']['list'][-1]['oversea']}명 입니다!\n " \
-                     f"코로나 조심하세요!{Constant.IMOGE['emotion']['nexpression']}"
+                      f"{Constant.IMOGE['emotion']['paw']}지역발생 : {data['result']['list'][-1]['local']}명\n" \
+                      f"{Constant.IMOGE['emotion']['paw']}해외발생 : {data['result']['list'][-1]['oversea']}명 입니다!\n " \
+                      f"코로나 조심하세요!{Constant.IMOGE['emotion']['nexpression']}"
             # 결과 컨텍스트
 
             self.return_string = GEN.set_card(Constant.SANDOL_COVID_IMG, is_title="코로나 확진자 수",
@@ -405,11 +415,11 @@ class Weather:
             chart.append(i.get_text().strip().split(" ")[1])
 
         result = f"오늘 {location}의 날씨를 알려드릴게요!\n" \
-                 f"오늘 날씨는{Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고,\n" \
-                 f"기온은 {temp}C 으로 {compare_yesterday}\n" \
-                 f"미세먼지는 {chart[0]}, \n" \
-                 f"초미세먼지는 {chart[1]}이며, \n" \
-                 f"자외선은 {chart[2]} 입니다!"
+                  f"오늘 날씨는{Constant.IMOGE['weather'][weather_info.strip()]}{weather_info}이고,\n" \
+                  f"기온은 {temp}C 으로 {compare_yesterday}\n" \
+                  f"미세먼지는 {chart[0]}, \n" \
+                  f"초미세먼지는 {chart[1]}이며, \n" \
+                  f"자외선은 {chart[2]} 입니다!"
         return GEN.set_text(result)
 
 
@@ -430,8 +440,8 @@ class Announcement:
 
             for i in range(self.MAX_ANNOUNCEMENT_CNT):
                 result.append([announce_list[i].find_all("td")[1].find('a').text.strip(),
-                               announce_list[i].find_all("td")[4].text.strip(),
-                               self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
+                                announce_list[i].find_all("td")[4].text.strip(),
+                                self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
 
             return GEN.set_list(self.TITLE, result,
                                 is_Button=GEN_OPTION.Button(label="바로가기", action="webLink", webLinkUrl=self.webLinkUrl))
