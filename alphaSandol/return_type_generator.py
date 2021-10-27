@@ -1,5 +1,5 @@
 class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
-    def __init__(self, quick_menu_text="도움말", quick_menu_action="message", quick_menu_label='도움말'):
+    def __init__(self, reply_json: dict = None):
         self.return_json = {
             "version": "2.0",
             "template": {
@@ -7,16 +7,15 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 ],
                 "quickReplies": [
                     {
-                        "messageText": quick_menu_text,
-                        "action": quick_menu_action,
-                        "label": quick_menu_label
-                    },
-                    {
-
+                        "messageText": "도움말",
+                        "action": "message",
+                        "label": "도움말"
                     }
                 ]
             }
         }
+        if reply_json is not None:
+            self.return_json['template']['quickReplies'].append(reply_json)
         self.common_params = common_params()
 
     def init_json(self):
