@@ -193,9 +193,8 @@ class AboutMeal:  # 학식 관련 클래스
 
     #식당 운영시간 불러오기
     def time_meal(self):
-      
       # GEN.set_image(Constant.SANDOLE_RSTRNT_MAP)
-
+      MEAL_GEN = return_type()
       time_meal_string = f"교외식당 운영시간입니다! \n" \
                 f"{Constant.IMOGE['emotion']['walk']}미가식당  \n" \
                 f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30 \n" \
@@ -203,7 +202,7 @@ class AboutMeal:  # 학식 관련 클래스
                 f"{Constant.IMOGE['emotion']['walk']}세미콘 식당 \n"\
                 f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"\
                 f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
-      GEN.set_text(time_meal_string,is_init=False)
+      MEAL_GEN.set_text(time_meal_string,is_init=False)
       
       time_meal_string = f"교내식당 운영시간입니다! \n" \
                 f"{Constant.IMOGE['emotion']['walk']}E동 교직원식당  \n" \
@@ -213,7 +212,7 @@ class AboutMeal:  # 학식 관련 클래스
                 f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"\
                 f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
 
-      return GEN.set_text(time_meal_string)
+      return MEAL_GEN.set_text(time_meal_string,is_init=False)
 
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
