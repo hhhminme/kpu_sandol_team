@@ -191,15 +191,27 @@ class AboutMeal:  # 학식 관련 클래스
 
         return GEN.set_text(f"파일을 정상적으로 초기화했습니다")
 
-    #식당 운영시간 함수
-    def time_meal(self) -> dict :
-      result = f"교외식당 운영시간입니다! \n" \
+    #식당 운영시간 불러오기
+    def time_meal(self):
+      time_meal_string = f"교외식당 운영시간입니다! \n" \
                 f"{Constant.IMOGE['emotion']['walk']}미가식당  \n" \
-                f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30 운영 시간 동안 항시 식사 가능합니다.\n\n" \
+                f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30 \n" \
+                f"{Constant.IMOGE['emotion']['paw']}운영시간동안 항시 식사 가능합니다. \n\n"\
                 f"{Constant.IMOGE['emotion']['walk']}세미콘 식당 \n"\
-                f"{Constant.IMOGE['emotion']['paw']}운영시간 : 중식 :11:30 ~ 1:30까지, 석식 5:00 ~ 6:30분까지"
-                
-      return GEN.set_text(result)
+                f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"\
+                f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
+      GEN.set_text(time_meal_string,is_init=False)
+
+      time_meal_string += f"교내식당 운영시간입니다! \n" \
+                f"{Constant.IMOGE['emotion']['walk']}E동 교직원식당  \n" \
+                f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 13:30 \n" \
+                f"{Constant.IMOGE['emotion']['paw']}석식 : 영업하지 않습니다. \n\n"\
+                f"{Constant.IMOGE['emotion']['walk']}푸드라운지 \n"\
+                f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"\
+                f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
+
+      return_time = GEN.set_text(time_meal_string,is_init=False)
+      return return_time
 
 
 class LastTraffic:  # 교통 관련 클래스
