@@ -214,7 +214,7 @@ class AboutMeal:  # 학식 관련 클래스
 
       MEAL_GEN.set_text(time_meal_string, is_init=False)
 
-      return MEAL_GEN.set_image(Constant.SANDOLE_RSTRNT_MAP)
+      return MEAL_GEN.set_image(Constant.SANDOLE_RSTRNT_MAP, is_init=False)
 
 
 class LastTraffic:  # 교통 관련 클래스

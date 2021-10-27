@@ -79,7 +79,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             self.return_json["template"]["outputs"].append({"basicCard": basic_card})
             return self.return_json
 
-    def set_image(self, src, is_init=True):  # 이미지 반환 형식
+    def set_image(self, src, text=None, is_init=True):  # 이미지 반환 형식
         if is_init:
             self.init_json()
 
