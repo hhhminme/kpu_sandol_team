@@ -212,7 +212,7 @@ class AboutMeal:  # 학식 관련 클래스
                 f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"\
                 f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
 
-      MEAL_GEN.set_text_time(time_meal_string, is_init=False)
+      MEAL_GEN.set_text(time_meal_string, is_init=False)
 
       return MEAL_GEN.set_image(Constant.SANDOLE_RSTRNT_MAP)
 
