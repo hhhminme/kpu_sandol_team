@@ -83,6 +83,7 @@ KEY_SET: dict = {
     'last_subway': Module.LastTraffic().real_time_traffic,
     'commerce': Module.Test().commerce_test
 }
+
 PARAM_EXIST_FUNCTION = {
     'weather': [],
     'covid': [],
