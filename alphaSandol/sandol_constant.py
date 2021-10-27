@@ -62,6 +62,7 @@ SANDOL_CATEGORY_4: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/
 SANDOL_COVID_IMG: str = "https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/img/card_covid.png"  # 코로나
 SANDOL_RSTRNT_FOOD_IMG: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/card_food.png"  # 푸드라운지
 SANDOL_RSTRNT_MIGA_IMG: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/card_miga.png"  # 미가식당
+SANDOLE_RSTRNT_MAP: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/meal_map.png"  #식당지도
 SANDOL_LOGO1: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo1.png"  # 산돌이 로고 (필요시 사용)
 SANDOL_PROFILE1: str = "https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo_profile1.png"  # 산돌이 프로필 (필요시 사용)
 
