@@ -32,9 +32,41 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             }
         }
 
+    def init_json_time(self):
+        self.return_json = {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                ],
+                "quickReplies": [
+                    {
+                        "messageText": "도움말",
+                        "action": "message",
+                        "label": "도움말"
+                    },{
+                        "messageText": "식당위치지도",
+                        "action": "message",
+                        "label": "식당위치지도"
+                    }
+                ]
+            }
+        }
+      
+
     def set_text(self, text, is_init = True):  #텍스트 형식
         if (is_init == True):
             self.init_json()
+        basic_text ={
+                        "simpleText": {
+                            "text": str(text)
+                        }
+                    }
+        self.return_json["template"]["outputs"].append(basic_text)
+        return self.return_json
+
+    def set_text_time(self, text, is_init = True):  #텍스트 형식
+        if (is_init == True):
+            self.init_json_time()
         basic_text ={
                         "simpleText": {
                             "text": str(text)
