@@ -31,7 +31,7 @@ class AboutMeal:  # 학식 관련 클래스
     def read_meal(self, uid) -> dict:  # 학식 불러오기
         restaurant_position = {"messageText": "운영시간",
                                 "action": "message",
-                                "label": "운영시간"
+                                "label": "운영시간 및 위치"
                               }
         MEAL_GEN = return_type(reply_json=restaurant_position)  # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
         # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
@@ -70,7 +70,7 @@ class AboutMeal:  # 학식 관련 클래스
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
                                 f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
                                 f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
-                    ret += "🐾웰스프레쉬 [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
+                    ret += "🐾웰스프레쉬(E동 교직원식당) [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
 
                 return_string = MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
                 return return_string
@@ -203,19 +203,21 @@ class AboutMeal:  # 학식 관련 클래스
 
         time_meal_string  = f"교외식당 운영시간입니다! \n" \
                             f"{Constant.IMOGE['emotion']['walk']}미가식당  \n" \
-                            f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30 \n" \
-                            f"{Constant.IMOGE['emotion']['paw']}운영시간동안 항시 식사 가능합니다. \n\n" \
-                            f"{Constant.IMOGE['emotion']['walk']}세미콘 식당 \n" \
-                            f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n" \
+                            f"{Constant.IMOGE['emotion']['paw']}운영시간 : 08:30 ~ 19:30  \n" \
+                            f"{Constant.IMOGE['emotion']['paw']}운영시간동안 항시 식사 가능합니다.  \n\n" \
+                            f"{Constant.IMOGE['emotion']['walk']}세미콘 식당  \n" \
+                            f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 1:30\n"  \
                             f"{Constant.IMOGE['emotion']['paw']}석식 : 5:00 ~ 6:30\n"
         MEAL_GEN.set_text(time_meal_string, is_init=False)
 
         time_meal_string = f"교내식당 운영시간입니다! \n" \
-                            f"{Constant.IMOGE['emotion']['walk']}E동 교직원식당  \n" \
-                            f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 13:30 \n" \
+                            f"{Constant.IMOGE['emotion']['walk']}웰스 프레쉬(E동 교직원식당)  \n" \
+                            f"{Constant.IMOGE['emotion']['paw']}중식 : 11:30 ~ 13:30 \n"  \
                             f"{Constant.IMOGE['emotion']['paw']}석식 : 영업하지 않습니다. \n\n" \
                             f"{Constant.IMOGE['emotion']['walk']}푸드라운지 \n" \
-                            f"{Constant.IMOGE['emotion']['paw']}아직 업데이트 되지 않았습니다.\n"
+                            f"{Constant.IMOGE['emotion']['paw']}천원의 아침 : 8시 30분 ~ 10시 \n" \
+                            f"{Constant.IMOGE['emotion']['paw']}운영시간 : 11:00 ~ 20:00 \n" \
+                            f"{Constant.IMOGE['emotion']['paw']}토,일,공유일 영업하지 않습니다. \n"
 
         return MEAL_GEN.set_text(time_meal_string, is_init=False)
 
