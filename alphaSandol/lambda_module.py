@@ -238,7 +238,8 @@ class AboutMeal:  # 학식 관련 클래스
         title = "식당 계좌이체 결제"
         dsc = "식당 계좌이체 결제 디스크립션"
 
-        return GEN.set_card(Constant.SANDOL_LOGO1,btn_list,title,dsc);
+        # return GEN.set_card(Constant.SANDOL_LOGO1,btn_list,title,dsc);
+        return GEN.set_text("hello")
       
 
 class LastTraffic:  # 교통 관련 클래스
