@@ -78,7 +78,7 @@ KEY_SET: dict = {
     'read_meal': Module.AboutMeal().read_meal,
     'reset_meal': Module.AboutMeal().reset_meal,
     'time_meal': Module.AboutMeal().time_meal,
-    'paymen_meal' : Module.AboutMeal().paymen_meal,
+    'payment_meal' : Module.AboutMeal().payment_meal,
     'subway': Module.LiveSubwayTraffic().get_string,
     'ann': Module.Announcement().announce,
     'last_subway': Module.LastTraffic().real_time_traffic,
