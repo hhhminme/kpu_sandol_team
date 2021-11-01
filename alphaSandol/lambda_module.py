@@ -238,8 +238,8 @@ class AboutMeal:  # 학식 관련 클래스
         title = "hello"
         dsc ="dsc"
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
-        return GEN.set_card(Constant.SANDOL_LOGO1, label="세미콘 식당", action="webLink",
-                            webLinkUrl ="https://qr.kakaopay.com/2810060111751110120069009c404611", is_title=title, is_description=dsc, flag=False)
+        return GEN.set_card(Constant.SANDOL_LOGO1, GEN_OPTION.Button(label="세미콘 식당", action="webLink",
+                            webLinkUrl ="https://qr.kakaopay.com/2810060111751110120069009c404611"), is_title=title, is_description=dsc, flag=False)
 
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
@@ -679,4 +679,5 @@ class Test:  # 테스트 블럭이 참조할 클래스 (직접 테스트해야�
 
 
 if __name__ == "__main__":
-    print(Weather().weather())
+    print(GEN.set_card(Constant.SANDOL_LOGO1, GEN_OPTION.Button(label="세미콘 식당", action="webLink",
+                            webLinkUrl ="https://qr.kakaopay.com/2810060111751110120069009c404611"), is_title="title", is_description="dsc", flag=False))
