@@ -223,22 +223,22 @@ class AboutMeal:  # 학식 관련 클래스
         return MEAL_GEN.set_text(time_meal_string, is_init=False)
 
     # 식당 계좌이체 결제
-    def paymen_meal(self):
-      btn_list = [{
-        "label" : "세미콘 식당",
-        "action" : "webLink",
-        "webLinkUrl" : "https://qr.kakaopay.com/2810060111751110120069009c404611"
-      },
-      {
-        "label" : "민이 식당",
-        "action" : "webLink",
-        "webLinkUrl" : "https://qr.kakaopay.com/2810060110000075262686359c406394"
-      }]         
-      
-      title = "식당 계좌이체 결제"
-      dsc = "식당 계좌이체 결제 디스크립션"
+    def payment_meal(self):
+        btn_list = [{
+          "label" : "세미콘 식당",
+          "action" : "webLink",
+          "webLinkUrl" : "https://qr.kakaopay.com/2810060111751110120069009c404611"
+        },
+        {
+          "label" : "민이 식당",
+          "action" : "webLink",
+          "webLinkUrl" : "https://qr.kakaopay.com/2810060110000075262686359c406394"
+        }]
 
-      return GEN.set_card(Constant.SANDOL_LOGO1,btn_list,title,dsc);
+        title = "식당 계좌이체 결제"
+        dsc = "식당 계좌이체 결제 디스크립션"
+
+        return GEN.set_card(Constant.SANDOL_LOGO1,btn_list,title,dsc);
       
 
 class LastTraffic:  # 교통 관련 클래스
