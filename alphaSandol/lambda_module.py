@@ -238,7 +238,7 @@ class AboutMeal:  # 학식 관련 클래스
         title = "hello"
         dsc ="dsc"
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
-        return GEN.set_card(Constant.SANDOL_LOGO1,GEN_OPTION.Button(label="바로가기", action="webLinkUrl", 
+        return GEN.set_card(Constant.SANDOL_LOGO1,is_buttons = GEN_OPTION.Button(label="바로가기", action="webLinkUrl", 
         webLinkUrl="https://qr.kakaopay.com/2810060110000075262686359c406394"),is_title=title,is_description=dsc,flag=False);
       
 class LastTraffic:  # 교통 관련 클래스
