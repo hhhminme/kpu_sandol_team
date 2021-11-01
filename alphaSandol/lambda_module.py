@@ -225,26 +225,22 @@ class AboutMeal:  # 학식 관련 클래스
 
     # 식당 계좌이체 결제
     def payment_meal(self):
-        # btn_list = [{
-        #   "label" : "세미콘 식당",
-        #   "action" : "webLink",
-        #   "webLinkUrl" : "https://qr.kakaopay.com/2810060111751110120069009c404611"
-        #   },
-        #   {
-        #   "label" : "민이 식당",
-        #   "action" : "webLink",
-        #   "webLinkUrl" : "https://qr.kakaopay.com/2810060110000075262686359c406394"
-        # }]
-        # GEN_OPTION.Button(label="바로가기", action="webLink", webLinkUrl=self.webLinkUrl)
-        
-        
-        btn =GEN_OPTION.Button(label="세미콘 식당", action="webLink", webLinkUrl ="https://qr.kakaopay.com/2810060111751110120069009c404611")
-        title = "식당 계좌이체 결제"
-        dsc = "식당 계좌이체 결제 디스크립션"
-
-        return GEN.set_card(Constant.SANDOL_LOGO1,is_buttons=btn,is_title=title,is_description=dsc,flag=False);
+        btn_list = [{
+          "label" : "세미콘 식당",
+          "action" : "webLink",
+          "webLinkUrl" : "https://qr.kakaopay.com/2810060111751110120069009c404611"
+          },
+          {
+          "label" : "민이 식당",
+          "action" : "webLink",
+          "webLinkUrl" : "https://qr.kakaopay.com/2810060110000075262686359c406394"
+        }]
+        title = "hello"
+        dsc ="dsc"
+        params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
+        return GEN.set_card(thumb_img = Constant.SANDOL_LOGO1,is_buttons=GEN_OPTION.Button(label="바로가기", action="webLinkUrl", 
+        webLinkUrl="https://qr.kakaopay.com/2810060110000075262686359c406394"),is_title=title,is_description=dsc,flag=False);
       
-
 class LastTraffic:  # 교통 관련 클래스
     def __init__(self):
 
