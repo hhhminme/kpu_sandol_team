@@ -1,0 +1,26 @@
+{
+  "emotion": {
+    "paw": "\\ud83d\\udc3e",
+    "smile": "\\ud83d\\ude3a",
+    "happy": "\\ud83d\\ude38",
+    "sad": "\\ud83d\\ude39",
+    "love": "\\ud83d\\ude3b",
+    "confident": "\\ud83d\\ude3c",
+    "angry": "\\ud83d\\ude3e",
+    "surprise": "\\ud83d\\ude40",
+    "walk": "\\ud83d\\udc08",
+    "nexpression": "\\ud83d\\udc31"
+  },
+  "weather": {
+      "흐림": "\\u2601",
+      "구름많음": "\\u26c5",
+      "hvy_rain": "\\u26c8",
+      "비": "\\u2614",
+      "약간흐림": "\\ud83c\\udf24",
+      "맑음": "\\u2600",
+      "sun_wth_rain": "\\ud83c\\udf26",
+      "thunder": "\\ud83c\\udf29",
+      "바람": "\\ud83c\\udf2a",
+      "안개": "\\ud83c\\udf2b"
+    }
+}
