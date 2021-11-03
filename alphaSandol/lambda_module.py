@@ -140,7 +140,7 @@ class AboutMeal:  # 학식 관련 클래스
                 #
                 # menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
                 # menu_info[self.DINNER] = dinner_list.replace(" ", ",")
-                final_string = str(menu_info)[1:-1].replace(" ", ",")
+                final_string = str(menu_info)[1:-1]
 
                 data[data.index("🐾" + store_name + "\n") + 1] = final_string + "\n"  # 최종 문자열
                 with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding='UTF-8') as rf:
