@@ -34,15 +34,14 @@ class AboutMeal:  # 학식 관련 클래스
         restaurant_position = {"messageText": "운영시간",
                                 "action": "message",
                                 "label": "운영시간 및 위치"
-                              }
+                              }     # quick reply 형식
         MEAL_GEN = return_type(reply_json=restaurant_position)  # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
         # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
         try:
             self.bucket.download_file(Constant.RESTAURANT_MENU, Constant.LOCAL_RESTAURANT_MENU)
 
         except Exception as e:
-            return GEN.set_text(
-                f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
+            return GEN.set_text(f"[File-Open-Error #131] 저장소에서 파일을 가져오는데 실패했습니다.{Constant.IMOGE['emotion']['sad']}\n{e}")
         # 버킷을 로컬 임시 폴더에 다운로드
 
         rst_name = list(Constant.RESTAURANT_ACCESS_ID.values())  # 식당id만 뽑아낸 리스트
@@ -82,7 +81,7 @@ class AboutMeal:  # 학식 관련 클래스
                     "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
         else:
-            selected_restaurant = rst_name.index(uid) * 2  # 식당 이름
+            selected_restaurant = rst_name.index(uid) * 2  # 식당 이름 포인터
             try:
                 weekday = ['월', '화', '수', '목', '금', '토', '일']
                 with open(Constant.LOCAL_RESTAURANT_MENU, "r", encoding='UTF-8') as f:
@@ -132,14 +131,14 @@ class AboutMeal:  # 학식 관련 클래스
                     ", ")
                 menu_info[self.DATE] = input_date
 
-                menu_info[self.LUNCH] = lunch_list.replace(", ", ",").replace(" ", ",")
-                menu_info[self.DINNER] = dinner_list.replace(",", "").replace(" ", ",")
+                menu_info[self.LUNCH] = lunch_list
+                menu_info[self.DINNER] = dinner_list
 
-                menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
-                menu_info[self.DINNER] = dinner_list.replace(" ", ",")
-
-                menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
-                menu_info[self.DINNER] = dinner_list.replace(" ", ",")
+                # menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
+                # menu_info[self.DINNER] = dinner_list.replace(" ", ",")
+                #
+                # menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
+                # menu_info[self.DINNER] = dinner_list.replace(" ", ",")
 
                 data[data.index("🐾" + store_name + "\n") + 1] = str(menu_info)[1:-1] + "\n"  # 최종 문자열
                 with open(Constant.LOCAL_RESTAURANT_MENU, "w", encoding='UTF-8') as rf:
