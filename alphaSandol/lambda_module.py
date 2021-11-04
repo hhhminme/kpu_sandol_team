@@ -58,8 +58,8 @@ class AboutMeal:  # 학식 관련 클래스
                         form = data[restaurant].replace("\n", '').replace("🐾", Constant.IMOGE['emotion']['walk'])
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                               f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
+                               f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
                     ret = ret[:-2]
                     MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
                     ret = '[교내식당 메뉴입니다!]\n'
@@ -132,8 +132,8 @@ class AboutMeal:  # 학식 관련 클래스
                     ", ")
                 menu_info[self.DATE] = input_date
 
-                menu_info[self.LUNCH] = lunch_list.replace(" ", ", ")
-                menu_info[self.DINNER] = dinner_list.replace(" ", ", ")
+                menu_info[self.LUNCH] = lunch_list
+                menu_info[self.DINNER] = dinner_list
 
                 final_string = str(menu_info)[1:-1]
 
