@@ -108,7 +108,7 @@ class AboutMeal:  # 학식 관련 클래스
                 return GEN.set_text(
                     "[File-Open-Error #132] 파일을 여는 중 오류가 발생했어요.." + Constant.IMOGE['emotion']['sad'] + str(e))
 
-    def upload_meal(self, store_name, lunch_list: list, dinner_list: list, input_date, owner_id) -> dict:  # 학식 업로드
+    def upload_meal(self, store_name, lunch_list: str, dinner_list: str, input_date, owner_id) -> dict:  # 학식 업로드
         if (owner_id != Constant.RESTAURANT_ACCESS_ID[store_name]) and owner_id not in list(
                 Constant.SANDOL_ACCESS_ID.values()):
             return GEN.set_text(f"[Permission-Error #121-1] 권한이 없습니다{owner_id}{Constant.IMOGE['emotion']['angry']}")
@@ -132,14 +132,9 @@ class AboutMeal:  # 학식 관련 클래스
                     ", ")
                 menu_info[self.DATE] = input_date
 
-                menu_info[self.LUNCH] = lunch_list
-                menu_info[self.DINNER] = dinner_list
+                menu_info[self.LUNCH] = lunch_list.replace(" ", "")
+                menu_info[self.DINNER] = dinner_list.replace(" ", "")
 
-                # menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
-                # menu_info[self.DINNER] = dinner_list.replace(" ", ",")
-                #
-                # menu_info[self.LUNCH] = lunch_list.replace(" ", ",")
-                # menu_info[self.DINNER] = dinner_list.replace(" ", ",")
                 final_string = str(menu_info)[1:-1]
 
                 data[data.index("🐾" + store_name + "\n") + 1] = final_string + "\n"  # 최종 문자열
