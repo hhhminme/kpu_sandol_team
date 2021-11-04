@@ -132,8 +132,8 @@ class AboutMeal:  # 학식 관련 클래스
                     ", ")
                 menu_info[self.DATE] = input_date
 
-                menu_info[self.LUNCH] = lunch_list.replace(" ", "")
-                menu_info[self.DINNER] = dinner_list.replace(" ", "")
+                menu_info[self.LUNCH] = lunch_list.replace(" ", ", ")
+                menu_info[self.DINNER] = dinner_list.replace(" ", ", ")
 
                 final_string = str(menu_info)[1:-1]
 
