@@ -94,12 +94,12 @@ class AboutMeal:  # 학식 관련 클래스
 
                     if uid == Constant.RESTAURANT_ACCESS_ID['푸드라운지']:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
+                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
                     else:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH]}\n" \
-                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER]}\n"
+                              f"{Constant.IMOGE['emotion']['paw']} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
+                              f"{Constant.IMOGE['emotion']['paw']} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
                     return_string = GEN.set_text(ret)
 
                 return return_string
