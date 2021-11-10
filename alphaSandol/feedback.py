@@ -2,7 +2,6 @@ import boto3
 import alphaSandol as settings
 import datetime
 
-settings.DEBUG = True  # 디버그모드 트리거 -> boto3 테스트 대신 로컬로 테스트 할 때 사용
 
 
 class Feedback:
@@ -40,7 +39,7 @@ class Feedback:
                     f"[File-Open-Error #103] 파일을 서버에 업로드 하는 중 오류가 발생했습니다{settings.IMOGE('emotion', 'sad')}\n{e}")
 
         else:   # 디버그 모드일때 발생하는 분기
-            with open("../test_stored_data/feedback.txt", "w", encoding='UTF-8') as f:
+            with open("../test_stored_data/feedback.txt", "a", encoding='UTF-8') as f:
                 f.writelines(self.data)
 
         return settings.GEN.set_text(f"피드백 주셔서 감사해요! 빠른 시일내에 검토 후 적용해볼게요!{settings.IMOGE('emotion','love')}")
