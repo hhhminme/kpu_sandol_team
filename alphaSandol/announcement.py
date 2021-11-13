@@ -9,7 +9,7 @@ class Announcement:
         self.ORIGIN = "https://www.kpu.ac.kr"
         self.TITLE = "교내 최신 학사공지 내역입니다"
         self.MAX_ANNOUNCEMENT_CNT = 5  # 최대 가져올 공지 수
-        self.webLinkUrl = "https://www.kpu.ac.kr/contents/main/cor/noticehaksa.html"
+        self.WEB_LINK_URL = "https://www.kpu.ac.kr/contents/main/cor/noticehaksa.html"
 
     def announce(self) -> dict:
         try:
@@ -25,7 +25,7 @@ class Announcement:
 
             return settings.GEN.set_list(self.TITLE, result,
                                          is_Button=settings.GEN_OPTION.Button(label="바로가기", action="webLink",
-                                                                              webLinkUrl=self.webLinkUrl))
+                                                                              webLinkUrl=self.WEB_LINK_URL))
 
         except Exception as e:
             return settings.GEN.set_text(f"{e}")
