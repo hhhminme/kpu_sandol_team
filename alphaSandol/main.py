@@ -1,6 +1,6 @@
 import json
 import base64
-import alphaSandol as constant
+import alphaSandol as settings
 
 if __name__ == '__main__':
     # main 파일을 엔트리포인트로 사용할 경우, path에 폴더 경로를 추가해 절대 경로로 임포트가 가능하게 함
@@ -8,12 +8,12 @@ if __name__ == '__main__':
     import os
 
     path.append(os.path.dirname(__file__))
-    constant.DEBUG = True  # 디버깅모드 트리거
+    settings.DEBUG = True  # 디버깅모드 트리거
 
 
 def lambda_handler(event, context):
     try:
-        if constant.DEBUG:
+        if settings.DEBUG:
             req = "None"  # request body
             func = "feedback_upload"  # 테스트할 함수
             params = ["BYE!!"]  # 파라미터
@@ -40,7 +40,7 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            "text": f"{constant.DEBUGGING('debug', 'main.lambda_handler', e)}"
+                            "text": f"{settings.DEBUGGING('debug', 'main.lambda_handler', e)}"
                         }
                     }
                 ],
@@ -61,16 +61,16 @@ def function_handler(func, req, param, access_id):
     vals = list(param.values())  # 함수에 파라미터에 사용할 값
     return_json = ''
     if func == 'weather':  # 날씨 관련
-        import weather
-        return_json = weather.Weather().weather()
+        from weather import Weather
+        return_json = Weather().weather()
 
     elif func == "covid":  # 코로나 관련
-        import covid
-        return_json = covid.Covid().today_covid()
+        from covid import Covid
+        return_json = Covid().today_covid()
 
     elif func == "feedback_upload" or func == "read_feedback":  # 피드백 관련
-        import feedback
-        feedback_class = feedback.Feedback()
+        from feedback import Feedback
+        feedback_class = Feedback()
 
         if func == "feedback_upload":
             return_json = feedback_class.upload_feedback(vals[0])
@@ -105,8 +105,8 @@ def function_handler(func, req, param, access_id):
             return_json = restaurant.payment_meal()
 
     elif func == "ann":  # 공지사항
-        import announcement
-        return_json = announcement.Announcement().announce()
+        from announcement import Announcement
+        return_json = Announcement().announce()
 
     elif func == "subway" or func == "last_subway":
         import subway
