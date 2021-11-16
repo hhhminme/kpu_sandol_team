@@ -1,6 +1,7 @@
 import json
 import base64
 import alphaSandol as settings
+from alphaSandol import DEBUGGING as debugging
 
 if __name__ == '__main__':
     # main 파일을 엔트리포인트로 사용할 경우, path에 폴더 경로를 추가해 절대 경로로 임포트가 가능하게 함
@@ -83,7 +84,7 @@ def function_handler(func, req, param, access_id):
                 return_json = feedback_class.read_feedback(access_id)
 
 
-    elif func == "store_name" or func == "read_meal" or func == "reset_meal" or func == "time_meal" or "payment_meal":
+    elif func in ["store_name", "read_meal", "reset_meal", "time_meal", "payment_meal"]:
         import restaurant
         meal_class = restaurant.AboutMeal()
 
@@ -108,7 +109,7 @@ def function_handler(func, req, param, access_id):
         from announcement import Announcement
         return_json = Announcement().announce()
 
-    elif func == "subway" or func == "last_subway":
+    elif func in ["subway", "last_subway"]:
         import subway
         if func == "subway":
             time = json.loads(req['action']['detailParams']['date_time']['value']['time'])
@@ -122,12 +123,11 @@ def function_handler(func, req, param, access_id):
         return_json = test_block.commerce_test()
 
     elif func == "perm_chk":
-        from return_type_generator import return_type as GEN
+        from return_type_generator import ReturnType as GEN
         return_json = GEN().set_text(access_id)
 
     else:
-        from return_type_generator import return_type as GEN
-        from alphaSandol import DEBUGGING as debugging
+        from return_type_generator import ReturnType as GEN
         GEN().set_text(text=debugging("error", "main.function_handler", "전달된 파라미터가 잘못되었습니다."))
 
     return {
@@ -138,9 +138,8 @@ def function_handler(func, req, param, access_id):
         }
     }
 
-
-if __name__ == "__main__":  # Deploy 할때 무조건 주석처리 하기
-    import pprint
-    func_call: json = lambda_handler("event", "context")
-    pprint.pprint(func_call)  # 디버깅용 함수 호출
+# if __name__ == "__main__":  # Deploy 할때 무조건 주석처리 하기
+#     import pprint
+#     func_call: json = lambda_handler("event", "context")
+#     pprint.pprint(func_call)  # 디버깅용 함수 호출
     # print(json.loads(func_call['body']))  # json 유니코드 -> UTF 확인용

@@ -24,7 +24,7 @@ class Announcement:
                                self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
 
             return settings.GEN.set_list(self.TITLE, result,
-                                         is_Button=settings.GEN_OPTION.Button(label="바로가기", action="webLink",
+                                         is_Button=settings.GEN_OPTION.button(label="바로가기", action="webLink",
                                                                               webLinkUrl=self.WEB_LINK_URL))
 
         except Exception as e:

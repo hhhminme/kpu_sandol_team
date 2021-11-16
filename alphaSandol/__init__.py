@@ -2,11 +2,11 @@ import os
 import json
 
 # 리턴 타입
-from return_type_generator import return_type
-from return_type_generator import common_params
+from return_type_generator import ReturnType
+from return_type_generator import ParamOptions
 
-GEN = return_type()  # kakao-i type json generator
-GEN_OPTION = common_params()  # generator optional param
+GEN = ReturnType()  # kakao-i type json generator
+GEN_OPTION = ParamOptions()  # generator optional param
 
 
 # Settings

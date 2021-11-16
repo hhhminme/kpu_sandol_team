@@ -2,8 +2,6 @@ import boto3
 import alphaSandol as settings
 import datetime
 
-settings.DEBUG = True
-
 
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
@@ -22,7 +20,7 @@ class AboutMeal:  # 학식 관련 클래스
                                "action": "message",
                                "label": "운영시간 및 위치"
                                }  # quick reply 형식
-        MEAL_GEN = settings.return_type(reply_json=restaurant_position)  # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
+        MEAL_GEN = settings.ReturnType(reply_json=restaurant_position)  # 따로 리턴타입을 불러옴, 이유는 발화안에 여러 응답을 줘야하기때문
         # 이전과 같은 id의 인스턴스로 사용하면 다른 발화에도 영향
         if not settings.DEBUG:  # 디버그 모드가 아닌 경우
             try:
@@ -203,7 +201,7 @@ class AboutMeal:  # 학식 관련 클래스
 
 # 식당 운영시간 불러오기
 def time_meal():
-    MEAL_GEN = settings.return_type()
+    MEAL_GEN = settings.ReturnType()
     MEAL_GEN.set_image(settings.SANDOL_RSTRNT_MAP, is_init=False)  # 식당 지도
 
     time_meal_string = f"교외식당 운영시간입니다! \n" \
@@ -242,7 +240,7 @@ def payment_meal():
     title = "hello"
     dsc = "dsc"
     params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
-    return settings.GEN.set_card(settings.SANDOL_LOGO1, settings.GEN_OPTION.Button(label="세미콘 식당", action="webLink",
+    return settings.GEN.set_card(settings.SANDOL_LOGO1, settings.GEN_OPTION.button(label="세미콘 식당", action="webLink",
                                                                                    webLinkUrl="https://qr.kakaopay.com/2810060111751110120069009c404611"),
                                  is_title=title, is_description=dsc, flag=False)
 
