@@ -51,14 +51,8 @@ def commerce_test():
         }
     }
     # 1~5 산돌 분식, 6 산돌 카페
-    Commerce_image = [
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test1.png',
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test2.png',
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test3.png',
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test4.png',
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test5.png',
-        'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test6.png'
-    ]
+    Commerce_image = [f'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test{x}.png'
+                      for x in range(1, 7)]
 
     random_image = Commerce_image[random.randint(0, 5)]
     return_json['template']['outputs'].append(Commerce_test(random_image))
