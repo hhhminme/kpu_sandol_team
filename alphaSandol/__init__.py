@@ -1,5 +1,13 @@
-import json
 import os
+import json
+
+# 리턴 타입
+from return_type_generator import ReturnType
+from return_type_generator import ParamOptions
+
+GEN = ReturnType()  # kakao-i type json generator
+GEN_OPTION = ParamOptions()  # generator optional param
+
 
 # Settings
 _PATH = os.path.abspath(os.path.dirname(__file__))  # 프로젝트 절대경로

@@ -1,4 +1,4 @@
-class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
+class ReturnType:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
     def __init__(self, reply_json: dict = None):
         self.return_json = {
             "version": "2.0",
@@ -16,7 +16,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         }
         if reply_json is not None:
             self.return_json['template']['quickReplies'].append(reply_json)
-        self.common_params = common_params()
+        self.common_params = ParamOptions()
 
     def init_json(self):
         self.return_json = {
@@ -36,7 +36,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
     def set_text(self, text, is_init=True):  # 텍스트 형식
         if is_init:
-            self.init_json()    # 이전에 들어간 텍스트가 유지될건지 여부
+            self.init_json()  # 이전에 들어간 텍스트가 유지될건지 여부
         basic_text = {
             "simpleText": {
                 "text": str(text)
@@ -54,10 +54,10 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         }
 
         try:
-            if is_title != None:
+            if is_title is not None:
                 basic_card["title"] = is_title  # 타이틀 입력
 
-            if is_description != None:
+            if is_description is not None:
                 basic_card["description"] = is_description  # 설명 입력
 
             if is_buttons != ():
@@ -66,7 +66,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
                 else:
                     basic_card.update({"buttons": list(is_buttons)})
 
-            if flag == True:  # flag 가 True이면 Card Json만 반환하지만, False이면 return해야하는 기본 JSON도 포함이 된다.
+            if flag:  # flag 가 True이면 Card Json만 반환하지만, False이면 return해야하는 기본 JSON도 포함이 된다.
                 return basic_card
 
             else:
@@ -96,7 +96,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
 
     def set_commerce(self, thumbnail, description, price, currency, is_discount=None, is_discountRate=None,
                      is_discountedPrice=None, profile=None, **kwargs):  # 커머스 반환 형식
-        self.common_params.Button(**kwargs)
+        self.common_params.button(**kwargs)
         return_json = {
             "version": "2.0",
             "template": {
@@ -153,13 +153,13 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         if card_type == "basicCard":
             for param in range(card_num):  # thumb_img, *is_buttons, is_title = None, is_description = None
                 basic_carousel['carousel']['items'].append(
-                    self.is_Card(thumb_img=params[param][0], is_title=params[param][1], is_description=params[param][2],
+                    self.set_card(thumb_img=params[param][0], is_title=params[param][1], is_description=params[param][2],
                                  flag=True))
 
         else:
             for param in range(card_num):  # thumb_img, *is_buttons, is_title = None, is_description = None
                 basic_carousel['carousel']['items'].append(
-                    self.is_Card(thumb_img=params[param][0], is_title=params[param][1], is_description=params[param][2],
+                    self.set_card(thumb_img=params[param][0], is_title=params[param][1], is_description=params[param][2],
                                  flag=True))
         self.return_json["template"]["outputs"].append(basic_carousel)
         return self.return_json
@@ -180,7 +180,7 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
             for idx, dat in enumerate(column):
                 if dat is not None:
                     if order[idx] == "link":
-                        item[order[idx]] = self.common_params.Link(dat)
+                        item[order[idx]] = self.common_params.link(dat)
 
                     else:
                         item[order[idx]] = dat
@@ -194,9 +194,12 @@ class return_type:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         self.return_json["template"]["outputs"].append(basic_list)
         return self.return_json
 
+    def __str__(self):
+        return str(self.return_json)
 
-class common_params:
-    def Button(self, **kwargs):
+
+class ParamOptions:
+    def button(self, **kwargs):
         data = {}
         params = ['label', 'action', 'webLinkUrl', 'messageText', 'phoneNumber', 'blockId']
         for item in kwargs.items():
@@ -209,7 +212,18 @@ class common_params:
 
         return data
 
-    def Link(self, url):
+    def link(self, url):
         return {
             'web': url
         }
+
+
+if __name__ == "__main__":
+    Gen = ReturnType()
+    Param = ParamOptions()  # 버튼
+    THUMBNAIL = r"https://github.com/teamSANDOL/kpu_sandol_team/blob/main/return_type_img/Basic%20Card%20Test.JPG?raw=true"
+    Gen.set_card(THUMBNAIL,
+                 is_title="제목입니다",
+                 is_description="카드 형식 예시입니다!"
+                 )
+    print(Gen)

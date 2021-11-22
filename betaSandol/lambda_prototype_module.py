@@ -336,7 +336,7 @@ class s3IOEvent():
             return gen.set_text("[Not-Found-Error #121-2] 해당하는 식당이 없습니다."+ imoge_mapping['emotion']['sad'])
 
         else:
-            store_file = "restaurant_menu.txt"
+            store_file = "../test_stored_data/restaurant_menu.txt"
             s3 = boto3.resource('s3')
             bucket = s3.Bucket("sandol")
             local_file = "/tmp/" + store_file
@@ -383,7 +383,7 @@ class s3IOEvent():
 
 
     def read_meal(self):
-        store_file = "restaurant_menu.txt"
+        store_file = "../test_stored_data/restaurant_menu.txt"
         s3 = boto3.resource('s3')  # 이 부분 해당 버킷 생성 후 적절히 수정 예정
         bucket = s3.Bucket("sandol")
         try:
@@ -428,7 +428,7 @@ class s3IOEvent():
         if bot_id not in sandol_team:
             return gen.set_text("[Permission-Error #141] 권한이 없습니다" + imoge_mapping['emotion']['angry'])
 
-        store_file = "restaurant_menu.txt"
+        store_file = "../test_stored_data/restaurant_menu.txt"
         s3 = boto3.resource('s3')
         bucket = s3.Bucket("sandol")
         local_file = "/tmp/" + store_file
