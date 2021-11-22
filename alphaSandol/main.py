@@ -9,7 +9,7 @@ if __name__ == '__main__':
     import os
 
     path.append(os.path.dirname(__file__))
-    settings.DEBUG = True  # 디버깅모드 트리거
+    settings.DEBUG = False  # 디버깅모드 트리거
 
 
 def lambda_handler(event, context):
