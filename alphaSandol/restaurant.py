@@ -3,12 +3,14 @@ import alphaSandol as settings
 import datetime
 
 
+class Time:
+    DATE = 0
+    LUNCH = 1
+    DINNER = 2
+
+
 class AboutMeal:  # 학식 관련 클래스
     def __init__(self):
-        self.DATE = 0
-        self.LUNCH = 1
-        self.DINNER = 2
-
         self.S3 = boto3.resource('s3')
         self.S3_client = boto3.client('s3')
         self.bucket = self.S3.Bucket(settings.BUCKET_NAME)
@@ -47,8 +49,8 @@ class AboutMeal:  # 학식 관련 클래스
                         form = data[restaurant].replace("\n", '').replace("🐾", settings.IMOGE('emotion', 'walk'))
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                               f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
-                               f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
+                               f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[Time.LUNCH].replace(' ', ', ')}\n" \
+                               f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[Time.DINNER].replace(' ', ', ')}\n"
                     ret = ret[:-2]
                     MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
                     ret = '[교내식당 메뉴입니다!]\n'
@@ -59,8 +61,8 @@ class AboutMeal:  # 학식 관련 클래스
                                                                                  settings.IMOGE('emotion', 'walk'))
 
                         ret += f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
-                               f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[self.LUNCH]}\n" \
-                               f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[self.DINNER]}\n"
+                               f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[Time.LUNCH]}\n" \
+                               f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[Time.DINNER]}\n"
                     ret += "🐾웰스프레쉬(E동 교직원식당) [URL 참조]\nhttps://ibook.kpu.ac.kr/Viewer/menu01"
 
                 return_string = MEAL_GEN.set_text(ret, is_init=False)  # 교외식당 저장
@@ -85,12 +87,12 @@ class AboutMeal:  # 학식 관련 클래스
 
                     if uid == settings.RESTAURANT_ACCESS_ID['푸드라운지']:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n포장메뉴도 있어요\n" \
-                              f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
-                              f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
+                              f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[Time.LUNCH].replace(' ', ', ')}\n" \
+                              f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[Time.DINNER].replace(' ', ', ')}\n"
                     else:
                         ret = f"{form}[{str(last_update_date)} {weekday[last_update_date.weekday()]}요일]\n" \
-                              f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[self.LUNCH].replace(' ', ', ')}\n" \
-                              f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[self.DINNER].replace(' ', ', ')}\n"
+                              f"{settings.IMOGE('emotion', 'paw')} 중식 : {menu_list[Time.LUNCH].replace(' ', ', ')}\n" \
+                              f"{settings.IMOGE('emotion', 'paw')} 석식 : {menu_list[Time.DINNER].replace(' ', ', ')}\n"
                     return_string = settings.GEN.set_text(ret)
 
                 return return_string
@@ -126,10 +128,10 @@ class AboutMeal:  # 학식 관련 클래스
                 data = f.readlines()
                 menu_info = data[data.index("🐾" + store_name + "\n") + 1].replace('\'', '').replace("\n", "").split(
                     ", ")
-                menu_info[self.DATE] = input_date
+                menu_info[Time.DATE] = input_date
 
-                menu_info[self.LUNCH] = lunch_list
-                menu_info[self.DINNER] = dinner_list
+                menu_info[Time.LUNCH] = lunch_list
+                menu_info[Time.DINNER] = dinner_list
 
                 final_string = str(menu_info)[1:-1]
 
