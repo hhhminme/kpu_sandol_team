@@ -1,7 +1,7 @@
 import json
 import base64
 import alphaSandol as settings
-from alphaSandol import DEBUGGING as debugging
+# from alphaSandol import DEBUGGING as debugging
 
 if __name__ == '__main__':
     # main 파일을 엔트리포인트로 사용할 경우, path에 폴더 경로를 추가해 절대 경로로 임포트가 가능하게 함
