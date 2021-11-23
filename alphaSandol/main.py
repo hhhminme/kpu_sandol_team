@@ -7,40 +7,31 @@ if __name__ == '__main__':
 
 import json
 import base64
-# import alphaSandol as settings
-# from alphaSandol import DEBUGGING as debugging
+import alphaSandol as settings
+from alphaSandol import DEBUGGING as debugging
 
 
 
 def lambda_handler(event, context):
     try:
-        request_body = event['body']
-        request_body = json.loads(base64.b64decode(request_body))  # base64로 디코딩해야 제대로된 값을 받음
+        if settings.DEBUG:
+            req = "None"  # request body
+            func = "feedback_upload"  # 테스트할 함수
+            params = ["BYE!!"]  # 파라미터
+            params = {func: params[0]}
+            access_id = 'd367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895'  # 접근 ID
 
-        param = request_body['action']['params']  # request json 접근용
-        key = list(param.keys())
-        func = key[0]  # 함수 호출시 사용할 값
-        ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
-        return_json = function_handler(func, request_body, param, ACCESS_ID)
+            return_json = function_handler(func, req, params, access_id)
 
-        # if settings.DEBUG:
-        #     req = "None"  # request body
-        #     func = "feedback_upload"  # 테스트할 함수
-        #     params = ["BYE!!"]  # 파라미터
-        #     params = {func: params[0]}
-        #     access_id = 'd367f2ec55f41b4207156f4b8fce5ce885b05d8c3b238cf8861c55a9012f6f5895'  # 접근 ID
-        #
-        #     return_json = function_handler(func, req, params, access_id)
+        else:
+            request_body = event['body']
+            request_body = json.loads(base64.b64decode(request_body))  # base64로 디코딩해야 제대로된 값을 받음
 
-        # else:
-        #     request_body = event['body']
-        #     request_body = json.loads(base64.b64decode(request_body))  # base64로 디코딩해야 제대로된 값을 받음
-        #
-        #     param = request_body['action']['params']  # request json 접근용
-        #     key = list(param.keys())
-        #     func = key[0]  # 함수 호출시 사용할 값
-        #     ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
-        #     return_json = function_handler(func, request_body, param, ACCESS_ID)
+            param = request_body['action']['params']  # request json 접근용
+            key = list(param.keys())
+            func = key[0]  # 함수 호출시 사용할 값
+            ACCESS_ID = str(request_body['userRequest']['user']['id'])  # 접근 권한을 가진 ID 확인용
+            return_json = function_handler(func, request_body, param, ACCESS_ID)
 
 
     except Exception as e:
@@ -50,8 +41,7 @@ def lambda_handler(event, context):
                 "outputs": [
                     {
                         "simpleText": {
-                            # "text": f"{settings.DEBUGGING('debug', 'main.lambda_handler', e)}"
-                            "text": f"main.lambda_handler"
+                            "text": f"{settings.DEBUGGING('debug', 'main.lambda_handler', e)}"
                         }
                     }
                 ],
