@@ -1,5 +1,5 @@
 import boto3
-import alphaSandol as settings
+import settings
 import datetime
 
 

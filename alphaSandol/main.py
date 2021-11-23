@@ -3,12 +3,12 @@ if __name__ == '__main__':
     from sys import path
     import os
 
-    path.append(os.path.dirname(os.path.dirname(__file__)))
+    path.append(os.path.dirname(__file__))
 
 import json
 import base64
-import alphaSandol as settings
-from alphaSandol import DEBUGGING as debugging
+import settings
+from settings import DEBUGGING as debugging
 
 
 

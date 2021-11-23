@@ -1,4 +1,4 @@
-import alphaSandol as settings
+import settings
 from bs4 import BeautifulSoup
 import requests
 

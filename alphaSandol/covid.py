@@ -1,6 +1,6 @@
 import requests
 import json
-import alphaSandol as settings
+import settings
 
 
 class Covid:

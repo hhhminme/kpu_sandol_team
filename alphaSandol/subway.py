@@ -2,7 +2,7 @@ import requests
 import json
 import datetime
 from bs4 import BeautifulSoup
-import alphaSandol as settings
+import settings
 
 
 class LiveSubwayTraffic:
