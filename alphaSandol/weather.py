@@ -35,14 +35,14 @@ class Weather:
             result += f"미세먼지는 -, \n"
 
         try:
-            f"초미세먼지는 {chart[1]}이며, \n"
+            result += f"초미세먼지는 {chart[1]}이며, \n"
         except:
-            f"초미세먼지는 -이며, \n"
+            result += f"초미세먼지는 -이며, \n"
 
         try:
-            f"자외선은 {chart[2]} 입니다!"
+            result += f"자외선은 {chart[2]} 입니다!"
         except:
-            f"자외선은 - 입니다!"
+            result += f"자외선은 - 입니다!"
 
         return settings.GEN.set_text(result)
 
