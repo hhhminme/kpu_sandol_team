@@ -44,9 +44,7 @@ class LiveSubwayTraffic:
                     self.return_data += schedule_data_up[-1]['headsign'] + schedule_data_up[-1][
                         'departureTime'] + " 막차입니다"
 
-                self.return_data += "\n\n"
 
-                flag = False
                 it = schedule_data_down.__iter__()  # 하행선
                 for i in schedule_data_down:
                     it.__next__()
@@ -133,6 +131,7 @@ class LastTraffic:  # 교통 관련 클래스
         context = ''
         header = [f"{settings.IMOGE('emotion', 'walk')}4호선 막차시간입니다\n",
                   f"\n{settings.IMOGE('emotion', 'walk')}수인선 막차시간입니다\n"]
+
         try:
             for iteration in range(len(self.SUBWAY_URL)):
                 context += ''.join(header[iteration])
@@ -208,6 +207,16 @@ class LastTraffic:  # 교통 관련 클래스
         return settings.GEN.set_text(str(context[:-1]))
 
 
+class EfficientTransfer(LastTraffic):   # 수인분당선
+    def __init__(self):
+        super().__init__()
+
+    def real_time_traffic(self):
+        return super().real_time_traffic()
+
+
 if __name__ == "__main__":
-    print(LiveSubwayTraffic().get_string("12:13:30"))
-    print(LastTraffic().real_time_traffic())
+    import pprint
+    pprint.pprint(LiveSubwayTraffic().get_string("12:13:30"))
+    # pprint.pprint(LastTraffic().real_time_traffic())
+    # pprint.pprint(EfficientTransfer().real_time_traffic())
