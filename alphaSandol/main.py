@@ -113,7 +113,7 @@ def function_handler(func, req, param, access_id):
         import subway
         if func == "subway":
             from return_type_generator import ReturnType
-            time = json.loads(req['action']['detailParams']['date_time']['value']['time'])
+            time = json.loads(req['action']['detailParams']['date_time']['value'])
             return_json = ReturnType().set_text(str(type(time)))
 
         else:
