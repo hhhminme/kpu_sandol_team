@@ -112,9 +112,8 @@ def function_handler(func, req, param, access_id):
     elif func in ["subway", "last_subway"]:
         import subway
         if func == "subway":
-            from return_type_generator import ReturnType
-            time = json.loads(req['action']['detailParams']['date_time']['value'])
-            return_json = ReturnType().set_text(str(time['time']))
+            time = json.loads(req['action']['detailParams']['date_time']['value'])['time']
+            return_json = subway.LiveSubwayTraffic().get_string(time)
 
         else:
             return_json = subway.LastTraffic().real_time_traffic()
