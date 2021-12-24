@@ -114,7 +114,7 @@ def function_handler(func, req, param, access_id):
         if func == "subway":
             from return_type_generator import ReturnType
             time = json.loads(req['action']['detailParams']['date_time']['value'])
-            return_json = ReturnType().set_text(str(type(time)))
+            return_json = ReturnType().set_text(str(time['time']))
 
         else:
             return_json = subway.LastTraffic().real_time_traffic()
