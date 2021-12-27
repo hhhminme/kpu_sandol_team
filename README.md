@@ -1,4 +1,4 @@
-# 한국산업기술대학교 AI 카카오톡 챗봇 산돌이
+# 한국산업기술대학교 카카오톡 챗봇 산돌이
 ## Index
   - [Overview](#overview) 
   - [Getting Started](#getting-started)
