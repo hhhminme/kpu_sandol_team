@@ -71,7 +71,7 @@ def commerce_test():    # set_commerce 예시
     return return_json
 
 
-def set_card():     # set_card
+def card_test():     # set_card
     Gen = ReturnType()
     THUMBNAIL = r"https://github.com/teamSANDOL/kpu_sandol_team/blob/main/return_type_img/Basic%20Card%20Test.JPG?raw=true"
     buttons = [
