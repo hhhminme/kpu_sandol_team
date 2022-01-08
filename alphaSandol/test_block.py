@@ -91,3 +91,4 @@ def image_test():   # set_image
 
 
 def carousel_test():
+    pass
