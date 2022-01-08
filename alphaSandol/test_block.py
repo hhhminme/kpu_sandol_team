@@ -1,3 +1,6 @@
+from return_type_generator import (ReturnType, ParamOptions)
+
+
 def commerce_test():
     import random
     return_json = {
@@ -51,9 +54,16 @@ def commerce_test():
         }
     }
     # 1~5 산돌 분식, 6 산돌 카페
-    Commerce_image = [f'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test{x}.png'
-                      for x in range(1, 7)]
+    Commerce_image = [
+        f'https://raw.githubusercontent.com/hhhminme/kpu_sandol_team/main/commerce_img/commerce_test{x}.png'
+        for x in range(1, 7)]
 
     random_image = Commerce_image[random.randint(0, 5)]
     return_json['template']['outputs'].append(Commerce_test(random_image))
     return return_json
+
+
+def image_test():
+    Gen = ReturnType()
+    URL = r"https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo1.png?raw=true"
+    return Gen.set_image(URL, text="산돌이 로고 이미지입니다!")

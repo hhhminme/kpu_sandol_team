@@ -219,11 +219,8 @@ class ParamOptions:
 
 
 if __name__ == "__main__":
+    import pprint
     Gen = ReturnType()
     Param = ParamOptions()  # 버튼
-    THUMBNAIL = r"https://github.com/teamSANDOL/kpu_sandol_team/blob/main/return_type_img/Basic%20Card%20Test.JPG?raw=true"
-    Gen.set_card(THUMBNAIL,
-                 is_title="제목입니다",
-                 is_description="카드 형식 예시입니다!"
-                 )
-    print(Gen)
+    URL = r"https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo1.png?raw=true"
+    pprint.pprint(Gen.set_image(URL, text="산돌이 로고 이미지입니다!"))
