@@ -1,7 +1,15 @@
-from return_type_generator import (ReturnType, ParamOptions)
+from return_type_generator import (ReturnType, ParamOption)
 
 
-def commerce_test():
+def text_test():    # set_text 예시
+    Gen = ReturnType()
+    text_list = ["안녕!", "내 이름은 산돌이!", "만나서 반가워"]
+    for txt in text_list:
+        Gen.set_text(txt, is_init=False)
+    return Gen
+
+
+def commerce_test():    # set_commerce 예시
     import random
     return_json = {
         "version": "2.0",
@@ -63,7 +71,23 @@ def commerce_test():
     return return_json
 
 
-def image_test():
+def set_card():     # set_card
+    Gen = ReturnType()
+    THUMBNAIL = r"https://github.com/teamSANDOL/kpu_sandol_team/blob/main/return_type_img/Basic%20Card%20Test.JPG?raw=true"
+    buttons = [
+        ParamOption('button', label='label1'),
+        ParamOption('button', label='label2'),
+        ParamOption('button', label='label3'),
+    ]
+    print(Gen.set_card(THUMBNAIL, *buttons, is_title="테스트!", is_description="산돌이 카드 테스트"))
+
+    print(Gen)
+
+
+def image_test():   # set_image
     Gen = ReturnType()
     URL = r"https://github.com/hhhminme/kpu_sandol_team/blob/main/img/logo1.png?raw=true"
     return Gen.set_image(URL, text="산돌이 로고 이미지입니다!")
+
+
+def carousel_test():
