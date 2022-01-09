@@ -120,9 +120,9 @@ def function_handler(func, req, param, access_id):
 
     elif func == "commerce":
         import test_block
-        # return_json = test_block.commerce_test()    # 원래 기능
+        return_json = test_block.commerce_test()    # 원래 기능
         # return_json = test_block.image_test()
-        return_json = test_block.card_test()
+        # return_json = test_block.card_test()
 
     elif func == "perm_chk":
         from return_type_generator import ReturnType as GEN
