@@ -19,13 +19,15 @@ class Announcement:
             result = []  # title, date, URl
 
             for i in range(self.MAX_ANNOUNCEMENT_CNT):
-                result.append([announce_list[i].find_all("td")[1].find('a').text.strip(),
-                               announce_list[i].find_all("td")[4].text.strip(),
-                               self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']])
+                result.append(settings.ParamOption('detail_list',
+                                                   title=announce_list[i].find_all("td")[1].find('a').text.strip(),
+                                                   description=announce_list[i].find_all("td")[4].text.strip(),
+                                                   link=self.ORIGIN + announce_list[i].find_all("td")[1].find("a")['href']
+                                                   )
+                              )
 
-            return settings.GEN.set_list(self.TITLE, result,
-                                         is_Button=settings.GEN_OPTION.button(label="바로가기", action="webLink",
-                                                                              webLinkUrl=self.WEB_LINK_URL))
+            button = [settings.ParamOption('button', label='바로가기', action='webLink', webLinkUrl=self.WEB_LINK_URL)]
+            return settings.GEN.set_list(self.TITLE, button, *result)
 
         except Exception as e:
             return settings.GEN.set_text(f"{e}")
