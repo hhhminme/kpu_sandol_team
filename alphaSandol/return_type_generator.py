@@ -87,7 +87,7 @@ class ReturnType:  # 리턴 타입별 JSON 형식을 만드는 곳 입니다.
         return self.return_json
 
     def set_card(self, thumb_img, *is_buttons, is_title=None, is_description=None, is_carousel=False):  # 카드 형식
-        init_json()
+        self.return_json = init_json()
         basic_card = {
             "thumbnail": {
                 "imageUrl": thumb_img
