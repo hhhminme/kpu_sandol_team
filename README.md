@@ -42,8 +42,6 @@
     산돌팀21 총괄 및 경영
   - [Cycrypto](https://github.com/Cycrypto) - **박준하** - <jh01love@naver.com>
     산돌이 스킬 및 로직파트 메인개발
-  - [DPS0340](https://github.com/DPS0340) - **이지호** - <optional.int@kakao.com>
-    산돌이 데브옵스 및 보조개발, 웹 서비스 플랫폼 검토
   - [hhhminme](https://github.com/hhhminme) - **허민** - <huhmn0409@naver.com>
     경영지원 및 프론트엔드 개발
 
