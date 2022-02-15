@@ -1,7 +1,7 @@
 {
   "dev": {
     "profile_name": null,
-    "project_name": "betasandol",
+    "project_name": "Kakao-Sandol",
     "runtime": "python3.8",
     "s3_bucket": "aws-sandol-bucket",
     "aws_region": "ap-northeast-2",
