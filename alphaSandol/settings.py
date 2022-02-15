@@ -13,7 +13,7 @@ _PATH = os.path.abspath(os.path.dirname(__file__))  # 프로젝트 절대경로
 DEBUG = False  # True 일때 디버그 모드 작동
 
 # BUCKET
-BUCKET_NAME: str = 'sandol'
+BUCKET_NAME: str = 'aws-sandol-bucket'
 
 RESTAURANT_MENU: str = "restaurant_menu.txt"  # 학식이 저장된 파일 이름 (Bucket)
 LOCAL_RESTAURANT_MENU: str = "/tmp/" + RESTAURANT_MENU  # 람다 서버의 해당 디렉토리에 불러옴
